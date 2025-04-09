@@ -1,0 +1,7 @@
+{
+  "name": "Stockify",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
