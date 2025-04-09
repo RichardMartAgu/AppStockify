@@ -1,0 +1,22 @@
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-icon color="primary" slot="start" name="mail-outline"></ion-icon>
+    <ion-input
+      [(ngModel)]="username"
+      type="text"
+      label="User Name"
+      labelPlacement="floating"
+      
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon color="primary" slot="start" name="lock-closed-outline"></ion-icon>
+    <ion-input
+      [(ngModel)]="password"
+      type="password"
+      label="Contraseña"
+      labelPlacement="floating"
+    ></ion-input>
+  </ion-item>
+  <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
+</ion-content>

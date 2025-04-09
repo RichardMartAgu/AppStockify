@@ -1,0 +1,44 @@
+<ion-menu contentId="main-content" (ionWillOpen)="getUser()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-chip>
+        <ion-avatar>
+          <img
+            alt="Avatar del usuario"
+            [src]="
+              image_url ||
+              'https://ionicframework.com/docs/img/demos/avatar.svg'
+            "
+          />
+        </ion-avatar>
+        <ion-label>{{ username || "Inicia sesión" }}</ion-label>
+      </ion-chip>
+      <ion-menu-toggle>
+        <ion-button *ngIf="username" (click)="logout()"
+          >Cerrar sesión</ion-button
+        >
+        <ion-button *ngIf="!username" [routerLink]="['/login']"
+          >Iniciar sesión</ion-button
+        >
+      </ion-menu-toggle>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-menu-toggle>
+      <ion-button [routerLink]="['/product']">Lista de productos</ion-button>
+
+      <ion-button [routerLink]="['/dashboard']">Home</ion-button>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header class="ion-no-border" [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</div>
