@@ -3,19 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
-
-export interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  access_token: string;
-
-  id: number;
-  username: string;
-  image_url: string;
-}
+import { LoginRequest, LoginResponse } from '../../models/login';
 
 @Injectable({
   providedIn: 'root',

@@ -13,6 +13,7 @@ import {
   personOutline,
   enterOutline,
   personAddOutline,
+  bugOutline,
 } from 'ionicons/icons';
 
 
@@ -24,7 +25,8 @@ addIcons({
   eyeOffOutline,
   personOutline,
   enterOutline,
-  personAddOutline
+  personAddOutline,
+  bugOutline,
 });
 
 @Component({
