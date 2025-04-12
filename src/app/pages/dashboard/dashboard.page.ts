@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+
+import { TitleService } from '../../core/services/components/title.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +13,15 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule,CommonModule, FormsModule]
 })
 export class DashboardPage implements OnInit {
+  
 
-  constructor() { }
+  constructor(
+    private titleService: TitleService
+  ) { }
+
+  ionViewWillEnter() {
+    this.titleService.setTitle('DashBoard');
+  }
 
   ngOnInit() {
   }

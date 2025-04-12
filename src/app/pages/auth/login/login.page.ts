@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../../core/services/auth/auth.service';
+import { TitleService } from 'src/app/core/services/components/title.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,19 @@ export class LoginPage {
   username = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  showPassword = false;
+
+  logo = environment.LOGO;
+
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private titleService: TitleService) 
+    {}
+
+  ionViewWillEnter() {
+    this.titleService.setTitle('Login');
+  }
 
   login() {
     const credentials: LoginRequest = {

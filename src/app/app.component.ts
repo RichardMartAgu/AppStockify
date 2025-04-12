@@ -1,32 +1,43 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { IonicModule } from '@ionic/angular';
-import { addIcons } from "ionicons";
-import { homeOutline, mailOutline, lockClosedOutline } from "ionicons/icons";
+import { addIcons } from 'ionicons';
 import { AuthService } from './core/services/auth/auth.service';
 import { Router } from '@angular/router';
+import {
+  homeOutline,
+  mailOutline,
+  lockClosedOutline,
+  eyeOutline,
+  eyeOffOutline,
+  personOutline,
+  enterOutline,
+  personAddOutline,
+} from 'ionicons/icons';
 
-addIcons({ homeOutline, mailOutline, lockClosedOutline });
+
+addIcons({
+  homeOutline,
+  mailOutline,
+  lockClosedOutline,
+  eyeOutline,
+  eyeOffOutline,
+  personOutline,
+  enterOutline,
+  personAddOutline
+});
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [
-    NavBarComponent,
-    FooterComponent,
-    LeftMenuComponent,
-    IonicModule
-  ],
+  imports: [LeftMenuComponent, IonicModule],
 })
 export class AppComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
   async ngOnInit() {
-    
     await this.authService.init();
 
     const token = await this.authService.getToken();

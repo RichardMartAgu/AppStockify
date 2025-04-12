@@ -32,13 +32,27 @@
     </ion-menu-toggle>
   </ion-content>
 </ion-menu>
-<div class="ion-page" id="main-content">
+<ion-content  class="ion-page" id="main-content">
   <ion-header class="ion-no-border" [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button class="primary"></ion-menu-button>
       </ion-buttons>
-      <ion-title>Menu</ion-title>
+      <div class="custom-toolbar">
+        <div>
+          <ion-title>{{ title }}</ion-title>
+        </div>
+
+        <img
+          class="logo"
+          [src]= logo
+          alt="Logo"
+        />
+      </div>
     </ion-toolbar>
   </ion-header>
-</div>
+  <ion-content>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+  <app-footer></app-footer>
+</ion-content>

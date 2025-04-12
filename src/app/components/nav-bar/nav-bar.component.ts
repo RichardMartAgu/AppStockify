@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss'],
-  imports: [RouterModule],
+  standalone: true,
 })
 export class NavBarComponent  implements OnInit {
 

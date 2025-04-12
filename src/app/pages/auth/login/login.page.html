@@ -1,22 +1,66 @@
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-icon color="primary" slot="start" name="mail-outline"></ion-icon>
-    <ion-input
-      [(ngModel)]="username"
-      type="text"
-      label="User Name"
-      labelPlacement="floating"
-      
-    ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-icon color="primary" slot="start" name="lock-closed-outline"></ion-icon>
-    <ion-input
-      [(ngModel)]="password"
-      type="password"
-      label="Contraseña"
-      labelPlacement="floating"
-    ></ion-input>
-  </ion-item>
-  <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
+  <div class="d-flex-center">
+    <img class="logo" [src]="logo" alt="Logo" />
+
+    <ion-text color="secondary">
+      <h1><strong>Stockify</strong></h1>
+    </ion-text>
+
+    <!-- Login form -->
+
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="username"
+          name="username"
+          required
+          type="text"
+          label="Ususario"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="password"
+          name="password"
+          [type]="showPassword ? 'text' : 'password'"
+          label="Contraseña"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-button
+          fill="clear"
+          slot="end"
+          (click)="showPassword = !showPassword"
+        >
+          <ion-icon
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-button
+        class="custom-button"
+        color="secondary"
+        expand="block"
+        shape="round"
+        type="submit"
+        [disabled]="!loginForm.valid"
+      >
+        Iniciar Sesión
+        <ion-icon class="icon" color="light"slot="end" name="enter-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+        class="custom-button"
+        color="medium"
+        expand="block"
+        shape="round"
+      >
+        Crear nueva cuenta
+        <ion-icon class="icon" color="light"slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+    </form>
+  </div>
 </ion-content>
