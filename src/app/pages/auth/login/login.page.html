@@ -14,9 +14,8 @@
         <ion-input
           [(ngModel)]="username"
           name="username"
-          required
           type="text"
-          label="Ususario"
+          label="Usuario"
           labelPlacement="floating"
           required
         ></ion-input>
@@ -52,15 +51,17 @@
         Iniciar Sesión
         <ion-icon class="icon" color="light"slot="end" name="enter-outline"></ion-icon>
       </ion-button>
-      <ion-button
-        class="custom-button"
-        color="medium"
-        expand="block"
-        shape="round"
-      >
-        Crear nueva cuenta
-        <ion-icon class="icon" color="light"slot="end" name="person-add-outline"></ion-icon>
+        <ion-button
+          (click)="addUpdateUser()"
+          class="custom-button"
+          color="medium"
+          expand="block"
+          shape="round"
+        >
+          Crear nueva cuenta
+          <ion-icon class="icon" color="light"slot="end" name="person-add-outline"></ion-icon>
       </ion-button>
+   
     </form>
   </div>
 </ion-content>

@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = `${environment.API_URL}/product`;
+  apiUrl1 = `${environment.API_URL}/product`;
+  apiUrl = `${environment.API_URL}/user`;
 
   constructor(private http: HttpClient) {}
 
   getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl1);
+  }
+
+  createUser(userData: any): Observable<any[]> {
+    return this.http.post<any[]>(this.apiUrl, userData);
   }
 }

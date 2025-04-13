@@ -11,7 +11,7 @@ import { LoginRequest, LoginResponse } from '../../models/login';
 export class AuthService {
   apiUrl = `${environment.API_URL}/login`;
   private _storage: Storage | null = null;
-
+  
   constructor(private http: HttpClient, private storage: Storage) {
     this.init();
   }

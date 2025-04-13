@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { LoginRequest } from '../../../core/services/auth/auth.service';
+import { LoginRequest } from '../../../core/models/login'
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/core/services/utils-service/utils.service';
+import { ModalController } from '@ionic/angular';
+import { AddUpdateUserComponent } from 'src/app/components/user/add-update-user/add-update-user.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [FormsModule, IonicModule],
 })
 export class LoginPage {
   username = '';
@@ -28,7 +29,8 @@ export class LoginPage {
     private authService: AuthService,
     private router: Router,
     private titleService: TitleService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private modalController: ModalController
   ) {}
 
   ionViewWillEnter() {
@@ -73,4 +75,12 @@ export class LoginPage {
       },
     });
   }
+
+  async addUpdateUser() {
+    const modal = await this.modalController.create({
+      component: AddUpdateUserComponent,
+    });
+    await modal.present();
+  }
+
 }
