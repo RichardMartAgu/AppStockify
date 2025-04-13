@@ -4,6 +4,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/core/interceptors/auth.interceptor'
 import { Storage } from '@ionic/storage-angular';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -17,3 +18,6 @@ bootstrapApplication(AppComponent, {
     Storage,
   ],
 });
+
+defineCustomElements(window);
+

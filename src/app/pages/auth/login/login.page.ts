@@ -76,9 +76,12 @@ export class LoginPage {
     });
   }
 
-  async addUpdateUser() {
+  // Create new user modal
+
+  async addUpdateUserModal() {
     const modal = await this.modalController.create({
       component: AddUpdateUserComponent,
+      cssClass: 'custom-modal'
     });
     await modal.present();
   }

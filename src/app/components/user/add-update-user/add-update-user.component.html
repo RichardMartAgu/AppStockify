@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
         <ion-icon name="close-circle-outline"></ion-icon>
@@ -11,8 +11,20 @@
 
 <ion-content class="ion-padding">
   <div class="d-flex-center">
-    <form (ngSubmit)="createUser()" #AddEditUserForm="ngForm">
 
+    <ion-avatar *ngIf="user.image_url">
+      <img [src]="user.image_url" />
+    </ion-avatar> 
+
+    <ion-icon class="image-icon" name="image-outline" *ngIf="!user.image_url"></ion-icon>
+
+    <!-- Create new image -->
+    <ion-button (click)="takeImage()" size="small" shape="round" color="light">
+      <ion-icon class="custom-icon" slot="end" name="camera-outline"></ion-icon>
+      Añadir imagen
+    </ion-button>
+
+    <form (ngSubmit)="createUser()" #AddEditUserForm="ngForm">
       <!-- Nombre -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>

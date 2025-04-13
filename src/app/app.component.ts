@@ -16,6 +16,8 @@ import {
   bugOutline,
   closeCircleOutline,
   alertCircleOutline,
+  imageOutline,
+  cameraOutline,
 } from 'ionicons/icons';
 
 
@@ -31,6 +33,8 @@ addIcons({
   bugOutline,
   closeCircleOutline,
   alertCircleOutline,
+  imageOutline,
+  cameraOutline,
 });
 
 @Component({
