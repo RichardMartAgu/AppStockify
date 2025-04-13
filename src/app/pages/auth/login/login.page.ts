@@ -64,16 +64,8 @@ export class LoginPage {
         );
         this.router.navigate(['/dashboard']);
       },
-      error: async (err) => {
-        await loading.dismiss();
-        await this.utilsService.presentToast(
-          'Error al iniciar sesión',
-          'danger',
-          'bug-outline'
-        );
-        console.error(err);
-      },
     });
+    await loading.dismiss();
   }
 
   // Create new user modal

@@ -39,7 +39,7 @@ export class AddUpdateUserComponent {
 
   async takeImage() {
     const loading = await this.utilsService.loading();
-    
+
     const photo = await this.utilsService.takePicture('Foto del usuario');
     if (photo.webPath) {
       try {
@@ -90,15 +90,7 @@ export class AddUpdateUserComponent {
         );
         this.closeModal();
       },
-      error: async (err) => {
-        console.error('Error:', err);
-        await loading.dismiss();
-        await this.utilsService.presentToast(
-          'Hubo un error al crear el usuario',
-          'danger',
-          'alert-circle-outline'
-        );
-      },
     });
+    await loading.dismiss();
   }
 }
