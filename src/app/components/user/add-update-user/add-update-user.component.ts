@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UtilsService } from 'src/app/core/services/utils-service/utils.service';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { CreateUserRequest } from 'src/app/core/models/user';
-import { UserService } from 'src/app/core/services/user/user.service';
-import { UploadImageService } from 'src/app/core/services/uploadImage/upload-image.service';
+import { UserService } from 'src/app/core/services/api/user/user.service';
+import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
 
 @Component({
   selector: 'app-add-update-user',

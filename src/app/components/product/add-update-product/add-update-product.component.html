@@ -1,0 +1,146 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title><strong>{{ isEditMode ? 'Editar Producto' : 'Crear Nuevo Producto' }}</strong></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="d-flex-center">
+    <ion-avatar *ngIf="product.image_url">
+      <img [src]="product.image_url" />
+    </ion-avatar>
+
+    <ion-icon
+      class="image-icon"
+      name="image-outline"
+      *ngIf="!product.image_url"
+    ></ion-icon>
+
+    <!-- Create new image -->
+    <ion-button (click)="takeImage()" size="small" shape="round" color="light">
+      <ion-icon class="custom-icon" slot="end" name="camera-outline"></ion-icon>
+      Añadir imagen
+    </ion-button>
+
+    <form (ngSubmit)="isEditMode ? updateProduct() : createProduct()" #AddEditProductForm="ngForm">
+      <!-- serial_number -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="barcode-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.serial_number"
+          name="serial_number"
+          type="text"
+          label="Nuemero de serie"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- Name -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="pricetag-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.name"
+          name="name"
+          type="text"
+          label="Nombre"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- quantity -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="cube-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.quantity"
+          name="quantity"
+          type="number"
+          label="Cantidad"
+          labelPlacement="floating"
+          min="0"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- price -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="cash-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.price"
+          name="price"
+          type="number"
+          label="Precio"
+          labelPlacement="floating"
+          min="0"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- description -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="document-text-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.description"
+          name="description"
+          type="text-area"
+          label="Descripción"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(opcional)</ion-note>
+      </ion-item>
+
+      <!-- category -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="folder-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.category"
+          name="category"
+          type="text"
+          label="Categoría"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(opcional)</ion-note>
+      </ion-item>
+
+      <!-- kit_id -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="apps-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.kit_id"
+          name="kit_id"
+          type="number"
+          label="Kit al que pertenece"
+          labelPlacement="floating"
+          min="0"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(opcional)</ion-note>
+      </ion-item>
+
+      <ion-button
+        class="custom-button"
+        color="secondary"
+        expand="block"
+        shape="round"
+        type="submit"
+        [disabled]="!AddEditProductForm.valid">
+        {{ isEditMode ? 'Guardar Cambios' : 'Nuevo producto' }}
+        <ion-icon
+          class="icon"
+          color="light"
+          slot="end"
+          name="save-outline"
+        ></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

@@ -18,8 +18,19 @@ import {
   alertCircleOutline,
   imageOutline,
   cameraOutline,
+  add,
+  barcodeOutline,
+  pricetagOutline,
+  cubeOutline,
+  cashOutline,
+  documentTextOutline,
+  folderOutline,
+  appsOutline,
+  createOutline,
+  trashOutline,
+  checkmarkCircleOutline,
+  saveOutline,
 } from 'ionicons/icons';
-
 
 addIcons({
   homeOutline,
@@ -35,6 +46,18 @@ addIcons({
   alertCircleOutline,
   imageOutline,
   cameraOutline,
+  add,
+  barcodeOutline,
+  pricetagOutline,
+  cubeOutline,
+  cashOutline,
+  documentTextOutline,
+  folderOutline,
+  appsOutline,
+  createOutline,
+  trashOutline,
+  checkmarkCircleOutline,
+  saveOutline,
 });
 
 @Component({

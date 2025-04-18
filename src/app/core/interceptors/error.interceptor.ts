@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { HttpRequest, HttpHandlerFn } from '@angular/common/http';
-import { UtilsService } from '../services/utils-service/utils.service';
+import { UtilsService } from '../services/utils/utils.service';
 
 function getErrorMessage(error: HttpErrorResponse): string {
   const url = error.url || '';
@@ -32,7 +32,9 @@ function getErrorMessage(error: HttpErrorResponse): string {
       }
       return 'Recurso no encontrado';
     case 422:
-      return 'Valor esperado';
+      return 'Valor insertado inesperado';
+    case 409:
+      return 'Error de conflicto de datos'
     case 500:
       return 'Error interno del servidor';
     default:

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 export class UtilsService {
   loadingController = inject(LoadingController);
   toastController = inject(ToastController);
+  alertController = inject(AlertController);
 
   // Loading service
 
@@ -27,6 +28,33 @@ export class UtilsService {
       position: 'bottom',
     });
     await toast.present();
+  }
+
+   // Confirm deletion with toast and alert
+   async confirmDelete(message: string, onConfirm: () => void) {
+    const alert = await this.alertController.create({
+      header: 'Confirmación',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Eliminación cancelada');
+          }
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => {
+            onConfirm();  
+            this.presentToast('Eliminado con éxito', 'primary', 'checkmark-circle-outline');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   // Camera function

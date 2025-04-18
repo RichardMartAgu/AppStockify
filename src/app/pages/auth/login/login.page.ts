@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../../../core/models/login'
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { environment } from 'src/environments/environment';
-import { UtilsService } from 'src/app/core/services/utils-service/utils.service';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { ModalController } from '@ionic/angular';
 import { AddUpdateUserComponent } from 'src/app/components/user/add-update-user/add-update-user.component';
 
