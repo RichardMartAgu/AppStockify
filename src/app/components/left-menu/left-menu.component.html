@@ -1,39 +1,67 @@
 <ion-menu contentId="main-content" (ionWillOpen)="getUser()">
   <ion-header>
     <ion-toolbar>
-      <ion-chip>
-        <ion-avatar>
-          <img
-            alt="Avatar del usuario"
-            [src]="
-              image_url ||
-              'https://ionicframework.com/docs/img/demos/avatar.svg'
-            "
-          />
-        </ion-avatar>
-        <ion-label>{{ username || "Inicia sesión" }}</ion-label>
-      </ion-chip>
-      <ion-menu-toggle>
-        <ion-button *ngIf="username" (click)="logout()"
-          >Cerrar sesión</ion-button
-        >
-        <ion-button *ngIf="!username" [routerLink]="['/login']"
-          >Iniciar sesión</ion-button
-        >
-      </ion-menu-toggle>
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-center">
+          <!-- CHIP: ocupa 9 de 12 columnas (~75%) -->
+          <ion-col
+            size="9"
+            class="ion-justify-content-center ion-align-items-center ion-text-center d-flex"
+          >
+            <ion-chip (click)="addUpdateUserModal()">
+              <ion-avatar>
+                <img
+                  alt="Avatar del usuario"
+                  [src]="
+                    image_url ||
+                    'https://ionicframework.com/docs/img/demos/avatar.svg'
+                  "
+                />
+              </ion-avatar>
+              <ion-label>{{ username || "Crear nuevo usuario" }}</ion-label>
+            </ion-chip>
+          </ion-col>
+
+          <!-- CERRAR/INICIAR SESIÓN: ocupa 3 de 12 columnas (~25%) -->
+          <ion-col size="3" class="ion-text">
+            <ion-menu-toggle>
+              <ion-text
+                *ngIf="username"
+                (click)="logout()"
+                color="medium"
+                class="logout-text"
+              >
+                Cerrar sesión
+              </ion-text>
+              <ion-text
+                *ngIf="!username"
+                [routerLink]="['/login']"
+                color="primary"
+              >
+                Iniciar sesión
+              </ion-text>
+            </ion-menu-toggle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
     <ion-menu-toggle>
-      <ion-button [routerLink]="['/product']">Lista de productos</ion-button>
-
-      <ion-button [routerLink]="['/dashboard']">Home</ion-button>
+      <ion-item>
+        <ion-icon aria-hidden="true" name="albums-outline" slot="start"></ion-icon>
+        <ion-text [routerLink]="['/product']">Lista de productos</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-icon aria-hidden="true" name="home-outline" slot="start"></ion-icon>
+        <ion-text [routerLink]="['/dashboard']">Home</ion-text>
+      </ion-item>
     </ion-menu-toggle>
   </ion-content>
 </ion-menu>
 
-<ion-content  class="ion-page" id="main-content">
+<ion-content class="ion-page" id="main-content">
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -44,11 +72,7 @@
           <ion-title>{{ title }}</ion-title>
         </div>
 
-        <img
-          class="logo"
-          [src]= logo
-          alt="Logo"
-        />
+        <img class="logo" [src]="logo" alt="Logo" />
       </div>
     </ion-toolbar>
   </ion-header>

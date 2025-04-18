@@ -1,3 +1,12 @@
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    image_url: string;
+    admin_id: number; 
+}
+
 export interface CreateUserRequest {
     username: string;
     password: string;

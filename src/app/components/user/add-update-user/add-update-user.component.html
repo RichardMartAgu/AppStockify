@@ -5,18 +5,25 @@
         <ion-icon name="close-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title><strong>Crear Nuevo Usuario</strong></ion-title>
+    <ion-title
+      ><strong>{{
+        isEditMode ? "Editar Perfil" : "Crear Nuevo Usuario"
+      }}</strong></ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="d-flex-center">
-
     <ion-avatar *ngIf="user.image_url">
       <img [src]="user.image_url" />
-    </ion-avatar> 
+    </ion-avatar>
 
-    <ion-icon class="image-icon" name="image-outline" *ngIf="!user.image_url"></ion-icon>
+    <ion-icon
+      class="image-icon"
+      name="image-outline"
+      *ngIf="!user.image_url"
+    ></ion-icon>
 
     <!-- Create new image -->
     <ion-button (click)="takeImage()" size="small" shape="round" color="light">
@@ -24,7 +31,10 @@
       Añadir imagen
     </ion-button>
 
-    <form (ngSubmit)="createUser()" #AddEditUserForm="ngForm">
+    <form
+      (ngSubmit)="isEditMode ? updateUser() : createUser()"
+      #AddEditUserForm="ngForm"
+    >
       <!-- Nombre -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>
@@ -44,11 +54,20 @@
         <ion-input
           [(ngModel)]="user.password"
           name="password"
-          type="password"
-          label="Contraseña"
+          [type]="showPassword ? 'text' : 'password'"
+          [label]="isEditMode ? 'Nueva Contraseña': ' Contraseña'"
           labelPlacement="floating"
-          required
+          [required]="!isEditMode"
         ></ion-input>
+        <ion-button
+        fill="clear"
+        slot="end"
+        (click)="showPassword = !showPassword"
+      >
+        <ion-icon
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+        ></ion-icon>
+      </ion-button>
       </ion-item>
 
       <!-- email -->
@@ -73,7 +92,7 @@
         type="submit"
         [disabled]="!AddEditUserForm.valid"
       >
-        Crear
+      {{ isEditMode ? 'Guardar Cambios' : 'Crear Usuario' }}
         <ion-icon
           class="icon"
           color="light"

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -7,14 +7,14 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TitleService } from '../../core/services/components/title.service';
-
+import { AddUpdateUserComponent } from '../user/add-update-user/add-update-user.component';
 
 @Component({
   selector: 'app-left-menu',
   templateUrl: './left-menu.component.html',
   styleUrls: ['./left-menu.component.scss'],
   standalone: true,
-  imports: [IonicModule, RouterModule, CommonModule,FooterComponent],
+  imports: [IonicModule, RouterModule, CommonModule, FooterComponent],
 })
 export class LeftMenuComponent implements OnInit {
   private authService = inject(AuthService);
@@ -28,13 +28,15 @@ export class LeftMenuComponent implements OnInit {
   username: string | null = null;
   image_url: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit(): void {
     this.titleService.title$.subscribe((value) => {
       this.title = value;
     });
-
   }
 
   async logout() {
@@ -50,5 +52,18 @@ export class LeftMenuComponent implements OnInit {
     this.username = await this.authService.getUsername();
     this.image_url = await this.authService.getUserImage();
   }
-  
+
+  async addUpdateUserModal(id = this.id) {
+    const modal = await this.modalController.create({
+      component: AddUpdateUserComponent,
+      componentProps: { id },
+      cssClass: 'custom-modal',
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data?.refresh) {
+      this.getUser();
+    }
+  }
 }

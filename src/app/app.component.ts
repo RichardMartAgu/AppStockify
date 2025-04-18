@@ -30,6 +30,7 @@ import {
   trashOutline,
   checkmarkCircleOutline,
   saveOutline,
+  albumsOutline,
 } from 'ionicons/icons';
 
 addIcons({
@@ -58,6 +59,7 @@ addIcons({
   trashOutline,
   checkmarkCircleOutline,
   saveOutline,
+  albumsOutline,
 });
 
 @Component({

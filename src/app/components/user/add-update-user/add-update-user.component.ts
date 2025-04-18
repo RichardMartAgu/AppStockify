@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,8 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { CreateUserRequest } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
+import { logOut } from 'ionicons/icons';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-add-update-user',
@@ -17,22 +19,51 @@ import { UploadImageService } from 'src/app/core/services/upload-image/upload-im
 export class AddUpdateUserComponent {
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
+  @Input() id: number | null = null;
+
+  isEditMode: boolean = false;
+  showPassword = false;
+
   user = {
+    id: 0,
     username: '',
     password: '',
     email: '',
     image_url: '',
+    role: '',
+    admin_id: 0,
   };
+
+  ngOnInit() {
+
+    if (this.id !== null) {
+      this.isEditMode = true;
+      this.getUserById(this.id);
+
+      if (!this.id) {
+        this.user = {
+          id: 0,
+          username: '',
+          password: '',
+          email: '',
+          image_url: '',
+          role: '',
+          admin_id: 0,
+        };
+      }
+    }
+  }
 
   constructor(
     private modalController: ModalController,
     private utilsService: UtilsService,
     private userService: UserService,
-    private uploadImage: UploadImageService
+    private uploadImage: UploadImageService,
+    private authService: AuthService
   ) {}
 
-  closeModal() {
-    this.modalController.dismiss();
+  closeModal(refresh: boolean = false) {
+    this.modalController.dismiss({ refresh });
   }
 
   // Take and upload user image
@@ -92,5 +123,65 @@ export class AddUpdateUserComponent {
       },
     });
     await loading.dismiss();
+  }
+
+  async getUserById(id: number) {
+    this.userService.getUserById(id).subscribe({
+      next: (userData) => {
+        this.user = {
+          id: userData.id,
+          username: userData.username,
+          email: userData.email,
+          password: userData.password,
+          image_url: userData.image_url,
+          role: userData.role,
+          admin_id: userData.admin_id,
+        };
+      },
+      error: async () => {
+        await this.utilsService.presentToast(
+          'Error al obtener los datos del usuario',
+          'danger',
+          'alert-circle-outline'
+        );
+      },
+    });
+  }
+
+  async updateUser() {
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    const updateData: CreateUserRequest = {
+      username: this.user.username,
+      email: this.user.email,
+      image_url: this.user.image_url,
+      password: this.user.password,
+      role: this.user.role,
+      admin_id: this.user.admin_id,
+      
+    };
+
+    this.userService.updateUser(this.user.id, updateData).subscribe({
+      next: async () => {
+        this.authService.setUserImage(this.user.image_url);
+        this.authService.setUsername(this.user.username);
+        await loading.dismiss();
+        await this.utilsService.presentToast(
+          'Usuario actualizado con éxito',
+          'success',
+          'checkmark-circle-outline'
+        );
+        this.closeModal(true);
+      },
+      error: async () => {
+        await loading.dismiss();
+        await this.utilsService.presentToast(
+          'Error al actualizar el usuario',
+          'danger',
+          'alert-circle-outline'
+        );
+      },
+    });
   }
 }

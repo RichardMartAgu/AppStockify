@@ -40,7 +40,7 @@ export class AddUpdateProductComponent {
     this.isEditMode = !!this.product?.id;
 
     if (!this.productToEdit) {
-      this.product = this.product = {
+      this.product = {
         id: 0,
         serial_number: '',
         name: '',
@@ -101,7 +101,7 @@ export class AddUpdateProductComponent {
     const loading = await this.utilsService.loading();
     await loading.present();
 
-    const credentials: CreateUpdateProductRequest = {
+    const updateData: CreateUpdateProductRequest = {
       serial_number: this.product.serial_number,
       name: this.product.name,
       quantity: this.product.quantity,
@@ -113,7 +113,7 @@ export class AddUpdateProductComponent {
       warehouse_id: 7, //TODO: crear almacén y añadirlo aqui
     };
 
-    this.productService.updateProduct(this.product.id, credentials).subscribe({
+    this.productService.updateProduct(this.product.id, updateData).subscribe({
       next: async (response) => {
         console.log('Successfull update product:', response);
         await loading.dismiss();

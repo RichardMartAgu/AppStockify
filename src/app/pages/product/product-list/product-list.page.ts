@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/core/services/api/product/product.servic
 import { AddUpdateProductComponent } from 'src/app/components/product/add-update-product/add-update-product.component';
 import { Product } from 'src/app/core/models/product';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -16,6 +17,8 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 })
 export class ProductListPage {
   products: any[] = [];
+
+  logo = environment.LOGO;
 
   constructor(
     private productService: ProductService,
@@ -40,6 +43,7 @@ export class ProductListPage {
     const modal = await this.modalController.create({
       component: AddUpdateProductComponent,
       componentProps: { product },
+      cssClass: 'custom-modal',
     });
     await modal.present();
 

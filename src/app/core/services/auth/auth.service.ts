@@ -11,7 +11,7 @@ import { LoginRequest, LoginResponse } from '../../models/login';
 export class AuthService {
   apiUrl = `${environment.API_URL}/login`;
   private _storage: Storage | null = null;
-  
+
   constructor(private http: HttpClient, private storage: Storage) {
     this.init();
   }
@@ -58,6 +58,13 @@ export class AuthService {
 
   async getUserImage(): Promise<string | null> {
     return await this._storage?.get('image_url');
+  }
+  async setUsername(username: string) {
+    await this._storage?.set('username', username);
+  }
+
+  async setUserImage(image_url: string) {
+    await this._storage?.set('image_url', image_url);
   }
 
   async logout() {
