@@ -6,10 +6,10 @@ import { TitleService } from 'src/app/core/services/components/title.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Warehouse } from 'src/app/core/models/warehouse';
 import { AddUpdateWarehouseComponent } from 'src/app/components/warehouse/add-update-warehouse/add-update-warehouse.component';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-warehouse',
@@ -27,14 +27,14 @@ export class WarehousePage {
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
     private modalController: ModalController,
-    private authService: AuthService,
+    private storageService: StorageService,
     private userService: UserService,
     private router: Router,
   ) {}
 
   async ionViewWillEnter() {
     this.titleService.setTitle('Almacenes');
-    this.userId = await this.authService.getUserId();
+    this.userId = await this.storageService.get<number>('user_id');
     if (this.userId !== null) {
       this.loadWarehousesByAdminId(this.userId);
     }
@@ -57,7 +57,7 @@ export class WarehousePage {
 
     const { data } = await modal.onWillDismiss();
     if (data?.refresh) {
-      this.userId = await this.authService.getUserId();
+      this.userId = await this.storageService.get<number>('user_id');
       if (this.userId !== null) {
         this.loadWarehousesByAdminId(this.userId);
       }

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { TitleService } from '../../core/services/components/title.service';
 import { AddUpdateUserComponent } from '../user/add-update-user/add-update-user.component';
 import { User } from 'src/app/core/models/user';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-left-menu',
@@ -42,7 +43,8 @@ export class LeftMenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -59,10 +61,10 @@ export class LeftMenuComponent implements OnInit {
   }
 
   async getUser() {
-    const userId = await this.authService.getUserId();
-    const username = await this.authService.getUsername();
-    const userImage = await this.authService.getUserImage();
-    const userEmail = await this.authService.getUserEmail();
+    const userId = await this.storageService.get<number>('user_id');
+    const username = await this.storageService.get<string>('username');
+    const userImage = await this.storageService.get<string>('image_url');
+    const userEmail = await this.storageService.get<string>('email');
 
     this.user.id = userId !== null ? userId : 0;
     this.user.username = username !== null ? username : '';

@@ -6,7 +6,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { CreateUserRequest, User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-add-update-user',
@@ -44,7 +44,7 @@ export class AddUpdateUserComponent {
     private utilsService: UtilsService,
     private userService: UserService,
     private uploadImage: UploadImageService,
-    private authService: AuthService
+    private storageService: StorageService,
   ) {}
 
   closeModal(refresh: boolean = false) {
@@ -148,8 +148,8 @@ export class AddUpdateUserComponent {
 
     this.userService.updateUser(this.user.id, updateData).subscribe({
       next: async () => {
-        this.authService.setUserImage(this.user.image_url);
-        this.authService.setUsername(this.user.username);
+        this.storageService.set('image_url',this.user.image_url);
+        this.storageService.set('username', this.user.username);
         await loading.dismiss();
         await this.utilsService.presentToast(
           'Usuario actualizado con éxito',

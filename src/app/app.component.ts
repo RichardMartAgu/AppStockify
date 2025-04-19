@@ -35,6 +35,7 @@ import {
   storefrontOutline,
   addCircleOutline,
 } from 'ionicons/icons';
+import { StorageService } from './core/services/storage/storage.service';
 
 addIcons({
   homeOutline,
@@ -77,11 +78,12 @@ addIcons({
 export class AppComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private storageService = inject(StorageService);
 
   async ngOnInit() {
-    await this.authService.init();
+    await this.storageService.init();
 
-    const token = await this.authService.getToken();
+    const token = await this.storageService.get<string>('token');
     if (token) {
       this.router.navigate(['/product']);
     } else {

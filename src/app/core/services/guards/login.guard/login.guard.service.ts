@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private storageService: StorageService, private router: Router) {}
 
   async canActivate(): Promise<boolean> {
-    const token = await this.authService.getToken();
+    const token = await this.storageService.get<string>('token');
 
     if (token && !this.isTokenExpired(token)) {
       

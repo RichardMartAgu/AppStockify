@@ -8,7 +8,7 @@ import {
   Warehouse,
 } from 'src/app/core/models/warehouse';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-add-update-warehouse',
@@ -40,7 +40,7 @@ export class AddUpdateWarehouseComponent {
     private modalController: ModalController,
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
-    private authService: AuthService
+    private storageService: StorageService,
   ) {}
 
   closeModal(refresh: boolean = false) {
@@ -52,7 +52,7 @@ export class AddUpdateWarehouseComponent {
   async createWarehouse() {
     const loading = await this.utilsService.loading();
     await loading.present();
-    const userId = await this.authService.getUserId();
+    const userId = await this.storageService.get<number>('user_id');
     if (userId != null) {
       this.warehouse.user_id = userId;
     }

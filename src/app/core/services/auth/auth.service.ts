@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 import { LoginRequest, LoginResponse } from '../../models/login';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,7 @@ export class AuthService {
   apiUrl = `${environment.API_URL}/login`;
   private _storage: Storage | null = null;
 
-  constructor(private http: HttpClient, private storage: Storage) {
-    this.init();
-  }
-
-  async init() {
-    this._storage = await this.storage.create();
+  constructor(private http: HttpClient, private storageService: StorageService) {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
@@ -38,50 +34,18 @@ export class AuthService {
     image_url: string,
     email: string
   ) {
-    await this._storage?.set('token', token);
-    await this._storage?.set('id', id);
-    await this._storage?.set('username', username);
-    await this._storage?.set('image_url', image_url);
-    await this._storage?.set('email', email);
-  }
-
-  async getToken(): Promise<string | null> {
-    return await this._storage?.get('token');
-  }
-
-  async getUserId(): Promise<number | null> {
-    return await this._storage?.get('id');
-  }
-
-  async getUsername(): Promise<string | null> {
-    return await this._storage?.get('username');
-  }
-
-  async getUserImage(): Promise<string | null> {
-    return await this._storage?.get('image_url');
-  }
-
-  async getUserEmail(): Promise<string | null> {
-    return await this._storage?.get('email');
-  }
-
-  async setUsername(username: string) {
-    await this._storage?.set('username', username);
-  }
-
-  async setUserImage(image_url: string) {
-    await this._storage?.set('image_url', image_url);
-  }
-
-  async setWarehauseId(warehouseId: number){
-    await this.storage?.set('warehouseId',warehouseId )
+    await this.storageService.set('token', token);
+    await this.storageService.set('user_id', id);
+    await this.storageService.set('username', username);
+    await this.storageService.set('image_url', image_url);
+    await this.storageService.set('email', email);
   }
 
   async logout() {
-    await this._storage?.remove('token');
-    await this._storage?.remove('id');
-    await this._storage?.remove('username');
-    await this._storage?.remove('image_url');
-    await this._storage?.remove('email');
+    await this.storageService.remove('token');
+    await this.storageService.remove('id');
+    await this.storageService.remove('username');
+    await this.storageService.remove('image_url');
+    await this.storageService.remove('email');
   }
 }

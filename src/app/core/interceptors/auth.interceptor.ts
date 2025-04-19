@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { StorageService } from '../services/storage/storage.service';
 
 function isTokenExpired(token: string): boolean {
   try {
@@ -15,9 +16,9 @@ function isTokenExpired(token: string): boolean {
 }
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
+  const storageService = inject(StorageService);
 
-  return from(authService.getToken()).pipe(
+  return from(storageService.get<string>('token')).pipe(
     switchMap((authToken) => {
       if (authToken && !isTokenExpired(authToken)) {
 
