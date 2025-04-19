@@ -28,20 +28,7 @@
     </ion-button>
 
     <form (ngSubmit)="isEditMode ? updateProduct() : createProduct()" #AddEditProductForm="ngForm">
-      <!-- serial_number -->
-      <ion-item class="custom-input">
-        <ion-icon slot="start" name="barcode-outline"></ion-icon>
-        <ion-input
-          [(ngModel)]="product.serial_number"
-          name="serial_number"
-          type="text"
-          label="Nuemero de serie"
-          labelPlacement="floating"
-          required
-        ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
-      </ion-item>
-
+      
       <!-- Name -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="pricetag-outline"></ion-icon>

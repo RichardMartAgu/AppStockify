@@ -1,0 +1,42 @@
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let warehouse of warehouses">
+      <ion-item>
+        <ion-label>
+          <h2>{{ warehouse.name }}</h2>
+        </ion-label>
+      </ion-item>
+
+      <!-- Sliding options (Edit and Delete) -->
+      <ion-item-options>
+        <!-- Edit button -->
+        <ion-item-option color="tertiary" (click)="editWarehouse(warehouse)">
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
+          Editar
+        </ion-item-option>
+
+        <!-- Delete button -->
+        <ion-item-option color="danger" (click)="deleteWarehouse(warehouse)">
+          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+          Borrar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!-- No warehouses available message -->
+    <ion-item *ngIf="warehouses.length === 0">
+      <ion-label>Debes crear un almacén para seguir</ion-label>
+    </ion-item>
+
+    <!-- New button -->
+    <ion-item (click)="addUpdateWarehouseModal()" lines="none">
+      <ion-icon
+        slot="start"
+        name="add-circle-outline"
+      ></ion-icon>
+      <ion-label>
+        <h2>Crear nuevo almacén</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

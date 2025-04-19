@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TitleService } from '../../core/services/components/title.service';
 import { AddUpdateUserComponent } from '../user/add-update-user/add-update-user.component';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-left-menu',
@@ -21,12 +22,23 @@ export class LeftMenuComponent implements OnInit {
   private titleService = inject(TitleService);
 
   title = 'Stockify';
-
   logo = environment.LOGO;
 
-  id: number | null = null;
-  username: string | null = null;
-  image_url: string | null = null;
+  pages = [
+    { title: 'Home', url: '/dashboard', icon: 'home-outline' },
+    { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
+    { title: 'Almacenes', url: '/warehouse', icon: 'storefront-outline' },
+  ];
+
+  user: User = {
+    id: 0,
+    username: '',
+    password:'',
+    email: '',
+    role: '',
+    image_url: '',
+    admin_id: 0,
+  };
 
   constructor(
     private router: Router,
@@ -41,22 +53,27 @@ export class LeftMenuComponent implements OnInit {
 
   async logout() {
     await this.authService.logout();
-    this.id = null;
-    this.username = null;
-    this.image_url = null;
+    this.user.username = '';
+    this.user.image_url = '';
     this.router.navigate(['/login']);
   }
 
   async getUser() {
-    this.id = await this.authService.getUserId();
-    this.username = await this.authService.getUsername();
-    this.image_url = await this.authService.getUserImage();
+    const userId = await this.authService.getUserId();
+    const username = await this.authService.getUsername();
+    const userImage = await this.authService.getUserImage();
+    const userEmail = await this.authService.getUserEmail();
+
+    this.user.id = userId !== null ? userId : 0;
+    this.user.username = username !== null ? username : '';
+    this.user.image_url = userImage !== null ? userImage : '';
+    this.user.email = userEmail !== null ? userEmail : '';
   }
 
-  async addUpdateUserModal(id = this.id) {
+  async addUpdateUserModal(user: User) {
     const modal = await this.modalController.create({
       component: AddUpdateUserComponent,
-      componentProps: { id },
+      componentProps: { user },
       cssClass: 'custom-modal',
     });
     await modal.present();

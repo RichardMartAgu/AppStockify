@@ -1,6 +1,9 @@
+import { Warehouse } from "./warehouse";
+
 export interface User {
     id: number;
     username: string;
+    password: string;
     email: string;
     role: string;
     image_url: string;
@@ -24,4 +27,12 @@ export interface RespnseUser {
     image_url: string;
     admin_id: number; 
 }
+
+interface UserWithWarehouses {
+    id: number;
+    username: string;
+    email: string;
+    role: string;
+    warehouses: Warehouse[];
+  }
 

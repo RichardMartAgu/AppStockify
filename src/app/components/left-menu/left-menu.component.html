@@ -3,30 +3,30 @@
     <ion-toolbar>
       <ion-grid class="ion-no-padding">
         <ion-row class="ion-align-items-center">
-          <!-- CHIP: ocupa 9 de 12 columnas (~75%) -->
           <ion-col
             size="9"
             class="ion-justify-content-center ion-align-items-center ion-text-center d-flex"
           >
-            <ion-chip (click)="addUpdateUserModal()">
+            <ion-chip (click)="addUpdateUserModal(user)">
               <ion-avatar>
                 <img
                   alt="Avatar del usuario"
                   [src]="
-                    image_url ||
+                    user.image_url ||
                     'https://ionicframework.com/docs/img/demos/avatar.svg'
                   "
                 />
               </ion-avatar>
-              <ion-label>{{ username || "Crear nuevo usuario" }}</ion-label>
+              <ion-label>{{
+                user.username || "Crear nuevo usuario"
+              }}</ion-label>
             </ion-chip>
           </ion-col>
 
-          <!-- CERRAR/INICIAR SESIÓN: ocupa 3 de 12 columnas (~25%) -->
           <ion-col size="3" class="ion-text">
             <ion-menu-toggle>
               <ion-text
-                *ngIf="username"
+                *ngIf="user.username"
                 (click)="logout()"
                 color="medium"
                 class="logout-text"
@@ -34,7 +34,7 @@
                 Cerrar sesión
               </ion-text>
               <ion-text
-                *ngIf="!username"
+                *ngIf="!user.username"
                 [routerLink]="['/login']"
                 color="primary"
               >
@@ -47,20 +47,30 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- List of pages -->
   <ion-content class="ion-padding">
-    <ion-menu-toggle>
-      <ion-item>
-        <ion-icon aria-hidden="true" name="albums-outline" slot="start"></ion-icon>
-        <ion-text [routerLink]="['/product']">Lista de productos</ion-text>
-      </ion-item>
-      <ion-item>
-        <ion-icon aria-hidden="true" name="home-outline" slot="start"></ion-icon>
-        <ion-text [routerLink]="['/dashboard']">Home</ion-text>
-      </ion-item>
+    <ion-menu-toggle *ngFor="let page of pages">
+      <ion-list lines="none">
+        <ion-item [routerLink]="page.url">
+          <ion-icon
+            aria-hidden="true"
+            [name]="page.icon"
+            slot="start"
+          ></ion-icon>
+          <ion-text> {{ page.title }}</ion-text>
+
+          <ion-icon
+            color="medium"
+            name="chevron-forward-circle-outline"
+            slot="end"
+          ></ion-icon>
+        </ion-item>
+      </ion-list>
     </ion-menu-toggle>
   </ion-content>
 </ion-menu>
 
+<!-- Header -->
 <ion-content class="ion-page" id="main-content">
   <ion-header class="ion-no-border">
     <ion-toolbar>

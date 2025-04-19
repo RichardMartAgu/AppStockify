@@ -9,4 +9,5 @@ export interface LoginResponse {
   id: number;
   username: string;
   image_url: string;
+  email: string;
 }

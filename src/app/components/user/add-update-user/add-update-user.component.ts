@@ -3,10 +3,9 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
-import { CreateUserRequest } from 'src/app/core/models/user';
+import { CreateUserRequest, User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
-import { logOut } from 'ionicons/icons';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
@@ -17,40 +16,26 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class AddUpdateUserComponent {
-  emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  emailPattern = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';
 
-  @Input() id: number | null = null;
+  @Input() user!: User;
 
   isEditMode: boolean = false;
   showPassword = false;
 
-  user = {
-    id: 0,
-    username: '',
-    password: '',
-    email: '',
-    image_url: '',
-    role: '',
-    admin_id: 0,
-  };
-
   ngOnInit() {
+    this.isEditMode = !!this.user?.id;
 
-    if (this.id !== null) {
-      this.isEditMode = true;
-      this.getUserById(this.id);
-
-      if (!this.id) {
-        this.user = {
-          id: 0,
-          username: '',
-          password: '',
-          email: '',
-          image_url: '',
-          role: '',
-          admin_id: 0,
-        };
-      }
+    if (!this.user) {
+      this.user = {
+        id: 0,
+        username: '',
+        password: '',
+        email: '',
+        image_url: '',
+        role: '',
+        admin_id: 0,
+      };
     }
   }
 
@@ -103,7 +88,7 @@ export class AddUpdateUserComponent {
 
     const credentials: CreateUserRequest = {
       username: this.user.username,
-      password: this.user.password,
+      password: '',
       email: this.user.email,
       role: 'Admin',
       image_url: this.user.image_url,
@@ -132,7 +117,7 @@ export class AddUpdateUserComponent {
           id: userData.id,
           username: userData.username,
           email: userData.email,
-          password: userData.password,
+          password: '',
           image_url: userData.image_url,
           role: userData.role,
           admin_id: userData.admin_id,
@@ -159,7 +144,6 @@ export class AddUpdateUserComponent {
       password: this.user.password,
       role: this.user.role,
       admin_id: this.user.admin_id,
-      
     };
 
     this.userService.updateUser(this.user.id, updateData).subscribe({

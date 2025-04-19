@@ -48,12 +48,12 @@ export class LoginPage {
 
     this.authService.login(credentials).subscribe({
       next: async (response) => {
-        console.log('Successfull login:', response);
-        await this.authService.saveToken(
+        await this.authService.saveUserData(
           response.access_token,
           response.id,
           response.username,
-          response.image_url
+          response.image_url,
+          response.email,
         );
         await loading.dismiss();
         (document.activeElement as HTMLElement)?.blur();

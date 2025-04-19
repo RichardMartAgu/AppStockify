@@ -16,8 +16,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'warehouse',
+    loadChildren: () =>
+      import('./pages/warehouse/warehouse.routes').then((m) => m.WAREHOUSE_ROUTES),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard.page').then( m => m.DashboardPage),
+    loadComponent: () =>
+      import('./pages/dashboard/dashboard.page').then((m) => m.DashboardPage),
     canActivate: [AuthGuard],
   },
 ];

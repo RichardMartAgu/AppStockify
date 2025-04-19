@@ -39,7 +39,7 @@ export class ProductListPage {
   }
 
   // Open the modal to add or update a product
-  async addUpdateUserModal(product?: Product) {
+  async addUpdateProductModal(product?: Product) {
     const modal = await this.modalController.create({
       component: AddUpdateProductComponent,
       componentProps: { product },
@@ -55,7 +55,7 @@ export class ProductListPage {
 
   // Edit product
   editProduct(product: Product) {
-    this.addUpdateUserModal(product);
+    this.addUpdateProductModal(product);
   }
 
   // Delete product

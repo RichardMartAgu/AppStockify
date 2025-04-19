@@ -1,0 +1,80 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title
+      ><strong>{{
+        isEditMode ? "Editar almacén" : "Crear Nuevo Almacén"
+      }}</strong></ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" >
+  <div class="d-flex-center" >
+    <form
+      (ngSubmit)="isEditMode ? updateWarehouse() : createWarehouse()"
+      #AddEditWarehouseForm="ngForm"
+    >
+      <!-- Nombre -->
+      <ion-item class="custom-input" >
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="warehouse.name"
+          name="name"
+          type="text"
+          label="Nombre"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- address -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="warehouse.address"
+          name="address"
+          type="text"
+          label="Dirección"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+      </ion-item>
+
+      <!-- phone -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="warehouse.phone"
+          name="phone"
+          type="phone"
+          label="Teléfono"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+      </ion-item>
+
+      <ion-button
+        class="custom-button"
+        color="secondary"
+        expand="block"
+        shape="round"
+        type="submit"
+        [disabled]="!AddEditWarehouseForm.valid"
+      >
+        {{ isEditMode ? 'Guardar Cambios' : 'Crear Almacén' }}
+        <ion-icon
+          class="icon"
+          color="light"
+          slot="end"
+          name="save-outline"
+        ></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

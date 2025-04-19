@@ -9,7 +9,7 @@ function isTokenExpired(token: string): boolean {
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.exp * 1000 < Date.now();
   } catch (e) {
-    console.error('Error al decodificar el token', e);
+
     return true; 
   }
 }
@@ -20,7 +20,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return from(authService.getToken()).pipe(
     switchMap((authToken) => {
       if (authToken && !isTokenExpired(authToken)) {
-        console.log('Token enviado en header:', authToken);
 
         const newRequest = req.clone({
           setHeaders: {
@@ -30,7 +29,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return next(newRequest);
       }
 
-      console.warn('Token ausente o expirado, no se incluye Authorization');
       return next(req);
     })
   );

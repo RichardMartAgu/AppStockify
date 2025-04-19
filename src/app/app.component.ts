@@ -31,6 +31,9 @@ import {
   checkmarkCircleOutline,
   saveOutline,
   albumsOutline,
+  chevronForwardCircleOutline,
+  storefrontOutline,
+  addCircleOutline,
 } from 'ionicons/icons';
 
 addIcons({
@@ -60,6 +63,9 @@ addIcons({
   checkmarkCircleOutline,
   saveOutline,
   albumsOutline,
+  chevronForwardCircleOutline,
+  storefrontOutline,
+  addCircleOutline,
 });
 
 @Component({

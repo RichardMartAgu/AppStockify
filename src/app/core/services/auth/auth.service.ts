@@ -31,17 +31,18 @@ export class AuthService {
     });
   }
 
-  async saveToken(
+  async saveUserData(
     token: string,
     id: number,
     username: string,
-    image_url: string
+    image_url: string,
+    email: string
   ) {
-    console.log('Token guardado:', token);
     await this._storage?.set('token', token);
     await this._storage?.set('id', id);
     await this._storage?.set('username', username);
     await this._storage?.set('image_url', image_url);
+    await this._storage?.set('email', email);
   }
 
   async getToken(): Promise<string | null> {
@@ -59,6 +60,11 @@ export class AuthService {
   async getUserImage(): Promise<string | null> {
     return await this._storage?.get('image_url');
   }
+
+  async getUserEmail(): Promise<string | null> {
+    return await this._storage?.get('email');
+  }
+
   async setUsername(username: string) {
     await this._storage?.set('username', username);
   }
@@ -67,10 +73,15 @@ export class AuthService {
     await this._storage?.set('image_url', image_url);
   }
 
+  async setWarehauseId(warehouseId: number){
+    await this.storage?.set('warehouseId',warehouseId )
+  }
+
   async logout() {
     await this._storage?.remove('token');
     await this._storage?.remove('id');
     await this._storage?.remove('username');
     await this._storage?.remove('image_url');
+    await this._storage?.remove('email');
   }
 }

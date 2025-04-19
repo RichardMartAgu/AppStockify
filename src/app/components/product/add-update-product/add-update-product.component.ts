@@ -18,28 +18,15 @@ import {
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class AddUpdateProductComponent {
-  @Input() productToEdit!: Product;
+  @Input() product!: Product;
   @Output() productCreated = new EventEmitter<void>();
 
   isEditMode: boolean = false;
 
-  product = {
-    id: 0,
-    serial_number: '',
-    name: '',
-    quantity: 0,
-    price: 0,
-    image_url: '',
-    description: '',
-    category: '',
-    kit_id: null,
-    warehouse_id: 0,
-  };
-
   ngOnInit() {
     this.isEditMode = !!this.product?.id;
 
-    if (!this.productToEdit) {
+    if (!this.product) {
       this.product = {
         id: 0,
         serial_number: '',
@@ -95,6 +82,39 @@ export class AddUpdateProductComponent {
     }
   }
 
+  // Create product API call
+
+  async createProduct() {
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    const credentials: CreateUpdateProductRequest = {
+      serial_number: this.product.serial_number,
+      name: this.product.name,
+      quantity: this.product.quantity,
+      price: this.product.price,
+      description: this.product.description,
+      category: this.product.category,
+      image_url: this.product.image_url,
+      kit_id: this.product.kit_id,
+      warehouse_id: 7, //TODO: crear almacén y añadirlo aqui
+    };
+
+    this.productService.createProduct(credentials).subscribe({
+      next: async (response) => {
+        await loading.dismiss();
+        await this.utilsService.presentToast(
+          'Producto creado con éxito',
+          'primary',
+          'save-outline'
+        );
+        this.productCreated.emit();
+        this.closeModal(true);
+      },
+    });
+    await loading.dismiss();
+  }
+
   // Update product API call
 
   async updateProduct() {
@@ -123,40 +143,6 @@ export class AddUpdateProductComponent {
           'save-outline'
         );
         this.closeModal();
-      },
-    });
-    await loading.dismiss();
-  }
-
-  // Create product API call
-
-  async createProduct() {
-    const loading = await this.utilsService.loading();
-    await loading.present();
-
-    const credentials: CreateUpdateProductRequest = {
-      serial_number: this.product.serial_number,
-      name: this.product.name,
-      quantity: this.product.quantity,
-      price: this.product.price,
-      description: this.product.description,
-      category: this.product.category,
-      image_url: this.product.image_url,
-      kit_id: this.product.kit_id,
-      warehouse_id: 7, //TODO: crear almacén y añadirlo aqui
-    };
-
-    this.productService.createProduct(credentials).subscribe({
-      next: async (response) => {
-        console.log('Successfull create product:', response);
-        await loading.dismiss();
-        await this.utilsService.presentToast(
-          'Producto creado con éxito',
-          'primary',
-          'save-outline'
-        );
-        this.productCreated.emit();
-        this.closeModal(true);
       },
     });
     await loading.dismiss();
