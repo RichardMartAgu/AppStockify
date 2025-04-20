@@ -62,7 +62,7 @@ export class LoginPage {
           'primary',
           'enter-outline'
         );
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/warehouse']);
       },
     });
     await loading.dismiss();

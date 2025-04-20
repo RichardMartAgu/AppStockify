@@ -15,6 +15,11 @@ export class WarehouseService {
   getWarehouseById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
+  
+  // Obtener todos los porductos de un almacén por ID
+  getProductsByWarehouseId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/products/${id}`);
+  }
 
   // Crear un nuevo almacén
   createWarehouse(user: any): Observable<any> {

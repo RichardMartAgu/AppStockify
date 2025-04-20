@@ -21,7 +21,7 @@ export class UserService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  // Obtener un usuarios por ID
+  // Obtener todos los almacenes de un usuario por ID
   getWarehousesByUserId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/warehouses/${id}`);
   }

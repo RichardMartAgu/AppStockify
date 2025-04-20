@@ -34,6 +34,7 @@ import {
   chevronForwardCircleOutline,
   storefrontOutline,
   addCircleOutline,
+  arrowDownCircleOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 
@@ -67,6 +68,7 @@ addIcons({
   chevronForwardCircleOutline,
   storefrontOutline,
   addCircleOutline,
+  arrowDownCircleOutline,
 });
 
 @Component({

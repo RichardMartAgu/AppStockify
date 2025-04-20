@@ -1,7 +1,13 @@
 <ion-content>
   <ion-list>
+    <ion-list-header>
+      <ion-label class="ion-text-center"
+        ><h1>Selecciona un almacén para continuar</h1>
+        <ion-icon name="arrow-down-circle-outline" size="large"></ion-icon>
+      </ion-label>
+    </ion-list-header>
     <ion-item-sliding *ngFor="let warehouse of warehouses">
-      <ion-item>
+      <ion-item (click)="selectWarehouse(warehouse)">
         <ion-label>
           <h2>{{ warehouse.name }}</h2>
         </ion-label>
@@ -30,10 +36,7 @@
 
     <!-- New button -->
     <ion-item (click)="addUpdateWarehouseModal()" lines="none">
-      <ion-icon
-        slot="start"
-        name="add-circle-outline"
-      ></ion-icon>
+      <ion-icon slot="start" name="add-circle-outline"></ion-icon>
       <ion-label>
         <h2>Crear nuevo almacén</h2>
       </ion-label>

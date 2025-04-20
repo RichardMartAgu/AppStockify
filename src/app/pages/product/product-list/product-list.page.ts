@@ -7,6 +7,8 @@ import { AddUpdateProductComponent } from 'src/app/components/product/add-update
 import { Product } from 'src/app/core/models/product';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
+import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-product-list',
@@ -24,18 +26,40 @@ export class ProductListPage {
     private productService: ProductService,
     private titleService: TitleService,
     private modalController: ModalController,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private warehouseService: WarehouseService,
+    private storageService: StorageService,
   ) {}
 
   ionViewWillEnter() {
     this.titleService.setTitle('Product List');
-    this.loadProducts();
+    this.loadWarehouseProducts();
   }
 
-  loadProducts() {
-    this.productService.getAllProducts().subscribe((products) => {
-      this.products = products;
+  async loadWarehouseProducts() {
+    const loading = await this.utilsService.loading();
+    await loading.present();
+  
+    const warehouse_id = await this.storageService.get<number>('warehouse_id');
+
+    if (warehouse_id === null) {
+      await this.utilsService.presentToast(
+        'No se encuentra el id del amacén',
+        'danger',
+        'alert-circle-outline'
+      );
+      await loading.dismiss();
+      return;
+    }
+
+    this.warehouseService.getProductsByWarehouseId(warehouse_id).subscribe({
+      next: (warehouseProductsData) => {
+        const products = warehouseProductsData?.products;
+        this.products = Array.isArray(products) ? products : [];
+        loading.dismiss();
+      },
     });
+    loading.dismiss();
   }
 
   // Open the modal to add or update a product
@@ -49,7 +73,7 @@ export class ProductListPage {
 
     const { data } = await modal.onWillDismiss();
     if (data?.refresh) {
-      this.loadProducts();
+      this.loadWarehouseProducts();
     }
   }
 

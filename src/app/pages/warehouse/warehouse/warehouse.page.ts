@@ -34,6 +34,7 @@ export class WarehousePage {
 
   async ionViewWillEnter() {
     this.titleService.setTitle('Almacenes');
+    this.storageService.remove('warehouse_id');
     this.userId = await this.storageService.get<number>('user_id');
     if (this.userId !== null) {
       this.loadWarehousesByAdminId(this.userId);
@@ -63,10 +64,10 @@ export class WarehousePage {
       }
     }
   }
-
-  onWarehouseClick(warehouse: any) {
+  // Select warehouse
+  selectWarehouse(warehouse: any) {
+    this.storageService.set('warehouse_id', warehouse.id)
     this.router.navigate(['/dashboard']);
-    // Aquí puedes navegar a detalles del almacén
   }
 
   // Edit warehouse

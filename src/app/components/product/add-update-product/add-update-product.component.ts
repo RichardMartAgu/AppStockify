@@ -9,6 +9,7 @@ import {
   CreateUpdateProductRequest,
   Product,
 } from 'src/app/core/models/product';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-add-update-product',
@@ -46,7 +47,8 @@ export class AddUpdateProductComponent {
     private modalController: ModalController,
     private utilsService: UtilsService,
     private productService: ProductService,
-    private uploadImage: UploadImageService
+    private uploadImage: UploadImageService,
+    private storageService: StorageService,
   ) {}
 
   closeModal(refresh: boolean = false) {
@@ -59,6 +61,7 @@ export class AddUpdateProductComponent {
     const loading = await this.utilsService.loading();
 
     const photo = await this.utilsService.takePicture('Foto del producto');
+    
     if (photo.webPath) {
       try {
         await loading.present();
@@ -88,6 +91,8 @@ export class AddUpdateProductComponent {
     const loading = await this.utilsService.loading();
     await loading.present();
 
+    const warehouse_id = await this.storageService.get<number>('warehouse_id')
+
     const credentials: CreateUpdateProductRequest = {
       serial_number: this.product.serial_number,
       name: this.product.name,
@@ -97,7 +102,7 @@ export class AddUpdateProductComponent {
       category: this.product.category,
       image_url: this.product.image_url,
       kit_id: this.product.kit_id,
-      warehouse_id: 7, //TODO: crear almacén y añadirlo aqui
+      warehouse_id: warehouse_id,
     };
 
     this.productService.createProduct(credentials).subscribe({
@@ -121,6 +126,8 @@ export class AddUpdateProductComponent {
     const loading = await this.utilsService.loading();
     await loading.present();
 
+    const warehouse_id = await this.storageService.get<number>('warehouse_id')
+
     const updateData: CreateUpdateProductRequest = {
       serial_number: this.product.serial_number,
       name: this.product.name,
@@ -130,7 +137,7 @@ export class AddUpdateProductComponent {
       category: this.product.category,
       image_url: this.product.image_url,
       kit_id: this.product.kit_id,
-      warehouse_id: 7, //TODO: crear almacén y añadirlo aqui
+      warehouse_id: warehouse_id,
     };
 
     this.productService.updateProduct(this.product.id, updateData).subscribe({
