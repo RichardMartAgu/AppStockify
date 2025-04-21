@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import {
   CreateUpdateWarehouseRequest,
+  ResponseWarehouse,
   Warehouse,
 } from 'src/app/core/models/warehouse';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
@@ -80,7 +81,7 @@ export class AddUpdateWarehouseComponent {
 
   async getWarehouseById(id: number) {
     this.warehouseService.getWarehouseById(id).subscribe({
-      next: (warehouseData) => {
+      next: (warehouseData: ResponseWarehouse) => {
         this.warehouse = {
           id: warehouseData.id,
           name: warehouseData.name,

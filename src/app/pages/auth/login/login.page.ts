@@ -8,7 +8,7 @@ import { TitleService } from 'src/app/core/services/components/title.service';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { ModalController } from '@ionic/angular';
-import { AddUpdateUserComponent } from 'src/app/components/user/add-update-user/add-update-user.component';
+import { AddUpdateUserComponent } from 'src/app/components/modals/user/add-update-user/add-update-user.component';
 
 @Component({
   selector: 'app-login',

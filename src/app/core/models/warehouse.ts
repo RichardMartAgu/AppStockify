@@ -1,3 +1,4 @@
+import { Client } from "./client";
 import { Product } from "./product";
 
 export interface Warehouse {
@@ -15,7 +16,7 @@ export interface CreateUpdateWarehouseRequest {
     user_id: number; 
 }
 
-export interface RespnseWarehouse {
+export interface ResponseWarehouse {
     id: number;
     name: string;
     address: string;
@@ -23,7 +24,7 @@ export interface RespnseWarehouse {
     user_id: number; 
 }
 
-interface ProductsByWarehouseIdResponse {
+export interface ProductsByWarehouseIdResponse {
     id: number;
     name: string;
     address: string;
@@ -31,4 +32,14 @@ interface ProductsByWarehouseIdResponse {
     user_id: number;
     products: Product[];
   }
+
+  export interface ClientsByWarehouseIdResponse {
+    id: number;
+    name: string;
+    address: string;
+    phone: string;
+    user_id: number;
+    clients: Client[];
+  }
+  
 

@@ -1,0 +1,55 @@
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let client of clients">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img
+            [src]="client.image_url || logo"
+          />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ client.name }}</h2>
+          <p>{{ client.description }}</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Sliding options (Edit and Delete) -->
+      <ion-item-options >
+        <!-- Edit button -->
+        <ion-item-option color="tertiary" (click)="editClient(client)">
+          <ion-icon
+            class="option-btn"
+            name="create-outline"
+          ></ion-icon>
+          Editar
+        </ion-item-option>
+
+        <!-- Delete button -->
+        <ion-item-option color="danger" (click)="deleteClient(client)">
+          <ion-icon
+            class="option-btn"
+            name="trash-outline"
+          ></ion-icon>
+          Borrar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- No clients available message -->
+  <ion-item *ngIf="clients.length === 0">
+    <ion-label>No hay clientes disponibles.</ion-label>
+  </ion-item>
+</ion-content>
+
+<!-- New button -->
+<ion-fab
+  vertical="bottom"
+  horizontal="end"
+  slot="fixed"
+  (click)="addUpdateClientModal()"
+>
+  <ion-fab-button color="secondary">
+    <ion-icon name="add" color="light"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

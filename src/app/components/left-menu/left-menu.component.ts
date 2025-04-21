@@ -7,7 +7,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TitleService } from '../../core/services/components/title.service';
-import { AddUpdateUserComponent } from '../user/add-update-user/add-update-user.component';
+import { AddUpdateUserComponent } from '../modals/user/add-update-user/add-update-user.component';
 import { User } from 'src/app/core/models/user';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 
@@ -29,6 +29,7 @@ export class LeftMenuComponent implements OnInit {
     { title: 'Home', url: '/dashboard', icon: 'home-outline' },
     { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
     { title: 'Almacenes', url: '/warehouse', icon: 'storefront-outline' },
+    { title: 'Clientes', url: '/client', icon: 'people-outline' },
   ];
 
   user: User = {

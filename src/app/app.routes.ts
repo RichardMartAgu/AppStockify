@@ -25,9 +25,17 @@ export const routes: Routes = [
     canActivate: [AuthGuard, WarehaouseGuard],
   },
   {
+    path: 'client',
+    loadChildren: () =>
+      import('./pages/client/client.routes').then((m) => m.CLIENT_ROUTES),
+    canActivate: [AuthGuard, WarehaouseGuard],
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./pages/dashboard/dashboard.page').then((m) => m.DashboardPage),
     canActivate: [AuthGuard, WarehaouseGuard],
   },
+  
+
 ];

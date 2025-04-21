@@ -7,6 +7,7 @@ import { CreateUserRequest, User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-update-user',
@@ -16,7 +17,7 @@ import { StorageService } from 'src/app/core/services/storage/storage.service';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class AddUpdateUserComponent {
-  emailPattern = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';
+  emailPattern = environment.EMAIL_PATTERN
 
   @Input() user!: User;
 

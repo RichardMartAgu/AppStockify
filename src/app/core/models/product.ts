@@ -23,7 +23,7 @@ export interface CreateUpdateProductRequest {
   warehouse_id: number | null;
 }
 
-export interface RespnseProduct {
+export interface ResponseProduct {
   id: number;
   name: string;
   quantity: number;

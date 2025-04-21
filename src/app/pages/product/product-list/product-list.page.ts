@@ -3,8 +3,9 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { ProductService } from 'src/app/core/services/api/product/product.service';
-import { AddUpdateProductComponent } from 'src/app/components/product/add-update-product/add-update-product.component';
+import { AddUpdateProductComponent } from 'src/app/components/modals/product/add-update-product/add-update-product.component';
 import { Product } from 'src/app/core/models/product';
+import { ProductsByWarehouseIdResponse } from 'src/app/core/models/warehouse';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
@@ -53,7 +54,7 @@ export class ProductListPage {
     }
 
     this.warehouseService.getProductsByWarehouseId(warehouse_id).subscribe({
-      next: (warehouseProductsData) => {
+      next: (warehouseProductsData : ProductsByWarehouseIdResponse) => {
         const products = warehouseProductsData?.products;
         this.products = Array.isArray(products) ? products : [];
         loading.dismiss();

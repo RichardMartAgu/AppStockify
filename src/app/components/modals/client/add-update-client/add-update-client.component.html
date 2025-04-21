@@ -1,0 +1,121 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title
+      ><strong>{{
+        isEditMode ? "Editar cliente" : "Añadir Nuevo Cliente"
+      }}</strong></ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="d-flex-center">
+    <form
+      (ngSubmit)="isEditMode ? updateClient() : createClient()"
+      #AddEditClientForm="ngForm"
+    >
+      <!-- Identificador -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="client.identifier"
+          name="indentifier"
+          type="text"
+          label="Identificador"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- Nombre -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="client.name"
+          name="name"
+          type="text"
+          label="Nombre"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- Contacto -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="client.contact"
+          name="contact"
+          type="text"
+          label="Contacto"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+      </ion-item>
+
+       <!-- email -->
+       <ion-item class="custom-input">
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="client.email"
+          name="email"
+          type="email"
+          [pattern]="emailPattern"
+          label="Correo"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+      </ion-item>
+
+      <!-- address -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="client.address"
+          name="address"
+          type="text"
+          label="Dirección"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+      </ion-item>
+
+      <!-- phone -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="client.phone"
+          name="phone"
+          type="phone"
+          label="Teléfono"
+          labelPlacement="floating"
+        ></ion-input>
+        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+      </ion-item>
+
+      <ion-button
+        class="custom-button"
+        color="secondary"
+        expand="block"
+        shape="round"
+        type="submit"
+        [disabled]="!AddEditClientForm.valid"
+      >
+        {{ isEditMode ? "Guardar Cambios" : "Añadir nuevo Cliente" }}
+        <ion-icon
+          class="icon"
+          color="light"
+          slot="end"
+          name="save-outline"
+        ></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

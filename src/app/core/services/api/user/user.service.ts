@@ -26,6 +26,10 @@ export class UserService {
     return this.http.get<any>(`${this.apiUrl}/warehouses/${id}`);
   }
 
+  // Obtener todos los clientes de un usuario por ID
+  getClientsByUserId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/clients/${id}`);
+  }
 
   // Crear un nuevo usuarios
   createUser(user: any): Observable<any> {
