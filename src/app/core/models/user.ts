@@ -4,16 +4,16 @@ import { Warehouse } from './warehouse';
 export interface User {
   id: number;
   username: string;
-  password: string;
+  password: string | null; 
   email: string;
   role: string;
   image_url: string;
-  admin_id: number;
+  admin_id: number | null;
 }
 
 export interface CreateUserRequest {
   username: string;
-  password: string;
+  password: string | null; 
   email: string;
   role: string;
   image_url: string | null;

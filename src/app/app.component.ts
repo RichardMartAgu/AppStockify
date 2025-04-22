@@ -36,6 +36,7 @@ import {
   addCircleOutline,
   arrowDownCircleOutline,
   peopleOutline,
+  repeatOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 
@@ -71,6 +72,7 @@ addIcons({
   addCircleOutline,
   arrowDownCircleOutline,
   peopleOutline,
+  repeatOutline,
 });
 
 @Component({

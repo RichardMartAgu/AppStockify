@@ -138,14 +138,20 @@ export class AddUpdateUserComponent {
     const loading = await this.utilsService.loading();
     await loading.present();
 
-    const updateData: CreateUserRequest = {
+    
+
+    const updateData: Partial<CreateUserRequest> = {
       username: this.user.username,
       email: this.user.email,
       image_url: this.user.image_url,
       password: this.user.password,
-      role: this.user.role,
-      admin_id: this.user.admin_id,
+      role: 'Admin',
+      admin_id: null,
     };
+
+    if(!this.user.password?.trim()){
+      delete updateData.password;
+     }
 
     this.userService.updateUser(this.user.id, updateData).subscribe({
       next: async () => {
@@ -159,14 +165,7 @@ export class AddUpdateUserComponent {
         );
         this.closeModal(true);
       },
-      error: async () => {
-        await loading.dismiss();
-        await this.utilsService.presentToast(
-          'Error al actualizar el usuario',
-          'danger',
-          'alert-circle-outline'
-        );
-      },
     });
+    await loading.dismiss();
   }
 }

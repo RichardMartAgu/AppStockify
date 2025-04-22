@@ -22,8 +22,8 @@ export class WarehouseService {
   }
 
   // Obtener todos los clientes de un almacén por ID
-  getClientsByWarehouseId(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/clients/${id}`);
+  getTransactionByWarehouseId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/transactions/${id}`);
   }
 
   // Crear un nuevo almacén

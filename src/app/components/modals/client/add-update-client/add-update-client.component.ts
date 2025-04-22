@@ -141,14 +141,6 @@ export class AddUpdateClientComponent {
           );
           this.closeModal(true);
         },
-        error: async () => {
-          await loading.dismiss();
-          await this.utilsService.presentToast(
-            'Error al actualizar el cliente',
-            'danger',
-            'alert-circle-outline'
-          );
-        },
       });
   }
 }

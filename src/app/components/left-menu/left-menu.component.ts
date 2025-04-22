@@ -30,6 +30,7 @@ export class LeftMenuComponent implements OnInit {
     { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
     { title: 'Almacenes', url: '/warehouse', icon: 'storefront-outline' },
     { title: 'Clientes', url: '/client', icon: 'people-outline' },
+    { title: 'Transacciones', url: '/transaction', icon: 'repeat-outline'},
   ];
 
   user: User = {
@@ -37,9 +38,9 @@ export class LeftMenuComponent implements OnInit {
     username: '',
     password:'',
     email: '',
-    role: '',
+    role: 'Admin',
     image_url: '',
-    admin_id: 0,
+    admin_id: null,
   };
 
   constructor(

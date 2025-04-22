@@ -31,11 +31,25 @@ export const routes: Routes = [
     canActivate: [AuthGuard, WarehaouseGuard],
   },
   {
+    path: 'transaction',
+    loadChildren: () =>
+      import('./pages/transaction/transaction.routes').then(
+        (m) => m.TRANSACTION_ROUTES
+      ),
+    canActivate: [AuthGuard, WarehaouseGuard],
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./pages/dashboard/dashboard.page').then((m) => m.DashboardPage),
     canActivate: [AuthGuard, WarehaouseGuard],
   },
-  
-
+  {
+    path: 'transaction',
+    loadChildren: () =>
+      import('./pages/transaction/transaction.routes').then(
+        (m) => m.TRANSACTION_ROUTES
+      ),
+    canActivate: [AuthGuard, WarehaouseGuard],
+  },
 ];

@@ -1,0 +1,68 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title
+      ><strong>{{
+        isEditMode ? "Editar transacción" : "Añadir Nuevo Transactione"
+      }}</strong></ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="d-flex-center">
+    <form
+      (ngSubmit)="isEditMode ? updateTransaction() : createTransaction()"
+      #AddEditTransactionForm="ngForm"
+    >
+      <!-- Identificador -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="transaction.identifier"
+          name="indentifier"
+          type="text"
+          label="Identificador"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <!-- Tipo -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="transaction.type"
+          name="type"
+          type="text"
+          label="Tipo de transacción"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
+      <ion-button
+        class="custom-button"
+        color="secondary"
+        expand="block"
+        shape="round"
+        type="submit"
+        [disabled]="!AddEditTransactionForm.valid"
+      >
+        {{ isEditMode ? "Guardar Cambios" : "Añadir nuevo Transactione" }}
+        <ion-icon
+          class="icon"
+          color="light"
+          slot="end"
+          name="save-outline"
+        ></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

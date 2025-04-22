@@ -23,7 +23,7 @@ export interface ResponseClient {
     identifier: string;
     name: string;
     contact: string;
-    email: string  | null; 
+    email: string | null; 
     address: string;
     phone: string;
     user_id: number; 

@@ -1,5 +1,6 @@
 import { Client } from "./client";
 import { Product } from "./product";
+import { Transaction } from "./transaction";
 
 export interface Warehouse {
     id: number;
@@ -40,6 +41,15 @@ export interface ProductsByWarehouseIdResponse {
     phone: string;
     user_id: number;
     clients: Client[];
+  }
+
+  export interface TransactionByWarehouseIdResponse {
+    id: number;
+    name: string;
+    address: string;
+    phone: string;
+    user_id: number;
+    transactions: Transaction[];
   }
   
 
