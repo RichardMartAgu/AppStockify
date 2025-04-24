@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router';
@@ -22,21 +22,23 @@ export class LeftMenuComponent implements OnInit {
   private authService = inject(AuthService);
   private titleService = inject(TitleService);
 
+  @ViewChild('miMenu', { read: ElementRef }) menu!: ElementRef<HTMLIonMenuElement>; 
+
   title = 'Stockify';
   logo = environment.LOGO;
 
   pages = [
     { title: 'Home', url: '/dashboard', icon: 'home-outline' },
-    { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
     { title: 'Almacenes', url: '/warehouse', icon: 'storefront-outline' },
+    { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
     { title: 'Clientes', url: '/client', icon: 'people-outline' },
-    { title: 'Transacciones', url: '/transaction', icon: 'repeat-outline'},
+    { title: 'Transacciones', url: '/transaction', icon: 'repeat-outline' },
   ];
 
   user: User = {
     id: 0,
     username: '',
-    password:'',
+    password: '',
     email: '',
     role: 'Admin',
     image_url: '',
@@ -49,10 +51,17 @@ export class LeftMenuComponent implements OnInit {
     private storageService: StorageService
   ) {}
 
+  isMenuOpen = false;
+
   ngOnInit(): void {
     this.titleService.title$.subscribe((value) => {
       this.title = value;
     });
+  }
+  async blurContentOnMenuOpen() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 
   async logout() {

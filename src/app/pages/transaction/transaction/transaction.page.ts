@@ -34,7 +34,7 @@ export class TransactionPage {
   ) {}
 
   ionViewWillEnter() {
-    this.titleService.setTitle('Transactions');
+    this.titleService.setTitle('Lista de Transacciones');
     this.loadUserTransactions();
   }
 

@@ -1,4 +1,4 @@
-<ion-menu contentId="main-content" (ionWillOpen)="getUser()">
+<ion-menu contentId="main-content" (ionWillOpen)="getUser(); blurContentOnMenuOpen()" isMenuHidden = true>
   <ion-header>
     <ion-toolbar>
       <ion-grid class="ion-no-padding">
@@ -70,8 +70,10 @@
   </ion-content>
 </ion-menu>
 
-<!-- Header -->
-<ion-content class="ion-page" id="main-content">
+
+<div class="ion-page" id="main-content">
+  
+  <!-- Header -->
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -81,14 +83,16 @@
         <div>
           <ion-title>{{ title }}</ion-title>
         </div>
-
         <img class="logo" [src]="logo" alt="Logo" />
       </div>
     </ion-toolbar>
   </ion-header>
 
+  <!-- Content -->
   <ion-content>
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
+
+   <!-- Footer -->
   <app-footer></app-footer>
-</ion-content>
+</div>
