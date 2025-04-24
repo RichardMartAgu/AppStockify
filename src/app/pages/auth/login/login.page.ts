@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { ModalController } from '@ionic/angular';
 import { AddUpdateUserComponent } from 'src/app/components/modals/user/add-update-user/add-update-user.component';
+import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 
 @Component({
   selector: 'app-login',
@@ -30,11 +31,13 @@ export class LoginPage {
     private router: Router,
     private titleService: TitleService,
     private utilsService: UtilsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private leftMenuComponent:LeftMenuComponent,
   ) {}
 
   ionViewWillEnter() {
     this.titleService.setTitle('Login');
+    this.leftMenuComponent.isHideMenu = true;
   }
 
   async login() {

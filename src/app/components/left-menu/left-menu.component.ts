@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router';
@@ -22,10 +28,16 @@ export class LeftMenuComponent implements OnInit {
   private authService = inject(AuthService);
   private titleService = inject(TitleService);
 
-  @ViewChild('miMenu', { read: ElementRef }) menu!: ElementRef<HTMLIonMenuElement>; 
+  @ViewChild('miMenu', { read: ElementRef })
+  menu!: ElementRef<HTMLIonMenuElement>;
 
   title = 'Stockify';
   logo = environment.LOGO;
+
+  isMenuOpen = false;
+  isHideMenu = false;
+
+  // isWarehousePage = this.router.url.includes('/warehaouse');
 
   pages = [
     { title: 'Home', url: '/dashboard', icon: 'home-outline' },
@@ -50,8 +62,6 @@ export class LeftMenuComponent implements OnInit {
     private modalController: ModalController,
     private storageService: StorageService
   ) {}
-
-  isMenuOpen = false;
 
   ngOnInit(): void {
     this.titleService.title$.subscribe((value) => {

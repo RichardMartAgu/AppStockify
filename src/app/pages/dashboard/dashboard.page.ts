@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { TitleService } from '../../core/services/components/title.service';
+import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,13 +15,16 @@ import { TitleService } from '../../core/services/components/title.service';
 })
 export class DashboardPage implements OnInit {
   
+  
 
   constructor(
-    private titleService: TitleService
+    private titleService: TitleService,
+    private leftMenuComponent:LeftMenuComponent,
   ) { }
 
   ionViewWillEnter() {
     this.titleService.setTitle('DashBoard');
+    this.leftMenuComponent.isHideMenu = false;
   }
 
   ngOnInit() {

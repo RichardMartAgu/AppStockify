@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
 import { TransactionByWarehouseIdResponse } from 'src/app/core/models/warehouse';
+import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 
 
 @Component({
@@ -31,11 +32,13 @@ export class TransactionPage {
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
     private storageService: StorageService,
+    private leftMenuComponent:LeftMenuComponent,
   ) {}
 
   ionViewWillEnter() {
     this.titleService.setTitle('Lista de Transacciones');
     this.loadUserTransactions();
+    this.leftMenuComponent.isHideMenu = false;
   }
 
   async loadUserTransactions() {

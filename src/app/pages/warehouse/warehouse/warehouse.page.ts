@@ -10,6 +10,7 @@ import { Warehouse } from 'src/app/core/models/warehouse';
 import { AddUpdateWarehouseComponent } from 'src/app/components/modals/warehouse/add-update-warehouse/add-update-warehouse.component';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 
 @Component({
   selector: 'app-warehouse',
@@ -30,10 +31,12 @@ export class WarehousePage {
     private storageService: StorageService,
     private userService: UserService,
     private router: Router,
+    private leftMenuComponent:LeftMenuComponent,
   ) {}
 
   async ionViewWillEnter() {
     this.titleService.setTitle('Almacenes');
+    this.leftMenuComponent.isHideMenu = true;
     this.storageService.remove('warehouse_id');
     this.userId = await this.storageService.get<number>('user_id');
     if (this.userId !== null) {

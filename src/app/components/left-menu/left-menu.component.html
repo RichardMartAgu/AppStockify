@@ -1,4 +1,7 @@
-<ion-menu contentId="main-content" (ionWillOpen)="getUser(); blurContentOnMenuOpen()" isMenuHidden = true>
+<ion-menu
+  contentId="main-content"
+  (ionWillOpen)="getUser(); blurContentOnMenuOpen()"
+>
   <ion-header>
     <ion-toolbar>
       <ion-grid class="ion-no-padding">
@@ -70,20 +73,18 @@
   </ion-content>
 </ion-menu>
 
-
 <div class="ion-page" id="main-content">
-  
   <!-- Header -->
   <ion-header class="ion-no-border">
-    <ion-toolbar>
+    <ion-toolbar [ngClass]="isHideMenu ? 'custom-toolbar' : 'customg-toolbar-paddin'">
       <ion-buttons slot="start">
-        <ion-menu-button class="primary"></ion-menu-button>
+        <ion-menu-button *ngIf="!isHideMenu" class="primary"></ion-menu-button>
       </ion-buttons>
-      <div class="custom-toolbar">
+      <div>
         <div>
-          <ion-title>{{ title }}</ion-title>
+          <ion-title>{{ title }} <img class="logo" [src]="logo" alt="Logo" /></ion-title>
         </div>
-        <img class="logo" [src]="logo" alt="Logo" />
+        
       </div>
     </ion-toolbar>
   </ion-header>
@@ -93,6 +94,6 @@
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
 
-   <!-- Footer -->
-  <app-footer></app-footer>
+  <!-- Footer -->
+  <app-footer *ngIf="!isHideMenu"></app-footer>
 </div>

@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { ClientsByUserIdResponse } from 'src/app/core/models/user';
+import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 
 @Component({
   selector: 'app-client',
@@ -30,11 +31,13 @@ export class ClientPage {
     private utilsService: UtilsService,
     private userService: UserService,
     private storageService: StorageService,
+    private leftMenuComponent:LeftMenuComponent,
   ) {}
 
   ionViewWillEnter() {
     this.titleService.setTitle('Clients');
     this.loadUserClients();
+    this.leftMenuComponent.isHideMenu = false;
   }
 
   async loadUserClients() {
