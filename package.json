@@ -31,7 +31,10 @@
     "@ionic/pwa-elements": "^3.3.0",
     "@ionic/storage-angular": "^4.0.0",
     "cloudinary-core": "^2.13.1",
+    "html2canvas": "^1.4.1",
+    "html2pdf": "^0.0.11",
     "ionicons": "^7.0.0",
+    "jspdf": "^3.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

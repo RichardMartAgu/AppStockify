@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        icon="arrow-back-circle"
+        color="medium"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title class="centered-title">
+      <h1>{{transaction.identifier}}</h1></ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let product of products">
+    <ion-item class="ion-text-start">
+      <ion-icon
+        *ngIf="transaction.type === 'in'"
+        slot="start"
+        name="enter-outline"
+        color="success"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="transaction.type === 'out'"
+        slot="start"
+        name="exit-outline"
+        color="danger"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="transaction.type === 'intern'"
+        slot="start"
+        name="repeat-outline"
+        color="warning"
+      ></ion-icon
+      ><ion-label class="app-color">
+        <h1>{{product.product.name}}</h1>
+        <ion-text color="dark">
+          <h2>Cantidad : {{ product.quantity }}</h2>
+        </ion-text>
+        <p><strong>{{ product.product.price }} € unidad</strong></p>
+      </ion-label>
+      <ion-note slot="end" color="primary"
+        >info <ion-icon color="primary" name="chevron-forward"></ion-icon
+      ></ion-note>
+    </ion-item>
+  </ion-list>
+  <!-- New button -->
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    (click)="goToPdf(transaction)"
+  >
+    <ion-fab-button color="secondary">
+      <ion-icon name="document-text-outline" color="light"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

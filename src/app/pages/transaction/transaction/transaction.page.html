@@ -1,15 +1,13 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let transaction of transactions">
-      <ion-item>
-        <ion-avatar slot="start">
-          <img
-            [src]="transaction.image_url || logo"
-          />
-        </ion-avatar>
+      <ion-item (click)="goTransactionsDetails(transaction)">
+       <ion-icon *ngIf="transaction.type === 'in'" slot="start" name="enter-outline" color="success"></ion-icon>
+       <ion-icon *ngIf="transaction.type === 'out'"slot="start" name="exit-outline" color="danger"></ion-icon>
+       <ion-icon *ngIf="transaction.type === 'intern'"slot="start" name="repeat-outline" color="warning"></ion-icon>
         <ion-label>
           <h2>{{ transaction.identifier }}</h2>
-          <p>{{ transaction.description }}</p>
+          <p>{{ transaction.date | date:'dd/MM/yyyy' }}</p>
         </ion-label>
       </ion-item>
 

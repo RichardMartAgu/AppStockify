@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        icon="arrow-back-circle"
+        color="medium"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title class="centered-title">
+      <h1>{{transaction.identifier}}</h1></ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div id="content-to-export" style="padding: 20px; background-color: #ffffff; color: #000000;">
+
+    <!-- LOGO -->
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="{{logo}}" alt="Logo" style="width: 150px; opacity: 70%; border-radius: 80px;">
+    </div>
+
+    <!-- DATOS PRINCIPALES -->
+    <h2>Detalles de la Transacción</h2>
+    <p><strong>Tipo:</strong>
+      {{ transaction.type === 'in' ? 'Salida' :
+         transaction.type === 'out' ? 'Entrada' :
+         transaction.type === 'intern' ? 'Interno' :
+         transaction.type }}
+    </p>
+    <p><strong>Fecha:</strong> {{ transaction.date | date:'dd/MM/yyyy' }}</p>
+
+    <hr>
+
+    <!-- PRODUCTOS -->
+    <h2>Productos</h2>
+    <table style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px;">Nombre</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Cantidad</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Precio Unidad (€)</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Total (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ product.product.name }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ product.quantity }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ product.product.price }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">
+            {{ product.quantity * product.product.price | number:'1.2-2' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <!-- TOTAL GENERAL -->
+    <div style="text-align: right; margin-top: 20px;">
+      <h3>Total: {{ calculateTotal() | number:'1.2-2' }} €</h3>
+    </div>
+
+    <!-- FIRMA -->
+    <div style="margin-top: 60px; text-align: right;">
+      <p>________________________</p>
+      <p>Firmado por: <strong>Stockify</strong></p>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button  (click)="downloadPDF()" color="secondary">Descargar PDF
+      <ion-icon slot="end" name="save-outline" color="light"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

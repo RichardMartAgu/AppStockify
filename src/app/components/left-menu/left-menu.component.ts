@@ -37,8 +37,6 @@ export class LeftMenuComponent implements OnInit {
   isMenuOpen = false;
   isHideMenu = false;
 
-  // isWarehousePage = this.router.url.includes('/warehaouse');
-
   pages = [
     { title: 'Home', url: '/dashboard', icon: 'home-outline' },
     { title: 'Almacenes', url: '/warehouse', icon: 'storefront-outline' },
