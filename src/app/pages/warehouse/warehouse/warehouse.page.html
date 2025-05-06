@@ -1,14 +1,22 @@
 <ion-content>
   <ion-list>
+
     <ion-list-header>
-      <ion-label class="ion-text-center"
+      <ion-text (click)="logout()" color="medium" class="logout-text">
+        <ion-icon color="medium" name="chevron-back"></ion-icon>
+        Cerrar sesión
+      </ion-text>
+      <ion-label class="custom-text"
         ><h1>Selecciona un almacén para continuar</h1>
         <ion-icon name="arrow-down-circle-outline" size="large"></ion-icon>
       </ion-label>
     </ion-list-header>
+
+    <ion-item-divider class="ion-margin-vertical"></ion-item-divider>
+
     <ion-item-sliding *ngFor="let warehouse of warehouses">
       <ion-item (click)="selectWarehouse(warehouse)">
-        <ion-label>
+        <ion-label class="ion-text-center">
           <h2>{{ warehouse.name }}</h2>
         </ion-label>
       </ion-item>

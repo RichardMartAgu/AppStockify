@@ -11,32 +11,32 @@ export class WarehouseService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtener un almacén por ID
+  // Get a warehouse by ID
   getWarehouseById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
-  
-  // Obtener todos los porductos de un almacén por ID
+
+  // Get all products of a warehouse by ID
   getProductsByWarehouseId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/products/${id}`);
   }
 
-  // Obtener todos los clientes de un almacén por ID
+  // Get all transactions of a warehouse by ID
   getTransactionByWarehouseId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/transactions/${id}`);
   }
 
-  // Crear un nuevo almacén
+  // Create a new warehouse
   createWarehouse(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user);
   }
 
-  // Actualizar un almacén existente
+  // Update an existing warehouse
   updateWarehouse(id: number, user: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, user);
   }
 
-  // Eliminar un almacén
+  // Delete a warehouse
   deleteWarehouse(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }

@@ -1,6 +1,5 @@
 <ion-content>
-  <ion-list>
-    <ion-item-sliding *ngFor="let transaction of transactions">
+  <ion-list *ngFor="let transaction of transactions">
       <ion-item (click)="goTransactionsDetails(transaction)">
        <ion-icon *ngIf="transaction.type === 'in'" slot="start" name="enter-outline" color="success"></ion-icon>
        <ion-icon *ngIf="transaction.type === 'out'"slot="start" name="exit-outline" color="danger"></ion-icon>
@@ -11,27 +10,6 @@
         </ion-label>
       </ion-item>
 
-      <!-- Sliding options (Edit and Delete) -->
-      <ion-item-options >
-        <!-- Edit button -->
-        <ion-item-option color="tertiary" (click)="editTransaction(transaction)">
-          <ion-icon
-            class="option-btn"
-            name="create-outline"
-          ></ion-icon>
-          Editar
-        </ion-item-option>
-
-        <!-- Delete button -->
-        <ion-item-option color="danger" (click)="deleteTransaction(transaction)">
-          <ion-icon
-            class="option-btn"
-            name="trash-outline"
-          ></ion-icon>
-          Borrar
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
   </ion-list>
 
   <!-- No transactions available message -->
@@ -45,7 +23,7 @@
   vertical="bottom"
   horizontal="end"
   slot="fixed"
-  (click)="addUpdateTransactionModal()"
+  (click)="goToNewTransaction()"
 >
   <ion-fab-button color="secondary">
     <ion-icon name="add" color="light"></ion-icon>

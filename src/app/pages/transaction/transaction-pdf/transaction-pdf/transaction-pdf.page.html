@@ -23,8 +23,8 @@
     <!-- DATOS PRINCIPALES -->
     <h2>Detalles de la Transacción</h2>
     <p><strong>Tipo:</strong>
-      {{ transaction.type === 'in' ? 'Salida' :
-         transaction.type === 'out' ? 'Entrada' :
+      {{ transaction.type === 'in' ? 'Entrada' :
+         transaction.type === 'out' ? 'Salida' :
          transaction.type === 'intern' ? 'Interno' :
          transaction.type }}
     </p>
@@ -47,7 +47,7 @@
         <tr *ngFor="let product of products">
           <td style="border: 1px solid #ddd; padding: 8px;">{{ product.product.name }}</td>
           <td style="border: 1px solid #ddd; padding: 8px;">{{ product.quantity }}</td>
-          <td style="border: 1px solid #ddd; padding: 8px;">{{ product.product.price }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ product.product.price | number:'1.2-2' }}</td>
           <td style="border: 1px solid #ddd; padding: 8px;">
             {{ product.quantity * product.product.price | number:'1.2-2' }}
           </td>

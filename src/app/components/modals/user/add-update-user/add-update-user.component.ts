@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class AddUpdateUserComponent {
-  emailPattern = environment.EMAIL_PATTERN
+  emailPattern = environment.EMAIL_PATTERN;
 
   @Input() user!: User;
 
@@ -45,7 +45,7 @@ export class AddUpdateUserComponent {
     private utilsService: UtilsService,
     private userService: UserService,
     private uploadImage: UploadImageService,
-    private storageService: StorageService,
+    private storageService: StorageService
   ) {}
 
   closeModal(refresh: boolean = false) {
@@ -138,8 +138,6 @@ export class AddUpdateUserComponent {
     const loading = await this.utilsService.loading();
     await loading.present();
 
-    
-
     const updateData: Partial<CreateUserRequest> = {
       username: this.user.username,
       email: this.user.email,
@@ -149,13 +147,15 @@ export class AddUpdateUserComponent {
       admin_id: null,
     };
 
-    if(!this.user.password?.trim()){
-      delete updateData.password;
-     }
+    if (this.isEditMode) {
+      if (!this.user.password?.trim()) {
+        delete updateData.password;
+      }
+    }
 
     this.userService.updateUser(this.user.id, updateData).subscribe({
       next: async () => {
-        this.storageService.set('image_url',this.user.image_url);
+        this.storageService.set('image_url', this.user.image_url);
         this.storageService.set('username', this.user.username);
         await loading.dismiss();
         await this.utilsService.presentToast(

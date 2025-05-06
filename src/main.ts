@@ -8,6 +8,11 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { errorInterceptor} from './app/core/interceptors/error.interceptor';
+import { registerLocaleData } from '@angular/common';
+import { LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,6 +22,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideHttpClient(withInterceptors([errorInterceptor])),
     Storage,
+    { provide: LOCALE_ID, useValue: 'es' }
   ],
 });
 

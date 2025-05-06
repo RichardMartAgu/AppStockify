@@ -1,0 +1,32 @@
+.content-wrapper {
+    display: flex;
+    flex-direction: column; 
+    gap: 1rem;
+  }
+
+  .centered-title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 10px;
+    padding-right: 40px;
+    color: darkgray;
+  }
+  
+  // large screen
+  @media (min-width: 768px) {
+    .content-wrapper {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  
+    .left-column, .right-column {
+      flex: 1;
+      padding: 1rem;
+    }
+  
+    .right-column {
+      border-radius: 8px;
+    }
+  }
+  

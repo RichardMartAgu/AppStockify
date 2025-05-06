@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { TitleService } from 'src/app/core/services/components/title.service';
-import { TransactionService } from 'src/app/core/services/api/transaction/transaction.service';
-import { AddUpdateTransactionComponent } from 'src/app/components/modals/transaction/add-update-transaction/add-update-transaction.component';
 import { Transaction } from 'src/app/core/models/transaction';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
@@ -26,9 +24,7 @@ export class TransactionPage {
   logo = environment.LOGO;
 
   constructor(
-    private transactionService: TransactionService,
     private titleService: TitleService,
-    private modalController: ModalController,
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
     private storageService: StorageService,
@@ -68,40 +64,8 @@ export class TransactionPage {
     loading.dismiss();
   }
 
-  // Open the modal to add or update a transaction
-  async addUpdateTransactionModal(transaction?: Transaction) {
-    const modal = await this.modalController.create({
-      component: AddUpdateTransactionComponent,
-      componentProps: { transaction },
-      cssClass: 'custom-modal',
-    });
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-    if (data?.refresh) {
-      this.loadWarehouseTransactions();
-    }
-  }
-
-  // Edit transaction
-  editTransaction(transaction: Transaction) {
-    this.addUpdateTransactionModal(transaction);
-  }
-
-  // Delete transaction
-  deleteTransaction(transaction: Transaction) {
-    this.utilsService.confirmDelete(
-      '¿Estás seguro de que deseas eliminar este transaccion?',
-      () => {
-        this.transactionService
-          .deleteTransaction(transaction.id)
-          .subscribe(() => {
-            this.transactions = this.transactions.filter(
-              (p) => p.id !== transaction.id
-            );
-          });
-      }
-    );
+  goToNewTransaction() {
+    this.router.navigate(['transaction/newTransaction']);
   }
 
   goTransactionsDetails(transaction: Transaction) {

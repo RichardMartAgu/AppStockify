@@ -1,0 +1,207 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        icon="arrow-back-circle"
+        color="medium"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title class="centered-title">
+      <h2>
+        {{ getTransactionType() }}
+        <ion-icon
+          *ngIf="transaction.type === 'in'"
+          slot="start"
+          name="enter-outline"
+          color="success"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="transaction.type === 'out'"
+          slot="start"
+          name="exit-outline"
+          color="danger"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="transaction.type === 'intern'"
+          slot="start"
+          name="repeat-outline"
+          color="warning"
+        ></ion-icon>
+        <ion-text *ngIf="selectedClientId">
+          {{ getSelectedClient()?.name }}
+        </ion-text>
+      </h2>
+      </ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="content-wrapper">
+    <!-- Columna izquierda: Formulario -->
+    <div class="left-column">
+      <form (ngSubmit)="createTransaction()" #CreateTransactionForm="ngForm">
+        <!-- Tipo -->
+        <ion-item class="custom-input">
+          <ion-icon slot="start" name="repeat-outline"></ion-icon>
+          <ion-select
+            [(ngModel)]="transaction.type"
+            name="type"
+            interface="alert"
+            placeholder="Selecciona tipo de transacción"
+            required
+          >
+            <ion-select-option value="in">Entrada </ion-select-option>
+            <ion-select-option value="out">Salida </ion-select-option>
+            <ion-select-option value="intern">Interna </ion-select-option>
+          </ion-select>
+          <ion-note slot="end" color="danger" *ngIf="!transaction.type">(Requerido)</ion-note>
+        </ion-item>
+
+        <!-- Cient -->
+        <ion-item class="custom-input">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-select
+            [(ngModel)]="selectedClientId"
+            name="clientId"
+            interface="alert"
+            placeholder="Selecciona un cliente"
+            required
+          >
+            <ion-select-option
+              *ngFor="let client of clients"
+              [value]="client.id"
+            >
+              {{ client.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-note slot="end" color="danger" *ngIf="!selectedClientId">(Requerido)</ion-note>
+        </ion-item>
+
+        <ion-item-divider class="ion-margin-vertical"></ion-item-divider>
+
+        <!-- Add Product -->
+
+        <!-- Product name -->
+        <ion-item class="custom-input">
+          <ion-select
+            [(ngModel)]="newProduct.id"
+            name="newProductName"
+            type="text"
+            label="Nombre del producto"
+            labelPlacement="floating"
+            (ionChange)="onProductSelect()"
+          >
+            <ion-select-option
+              *ngFor="let product of products"
+              [value]="product.id"
+            >
+              {{ product.name }}
+            </ion-select-option>
+            ></ion-select
+          >
+        </ion-item>
+
+        <!-- Product Serial Number -->
+        <ion-item class="custom-input">
+          <ion-select
+            [(ngModel)]="newProduct.serial_number"
+            name="newProductSerialNumber"
+            label="Número de serie"
+            labelPlacement="floating"
+            (ionChange)="onSerialNumberSelect()"
+          >
+            <ion-select-option
+              *ngFor="let product of products"
+              [value]="product.serial_number"
+            >
+              {{ product.serial_number }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Quantity of products -->
+        <ion-item class="custom-input">
+          <ion-input
+            [(ngModel)]="newProduct.quantity"
+            name="newProductQuantity"
+            type="number"
+            label="Cantidad"
+            labelPlacement="floating"
+            min="0"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Add prdocut button -->
+        <ion-button
+          class="ion-margin-top"
+          color="success"
+          expand="block"
+          shape="round"
+          (click)="addProductToCrateList()"
+          type="button"
+          [disabled]="!isProductValid()"
+        >
+          Añadir Producto
+          <ion-icon
+            slot="end"
+            name="add-circle-outline"
+            color="light"
+          ></ion-icon>
+        </ion-button>
+
+        <ion-item-divider class="ion-margin-vertical"></ion-item-divider>
+
+        <!-- create transaction product -->
+        <ion-button
+          class="custom-button"
+          color="secondary"
+          expand="block"
+          shape="round"
+          type="submit"
+          [disabled]="!CreateTransactionForm.valid || transaction.transactionProduct.length === 0"
+        >
+          Crear transacción
+          <ion-icon
+            class="icon"
+            color="light"
+            slot="end"
+            name="save-outline"
+          ></ion-icon>
+        </ion-button>
+      </form>
+    </div>
+
+    <!-- Right Column: Transaction data -->
+    <div class="right-column">
+      <ion-text color="medium">
+        <h1><strong>Lista de productos</strong></h1>
+      </ion-text>
+
+      <ion-list *ngIf="addedListProducts.length > 0; else noProducts">
+        <ion-item *ngFor="let product of addedListProducts; let i = index">
+          <ion-label>
+            {{ product.quantity }} x {{ product.name }} - {{
+            product.serial_number }}
+          </ion-label>
+
+          <!-- Delete Button -->
+          <ion-button
+            fill="clear"
+            slot="end"
+            (click)="  removeProductToCreateList(i)"
+          >
+            <ion-icon name="trash-outline" color="danger"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+
+      <ng-template #noProducts>
+        <p>No hay productos añadidos todavía.</p>
+        <ion-note slot="end" color="danger"
+          >(Requerido 1 producto mínimo)</ion-note
+        >
+      </ng-template>
+    </div>
+  </div>
+</ion-content>

@@ -38,7 +38,7 @@
         <ion-text color="dark">
           <h2>Cantidad : {{ product.quantity }}</h2>
         </ion-text>
-        <p><strong>{{ product.product.price }} € unidad</strong></p>
+        <p><strong>{{ product.product.price | number:'1.2-2' }} € unidad</strong></p>
       </ion-label>
       <ion-note slot="end" color="primary"
         >info <ion-icon color="primary" name="chevron-forward"></ion-icon

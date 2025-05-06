@@ -40,6 +40,7 @@ import {
   arrowBackCircle,
   exitOutline,
   chevronForward,
+  chevronBack,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 
@@ -79,6 +80,7 @@ addIcons({
   arrowBackCircle,
   exitOutline,
   chevronForward,
+  chevronBack,
 });
 
 @Component({

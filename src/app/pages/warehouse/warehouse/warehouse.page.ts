@@ -11,6 +11,7 @@ import { AddUpdateWarehouseComponent } from 'src/app/components/modals/warehouse
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-warehouse',
@@ -32,6 +33,7 @@ export class WarehousePage {
     private userService: UserService,
     private router: Router,
     private leftMenuComponent:LeftMenuComponent,
+    private authService: AuthService,
   ) {}
 
   async ionViewWillEnter() {
@@ -48,6 +50,11 @@ export class WarehousePage {
     this.userService.getWarehousesByUserId(userId).subscribe((userData) => {
       this.warehouses = userData.warehouses;
     });
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   // Open the modal to add or update a warehouse
