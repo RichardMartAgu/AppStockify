@@ -1,6 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { StorageService } from '../services/storage/storage.service';

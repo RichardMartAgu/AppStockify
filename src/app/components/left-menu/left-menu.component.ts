@@ -43,6 +43,7 @@ export class LeftMenuComponent implements OnInit {
     { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
     { title: 'Clientes', url: '/client', icon: 'people-outline' },
     { title: 'Transacciones', url: '/transaction', icon: 'repeat-outline' },
+    { title: 'Suscripción', url: '/payment', icon: 'cash-outline' },
   ];
 
   user: User = {

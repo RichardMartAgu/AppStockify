@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pago Exitoso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="paymentStatus">
+    <ion-card *ngIf="paymentStatus === 'success'">
+      <ion-card-header>
+        <ion-card-title>¡Pago Exitoso!</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Tu pago ha sido procesado exitosamente.</p>
+        <p>Gracias por tu compra.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="paymentStatus === 'failed'">
+      <ion-card-header>
+        <ion-card-title>Pago Fallido</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Lo sentimos, el pago no se ha podido procesar.</p>
+        <p>Por favor, intenta nuevamente.</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ion-spinner *ngIf="!paymentStatus"></ion-spinner>
+</ion-content>

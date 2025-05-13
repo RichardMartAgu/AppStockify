@@ -52,4 +52,13 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard, WarehaouseGuard],
   },
+  {
+    path: 'payment',
+    loadChildren: () =>
+      import('./pages/payment/payment.routes').then(
+        (m) => m.PAYMENT_ROUTES
+      ),
+    canActivate: [AuthGuard, WarehaouseGuard],
+  },
+
 ];
