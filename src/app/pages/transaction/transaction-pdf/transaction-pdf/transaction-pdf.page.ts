@@ -31,7 +31,7 @@ export class TransactionPdfPage implements OnInit {
     }
   }
 
-  // Función para calcular el total
+  // Calculate total amount of transaction products
   calculateTotal(): number {
     return this.products.reduce(
       (total, p) => total + p.quantity * p.product.price,
@@ -39,6 +39,7 @@ export class TransactionPdfPage implements OnInit {
     );
   }
 
+  // Generate and download PDF from HTML content
   downloadPDF() {
     const element = document.getElementById('content-to-export');
     if (element) {

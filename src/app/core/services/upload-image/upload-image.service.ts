@@ -10,6 +10,7 @@ export class UploadImageService {
 
   constructor() { }
 
+  // Convert a URI to a File object
   async uriToFile(uri: string, fileName: string): Promise<File> {
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -17,6 +18,7 @@ export class UploadImageService {
       return new File([blob], fileName, { type: blob.type });
     }
 
+  // Upload a File to Cloudinary
   async uploadImage(file: File) {
     const uploadUrl = `https://api.cloudinary.com/v1_1/${this.cloudinaryConfig.cloudName}/image/upload`;
 

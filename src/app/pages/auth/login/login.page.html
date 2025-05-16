@@ -8,6 +8,7 @@
 
     <!-- Login form -->
 
+    <!-- name -->
     <form (ngSubmit)="login()" #loginForm="ngForm">
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>
@@ -20,6 +21,8 @@
           required
         ></ion-input>
       </ion-item>
+
+      <!-- password -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
         <ion-input
@@ -49,19 +52,28 @@
         [disabled]="!loginForm.valid"
       >
         Iniciar Sesión
-        <ion-icon class="icon" color="light"slot="end" name="enter-outline"></ion-icon>
+        <ion-icon
+          class="icon"
+          color="light"
+          slot="end"
+          name="enter-outline"
+        ></ion-icon>
       </ion-button>
-        <ion-button
-          (click)="addUpdateUserModal()"
-          class="custom-button"
-          color="medium"
-          expand="block"
-          shape="round"
-        >
-          Crear nueva cuenta
-          <ion-icon class="icon" color="light"slot="end" name="person-add-outline"></ion-icon>
+      <ion-button
+        (click)="addUpdateUserModal()"
+        class="custom-button"
+        color="medium"
+        expand="block"
+        shape="round"
+      >
+        Crear nueva cuenta
+        <ion-icon
+          class="icon"
+          color="light"
+          slot="end"
+          name="person-add-outline"
+        ></ion-icon>
       </ion-button>
-   
     </form>
   </div>
 </ion-content>

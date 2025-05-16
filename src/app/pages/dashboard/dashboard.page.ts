@@ -11,23 +11,18 @@ import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.compon
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonicModule,CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class DashboardPage implements OnInit {
-  
-  
-
   constructor(
     private titleService: TitleService,
-    private leftMenuComponent:LeftMenuComponent,
-  ) { }
+    private leftMenuComponent: LeftMenuComponent
+  ) {}
 
   ionViewWillEnter() {
     this.titleService.setTitle('DashBoard');
     this.leftMenuComponent.isHideMenu = false;
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -34,7 +34,7 @@ export class TransactionDetailsPage implements OnInit {
       this.products = this.transaction?.products || [];
     }
   }
-
+  // redirect to pdf page
   goToPdf(transaction: Transaction) {
     this.router.navigate(['transaction/pdf'], {
       state: { transaction },

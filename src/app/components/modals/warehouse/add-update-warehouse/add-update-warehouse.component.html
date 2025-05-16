@@ -13,15 +13,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" >
-  <div class="d-flex-center" >
+<ion-content class="ion-padding">
+  <div class="d-flex-center">
+    <!-- form -->
     <form
       (ngSubmit)="isEditMode ? updateWarehouse() : createWarehouse()"
       #AddEditWarehouseForm="ngForm"
     >
-      <!-- Nombre -->
-      <ion-item class="custom-input" >
-        <ion-icon slot="start" name="person-outline"></ion-icon>
+      <!-- name -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="business-outline"></ion-icon>
         <ion-input
           [(ngModel)]="warehouse.name"
           name="name"
@@ -35,7 +36,7 @@
 
       <!-- address -->
       <ion-item class="custom-input">
-        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-icon slot="start" name="location-outline"></ion-icon>
         <ion-input
           [(ngModel)]="warehouse.address"
           name="address"
@@ -48,7 +49,7 @@
 
       <!-- phone -->
       <ion-item class="custom-input">
-        <ion-icon slot="start" name="mail-outline"></ion-icon>
+        <ion-icon slot="start" name="call-outline"></ion-icon>
         <ion-input
           [(ngModel)]="warehouse.phone"
           name="phone"
@@ -67,7 +68,7 @@
         type="submit"
         [disabled]="!AddEditWarehouseForm.valid"
       >
-        {{ isEditMode ? 'Guardar Cambios' : 'Crear Almacén' }}
+        {{ isEditMode ? "Guardar Cambios" : "Crear Almacén" }}
         <ion-icon
           class="icon"
           color="light"

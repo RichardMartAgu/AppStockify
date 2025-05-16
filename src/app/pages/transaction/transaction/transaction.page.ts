@@ -38,6 +38,7 @@ export class TransactionPage {
     this.leftMenuComponent.isHideMenu = false;
   }
 
+  // Fetch transactions for current warehouse
   async loadWarehouseTransactions() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -64,10 +65,12 @@ export class TransactionPage {
     loading.dismiss();
   }
 
+  // Navigate to the page to create a new transaction
   goToNewTransaction() {
     this.router.navigate(['transaction/newTransaction']);
   }
 
+  // Navigate to the transaction details page passing the transaction dat
   goTransactionsDetails(transaction: Transaction) {
     this.router.navigate(['transaction/details'], {
       state: { transaction },

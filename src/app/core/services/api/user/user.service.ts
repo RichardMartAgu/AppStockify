@@ -11,37 +11,37 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtener todos los usuarios
+  // Get all users
   getAllUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  // Obtener un usuarios por ID
+  // Get a user by ID
   getUserById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  // Obtener todos los almacenes de un usuario por ID
+  // Get all warehouses for a user by user ID
   getWarehousesByUserId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/warehouses/${id}`);
   }
 
-  // Obtener todos los clientes de un usuario por ID
+  // Get all clients for a user by user ID
   getClientsByUserId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/clients/${id}`);
   }
 
-  // Crear un nuevo usuarios
+  // Create a new user
   createUser(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user);
   }
 
-  // Actualizar un usuarios existente
+  // Update an existing user
   updateUser(id: number, user: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, user);
   }
 
-  // Eliminar un usuarios
+  // Delete a user by ID
   deleteUser(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }

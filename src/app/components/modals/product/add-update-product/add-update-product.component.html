@@ -5,7 +5,11 @@
         <ion-icon name="close-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title><strong>{{ isEditMode ? 'Editar Producto' : 'Crear Nuevo Producto' }}</strong></ion-title>
+    <ion-title
+      ><strong>{{
+        isEditMode ? "Editar Producto" : "Crear Nuevo Producto"
+      }}</strong></ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
@@ -27,8 +31,24 @@
       Añadir imagen
     </ion-button>
 
-    <form (ngSubmit)="isEditMode ? updateProduct() : createProduct()" #AddEditProductForm="ngForm">
-      
+    <form
+      (ngSubmit)="isEditMode ? updateProduct() : createProduct()"
+      #AddEditProductForm="ngForm"
+    >
+      <!-- Serial number -->
+      <ion-item class="custom-input">
+        <ion-icon slot="start" name="barcode-outline"></ion-icon>
+        <ion-input
+          [(ngModel)]="product.serial_number"
+          name="serial_number"
+          type="text"
+          label="Número de serie"
+          labelPlacement="floating"
+          required
+        ></ion-input>
+        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+      </ion-item>
+
       <!-- Name -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="pricetag-outline"></ion-icon>
@@ -50,7 +70,7 @@
           [(ngModel)]="product.quantity"
           name="quantity"
           type="number"
-          label="Cantidad"
+          label="Cantidad en stock"
           labelPlacement="floating"
           min="0"
           required
@@ -65,7 +85,7 @@
           [(ngModel)]="product.price"
           name="price"
           type="number"
-          label="Precio"
+          label="Precio unitario"
           labelPlacement="floating"
           min="0"
           required
@@ -82,34 +102,28 @@
           type="text-area"
           label="Descripción"
           labelPlacement="floating"
+          auto-grow="true"
         ></ion-input>
         <ion-note slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
       <!-- category -->
-      <ion-item class="custom-input">
-        <ion-icon slot="start" name="folder-outline"></ion-icon>
-        <ion-input
-          [(ngModel)]="product.category"
-          name="category"
-          type="text"
-          label="Categoría"
-          labelPlacement="floating"
-        ></ion-input>
+      <ion-item class="custom-input" (click)="openSearchCategoryModal()">
+        <ion-icon slot="start" name="document-text-outline"></ion-icon>
+        <ion-label>
+          Categoría
+          <p>{{ product.category }}</p>
+        </ion-label>
         <ion-note slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
-      <!-- kit_id -->
-      <ion-item class="custom-input">
+      <!-- kit -->
+      <ion-item class="custom-input" (click)="openSearchKitModal()">
         <ion-icon slot="start" name="apps-outline"></ion-icon>
-        <ion-input
-          [(ngModel)]="product.kit_id"
-          name="kit_id"
-          type="number"
-          label="Kit al que pertenece"
-          labelPlacement="floating"
-          min="0"
-        ></ion-input>
+        <ion-label>
+          Kit asociado
+          <p>{{ product.kit_id }}</p>
+        </ion-label>
         <ion-note slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
@@ -119,8 +133,9 @@
         expand="block"
         shape="round"
         type="submit"
-        [disabled]="!AddEditProductForm.valid">
-        {{ isEditMode ? 'Guardar Cambios' : 'Nuevo producto' }}
+        [disabled]="!AddEditProductForm.valid"
+      >
+        {{ isEditMode ? "Guardar Cambios" : "Nuevo producto" }}
         <ion-icon
           class="icon"
           color="light"

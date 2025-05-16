@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { LoginRequest } from '../../../core/models/login'
+import { LoginRequest } from '../../../core/models/login';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -32,7 +32,7 @@ export class LoginPage {
     private titleService: TitleService,
     private utilsService: UtilsService,
     private modalController: ModalController,
-    private leftMenuComponent:LeftMenuComponent,
+    private leftMenuComponent: LeftMenuComponent
   ) {}
 
   ionViewWillEnter() {
@@ -56,7 +56,7 @@ export class LoginPage {
           response.id,
           response.username,
           response.image_url,
-          response.email,
+          response.email
         );
         await loading.dismiss();
         (document.activeElement as HTMLElement)?.blur();
@@ -71,14 +71,12 @@ export class LoginPage {
     await loading.dismiss();
   }
 
-  // Create new user modal
-
+  // Open modal to add or update user
   async addUpdateUserModal() {
     const modal = await this.modalController.create({
       component: AddUpdateUserComponent,
-      cssClass: 'custom-modal'
+      cssClass: 'custom-modal',
     });
     await modal.present();
   }
-
 }

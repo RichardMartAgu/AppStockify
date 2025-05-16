@@ -9,18 +9,18 @@ export class LoginGuard implements CanActivate {
 
   constructor(private storageService: StorageService, private router: Router) {}
 
+  // Prevent access to login page if user is already authenticated
   async canActivate(): Promise<boolean> {
     const token = await this.storageService.get<string>('token');
 
     if (token && !this.isTokenExpired(token)) {
-      
       this.router.navigate(['/']);
       return false;
     }
-
     return true;
   }
 
+  // Check if JWT token is expired
   private isTokenExpired(token: string): boolean {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));

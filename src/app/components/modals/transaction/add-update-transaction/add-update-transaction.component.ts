@@ -47,12 +47,12 @@ export class AddUpdateTransactionComponent {
     private storageService: StorageService
   ) {}
 
+  // Closes the modal and optionally triggers a refresh
   closeModal(refresh: boolean = false) {
     this.modalController.dismiss({ refresh });
   }
 
-  // Create transaction API call
-
+  // Sends a request to the backend to create a new transaction
   async createTransaction() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -64,7 +64,7 @@ export class AddUpdateTransactionComponent {
       this.transaction.client_id = null;
     }
 
-    const credentials: CreateUpdateTransactionRequest = {
+    const credentials: Partial<CreateUpdateTransactionRequest> = {
       identifier: this.transaction.identifier,
       type: this.transaction.type,
       warehouse_id: this.transaction.warehouse_id,
@@ -85,6 +85,7 @@ export class AddUpdateTransactionComponent {
     await loading.dismiss();
   }
 
+  // Fetches a transaction from the backend by its ID
   async getTransactionById(id: number) {
     this.transactionService.getTransactionById(id).subscribe({
       next: (transactionData: ResponseTransaction) => {
@@ -97,21 +98,15 @@ export class AddUpdateTransactionComponent {
           client_id: transactionData.client_id,
         };
       },
-      error: async () => {
-        await this.utilsService.presentToast(
-          'Error al obtener los datos del transacción',
-          'danger',
-          'alert-circle-outline'
-        );
-      },
     });
   }
 
+  // Sends a request to update the existing transaction
   async updateTransaction() {
     const loading = await this.utilsService.loading();
     await loading.present();
 
-    const updateData: CreateUpdateTransactionRequest = {
+    const updateData: Partial<CreateUpdateTransactionRequest> = {
       identifier: this.transaction.identifier,
       type: this.transaction.type,
       warehouse_id: this.transaction.warehouse_id,

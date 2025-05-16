@@ -11,23 +11,22 @@ export class TransactionService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtener un transacción por ID
+  // Get a transaction by ID
   getTransactionById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-
-  // Crear un nuevo transacción
+  // Create a new transaction
   createTransaction(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user);
   }
 
-  // Actualizar un transacción existente
+  // Update an existing transaction
   updateTransaction(id: number, user: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, user);
   }
 
-  // Eliminar un transacción
+  // Delete a transaction by ID
   deleteTransaction(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }

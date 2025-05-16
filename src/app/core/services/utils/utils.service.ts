@@ -1,5 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import {
+  LoadingController,
+  ToastController,
+  AlertController,
+} from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Injectable({
@@ -10,14 +14,12 @@ export class UtilsService {
   toastController = inject(ToastController);
   alertController = inject(AlertController);
 
-  // Loading service
-
+  // Create a loading spinner
   loading() {
     return this.loadingController.create({ spinner: 'crescent' });
   }
 
-  // Toast service
-
+  // Show a toast notification
   async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message,
@@ -30,35 +32,37 @@ export class UtilsService {
     await toast.present();
   }
 
-   // Confirm deletion with toast and alert
-   async confirmDelete(message: string, onConfirm: () => void) {
+  // Show confirmation alert before deletion
+  async confirmDelete(message: string, onConfirm: () => void) {
     const alert = await this.alertController.create({
-      header: 'Confirmación',
+      header: '⚠️ Alerta',
       message: message,
       buttons: [
         {
-          text: 'Cancelar',
+          text: '❌ Cancelar',
           role: 'cancel',
           handler: () => {
             console.log('Eliminación cancelada');
-          }
+          },
         },
         {
-          text: 'Eliminar',
+          text: '🗑️ Eliminar',
           role: 'destructive',
           handler: () => {
-            onConfirm();  
-            this.presentToast('Eliminado con éxito', 'primary', 'checkmark-circle-outline');
-          }
-        }
-      ]
+            onConfirm();
+            this.presentToast(
+              'Eliminación completada',
+              'success',
+              'checkmark-circle-outline'
+            );
+          },
+        },
+      ],
     });
-
     await alert.present();
   }
 
-  // Camera function
-
+  /// Take a picture using device camera
   async takePicture(promptLabelHeader: string) {
     return await Camera.getPhoto({
       quality: 90,
@@ -68,6 +72,17 @@ export class UtilsService {
       promptLabelHeader,
       promptLabelPhoto: 'Selecciona una imagen',
       promptLabelPicture: 'Nueva Foto',
+    });
+  }
+
+  // Get unique items from array by key
+  getUniqueItems(products: any[], key: string): any[] {
+    const seen = new Set<string>();
+    return products.filter((p) => {
+      const value = p[key];
+      if (!value || seen.has(value)) return false;
+      seen.add(value);
+      return true;
     });
   }
 }

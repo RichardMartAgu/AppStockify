@@ -35,11 +35,12 @@ export class ClientPage {
   ) {}
 
   ionViewWillEnter() {
-    this.titleService.setTitle('Clients');
+    this.titleService.setTitle('Clientes');
     this.loadUserClients();
     this.leftMenuComponent.isHideMenu = false;
   }
 
+  
   async loadUserClients() {
     const loading = await this.utilsService.loading();
     await loading.present();

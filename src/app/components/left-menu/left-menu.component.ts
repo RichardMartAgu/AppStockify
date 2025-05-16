@@ -8,7 +8,6 @@ import {
 import { IonicModule, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from '../../components/footer/footer.component';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -22,7 +21,7 @@ import { StorageService } from 'src/app/core/services/storage/storage.service';
   templateUrl: './left-menu.component.html',
   styleUrls: ['./left-menu.component.scss'],
   standalone: true,
-  imports: [IonicModule, RouterModule, CommonModule, FooterComponent],
+  imports: [IonicModule, RouterModule, CommonModule],
 })
 export class LeftMenuComponent implements OnInit {
   private authService = inject(AuthService);
@@ -40,7 +39,7 @@ export class LeftMenuComponent implements OnInit {
   pages = [
     { title: 'Home', url: '/dashboard', icon: 'home-outline' },
     { title: 'Almacenes', url: '/warehouse', icon: 'storefront-outline' },
-    { title: 'Lista de productos', url: '/product', icon: 'albums-outline' },
+    { title: 'Productos', url: '/product', icon: 'albums-outline' },
     { title: 'Clientes', url: '/client', icon: 'people-outline' },
     { title: 'Transacciones', url: '/transaction', icon: 'repeat-outline' },
     { title: 'Suscripción', url: '/payment', icon: 'cash-outline' },
@@ -67,12 +66,15 @@ export class LeftMenuComponent implements OnInit {
       this.title = value;
     });
   }
+
+  // Removes focus from any active element when the menu is opened
   async blurContentOnMenuOpen() {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
   }
 
+  // Logs out the user and clears local user info
   async logout() {
     await this.authService.logout();
     this.user.username = '';
@@ -80,6 +82,7 @@ export class LeftMenuComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  // Loads the current user data from storage and updates the user object
   async getUser() {
     const userId = await this.storageService.get<number>('user_id');
     const username = await this.storageService.get<string>('username');
@@ -92,6 +95,7 @@ export class LeftMenuComponent implements OnInit {
     this.user.email = userEmail !== null ? userEmail : '';
   }
 
+  // Opens a modal to add or update user information
   async addUpdateUserModal(user: User) {
     const modal = await this.modalController.create({
       component: AddUpdateUserComponent,

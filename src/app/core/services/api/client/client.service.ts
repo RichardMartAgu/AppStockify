@@ -4,30 +4,30 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', // Makes this service available app-wide
 })
 export class ClientService {
+  // Base URL for client-related API endpoints
   apiUrl = `${environment.API_URL}/client`;
 
   constructor(private http: HttpClient) {}
 
-  // Obtener un cliente por ID
+  // Retrieve a client by their ID
   getClientById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-
-  // Crear un nuevo cliente
+  // Create a new client
   createClient(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user);
   }
 
-  // Actualizar un cliente existente
+  // Update an existing client's information
   updateClient(id: number, user: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, user);
   }
 
-  // Eliminar un cliente
+  // Delete a client by ID
   deleteClient(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }

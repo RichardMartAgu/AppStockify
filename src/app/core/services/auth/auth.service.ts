@@ -13,9 +13,12 @@ export class AuthService {
   apiUrl = `${environment.API_URL}/login`;
   private _storage: Storage | null = null;
 
-  constructor(private http: HttpClient, private storageService: StorageService) {
-  }
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
 
+  // Perform login with user credentials
   login(credentials: LoginRequest): Observable<LoginResponse> {
     const body = new HttpParams()
       .set('grant_type', 'password')
@@ -27,6 +30,7 @@ export class AuthService {
     });
   }
 
+  // Save user data to storage after login
   async saveUserData(
     token: string,
     id: number,
@@ -41,6 +45,7 @@ export class AuthService {
     await this.storageService.set('email', email);
   }
 
+  // Clear user data from storage on logout
   async logout() {
     await this.storageService.remove('token');
     await this.storageService.remove('user_id');

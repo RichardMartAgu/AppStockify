@@ -35,7 +35,7 @@
       (ngSubmit)="isEditMode ? updateUser() : createUser()"
       #AddEditUserForm="ngForm"
     >
-      <!-- Nombre -->
+      <!-- Name -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-input
@@ -55,19 +55,19 @@
           [(ngModel)]="user.password"
           name="password"
           [type]="showPassword ? 'text' : 'password'"
-          [label]="isEditMode ? 'Nueva Contraseña': ' Contraseña'"
+          [label]="isEditMode ? 'Nueva Contraseña' : ' Contraseña'"
           labelPlacement="floating"
           [required]="!isEditMode"
         ></ion-input>
         <ion-button
-        fill="clear"
-        slot="end"
-        (click)="showPassword = !showPassword"
-      >
-        <ion-icon
-          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
-        ></ion-icon>
-      </ion-button>
+          fill="clear"
+          slot="end"
+          (click)="showPassword = !showPassword"
+        >
+          <ion-icon
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          ></ion-icon>
+        </ion-button>
       </ion-item>
 
       <!-- email -->
@@ -92,7 +92,7 @@
         type="submit"
         [disabled]="!AddEditUserForm.valid"
       >
-      {{ isEditMode ? 'Guardar Cambios' : 'Crear Usuario' }}
+        {{ isEditMode ? "Guardar Cambios" : "Crear Usuario" }}
         <ion-icon
           class="icon"
           color="light"

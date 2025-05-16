@@ -48,12 +48,12 @@ export class AddUpdateUserComponent {
     private storageService: StorageService
   ) {}
 
+  // Dismiss the modal and optionally refresh the parent view
   closeModal(refresh: boolean = false) {
     this.modalController.dismiss({ refresh });
   }
 
-  // Take and upload user image
-
+  // Capture a user photo and upload it
   async takeImage() {
     const loading = await this.utilsService.loading();
 
@@ -81,15 +81,14 @@ export class AddUpdateUserComponent {
     }
   }
 
-  // Create user API call
-
+  // Create a new user by sending data to the backend
   async createUser() {
     const loading = await this.utilsService.loading();
     await loading.present();
 
     const credentials: CreateUserRequest = {
       username: this.user.username,
-      password: '',
+      password: this.user.password,
       email: this.user.email,
       role: 'Admin',
       image_url: this.user.image_url,
@@ -111,6 +110,7 @@ export class AddUpdateUserComponent {
     await loading.dismiss();
   }
 
+  // Retrieve user data by ID and populate form
   async getUserById(id: number) {
     this.userService.getUserById(id).subscribe({
       next: (userData) => {
@@ -134,6 +134,7 @@ export class AddUpdateUserComponent {
     });
   }
 
+  // Update an existing user's information
   async updateUser() {
     const loading = await this.utilsService.loading();
     await loading.present();

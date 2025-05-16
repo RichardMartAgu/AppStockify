@@ -3,6 +3,7 @@
   (ionWillOpen)="getUser(); blurContentOnMenuOpen()"
   [swipeGesture]="!isHideMenu"
 >
+  <!-- Side menu -->
   <ion-header>
     <ion-toolbar>
       <ion-grid class="ion-no-padding">
@@ -74,6 +75,7 @@
   </ion-content>
 </ion-menu>
 
+<!-- Page -->
 <div class="ion-page" id="main-content">
   <!-- Header -->
   <ion-header class="ion-no-border">
@@ -99,6 +101,36 @@
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
 
+  <!-- Ion menu fab button-->
+  <ion-fab
+    slot="fixed"
+    vertical="bottom"
+    horizontal="start"
+    *ngIf="!isHideMenu"
+  >
+    <ion-fab-button color="medium" size="small">
+      <ion-icon color="light" name="grid-outline"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="end">
+      <ion-fab-button
+        *ngFor="let page of pages"
+        [routerLink]="page.url"
+        [title]="page.title"
+      >
+        <ion-icon [name]="page.icon"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <!-- Footer -->
-  <app-footer *ngIf="!isHideMenu"></app-footer>
+  <ion-footer *ngIf="!isHideMenu">
+    <ion-toolbar>
+      <div class="ion-text-end" style="width: 100%; padding-right: 16px">
+        <ion-text color="medium" class="ion-padding">
+          <small>© 2025 Stockify</small>
+        </ion-text>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
 </div>

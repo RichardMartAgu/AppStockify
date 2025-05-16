@@ -2,14 +2,22 @@
   <ion-list>
     <ion-item-sliding *ngFor="let client of clients">
       <ion-item>
-        <ion-avatar slot="start">
-          <img
-            [src]="client.image_url || logo"
-          />
-        </ion-avatar>
+        <ion-icon
+          slot="start"
+          name="people-outline"
+          color="primary"
+        ></ion-icon>
         <ion-label>
           <h2>{{ client.name }}</h2>
-          <p>{{ client.description }}</p>
+          <p *ngIf="client.address">
+            <ion-icon name="location-outline" color="medium"></ion-icon>
+            {{ client.address }}
+          </p>
+
+          <p *ngIf="client.phone">
+            <ion-icon name="call-outline" color="medium"></ion-icon>
+            {{ client.phone }}
+          </p>
         </ion-label>
       </ion-item>
 

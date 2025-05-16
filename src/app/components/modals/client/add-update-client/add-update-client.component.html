@@ -19,7 +19,7 @@
       (ngSubmit)="isEditMode ? updateClient() : createClient()"
       #AddEditClientForm="ngForm"
     >
-      <!-- Identificador -->
+      <!-- Identifier -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-input
@@ -33,7 +33,7 @@
         <ion-note slot="end" color="danger">(Requerido)</ion-note>
       </ion-item>
 
-      <!-- Nombre -->
+      <!-- Name -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-input
@@ -47,7 +47,7 @@
         <ion-note slot="end" color="danger">(Requerido)</ion-note>
       </ion-item>
 
-      <!-- Contacto -->
+      <!-- contact -->
       <ion-item class="custom-input">
         <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-input
@@ -60,8 +60,8 @@
         <ion-note slot="end" color="medium">(Opcional)</ion-note>
       </ion-item>
 
-       <!-- email -->
-       <ion-item class="custom-input">
+      <!-- email -->
+      <ion-item class="custom-input">
         <ion-icon slot="start" name="mail-outline"></ion-icon>
         <ion-input
           [(ngModel)]="client.email"

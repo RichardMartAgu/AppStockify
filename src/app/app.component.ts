@@ -41,6 +41,13 @@ import {
   exitOutline,
   chevronForward,
   chevronBack,
+  chevronForwardOutline,
+  gridOutline,
+  closeOutline,
+  businessOutline,
+  locationOutline,
+  callOutline,
+  peopleCircleOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 
@@ -81,6 +88,14 @@ addIcons({
   exitOutline,
   chevronForward,
   chevronBack,
+  chevronForwardOutline,
+  gridOutline,
+  closeOutline,
+  businessOutline,
+  locationOutline,
+  callOutline,
+  peopleCircleOutline,
+  
 });
 
 @Component({
@@ -99,7 +114,7 @@ export class AppComponent implements OnInit {
 
     const token = await this.storageService.get<string>('token');
     if (token) {
-      this.router.navigate(['/product']);
+      this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/login']);
     }

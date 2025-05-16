@@ -12,9 +12,11 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- list of transactions -->
 <ion-content>
   <ion-list *ngFor="let product of products">
     <ion-item class="ion-text-start">
+      <!-- info -->
       <ion-icon
         *ngIf="transaction.type === 'in'"
         slot="start"
@@ -27,32 +29,30 @@
         name="exit-outline"
         color="danger"
       ></ion-icon>
-      <ion-icon
-        *ngIf="transaction.type === 'intern'"
-        slot="start"
-        name="repeat-outline"
-        color="warning"
-      ></ion-icon
-      ><ion-label class="app-color">
+      <ion-label class="app-color">
         <h1>{{product.product.name}}</h1>
         <ion-text color="dark">
           <h2>Cantidad : {{ product.quantity }}</h2>
         </ion-text>
-        <p><strong>{{ product.product.price | number:'1.2-2' }} € unidad</strong></p>
+        <p>
+          <strong>{{ product.product.price | number:'1.2-2' }} € unidad</strong>
+        </p>
       </ion-label>
+
       <ion-note slot="end" color="primary"
         >info <ion-icon color="primary" name="chevron-forward"></ion-icon
       ></ion-note>
     </ion-item>
   </ion-list>
-  <!-- New button -->
+
+  <!-- Go to pdf button -->
   <ion-fab
     vertical="bottom"
     horizontal="end"
     slot="fixed"
     (click)="goToPdf(transaction)"
   >
-    <ion-fab-button color="secondary">
+    <ion-fab-button color="medium">
       <ion-icon name="document-text-outline" color="light"></ion-icon>
     </ion-fab-button>
   </ion-fab>

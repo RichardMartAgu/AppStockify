@@ -13,11 +13,13 @@ export class StripeService {
 
   constructor(private http: HttpClient) {}
 
+  // Create a new Stripe checkout session for the given user ID
   createCheckoutSession(userId: number): Observable<any> {
   return this.http.post(`${this.apiUrl}/create-checkout-session?user_id=${userId}`, {});
 }
 
 
+  // Redirect user to Stripe checkout page with the given session ID
   redirectToCheckout(sessionId: string) {
     const stripe = Stripe('pk_test_51RLgpHEEie4OqAPDcXOuBazk6aD1nlH4Z1QagJs25meg0OzdyQZqTBfQGSZQVHKSacHwOmtSmQdq0IazwAdd5Iq000w7GZBzik');
     stripe.redirectToCheckout({ sessionId }).then((result: any) => {
@@ -27,6 +29,7 @@ export class StripeService {
     });
   }
 
+  // Verify payment status for the given session ID
   async verifyPayment(sessionId: string): Promise<any> {
     try {
       const response = await fetch(`http://localhost:8000/api/verify-payment/${sessionId}`);

@@ -8,6 +8,7 @@ import { StorageService } from '../../storage/storage.service';
 export class WarehaouseGuard implements CanActivate {
   constructor(private storageService: StorageService, private router: Router) {}
 
+  // Check if a warehouse is selected before activating route
   async canActivate(): Promise<boolean> {
     const warehouse_id = await this.storageService.get<number>('warehouse_id');
 
@@ -15,7 +16,6 @@ export class WarehaouseGuard implements CanActivate {
       this.router.navigate(['/warehouse']);
       return false;
     }
-
     return true;
   }
 }

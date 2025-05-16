@@ -29,18 +29,19 @@ export class ProductListPage {
     private modalController: ModalController,
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
-    private storageService: StorageService,
+    private storageService: StorageService
   ) {}
 
   ionViewWillEnter() {
-    this.titleService.setTitle('Product List');
+    this.titleService.setTitle('Lista de productos');
     this.loadWarehouseProducts();
   }
 
+  // load warehouse products
   async loadWarehouseProducts() {
     const loading = await this.utilsService.loading();
     await loading.present();
-  
+
     const warehouse_id = await this.storageService.get<number>('warehouse_id');
 
     if (warehouse_id === null) {
@@ -54,7 +55,7 @@ export class ProductListPage {
     }
 
     this.warehouseService.getProductsByWarehouseId(warehouse_id).subscribe({
-      next: (warehouseProductsData : ProductsByWarehouseIdResponse) => {
+      next: (warehouseProductsData: ProductsByWarehouseIdResponse) => {
         const products = warehouseProductsData?.products;
         this.products = Array.isArray(products) ? products : [];
         loading.dismiss();
@@ -63,7 +64,7 @@ export class ProductListPage {
     loading.dismiss();
   }
 
-  // Open the modal to add or update a product
+  // Show modal to add or update a product
   async addUpdateProductModal(product?: Product) {
     const modal = await this.modalController.create({
       component: AddUpdateProductComponent,
@@ -78,12 +79,12 @@ export class ProductListPage {
     }
   }
 
-  // Edit product
+  // Open edit modal for selected product
   editProduct(product: Product) {
     this.addUpdateProductModal(product);
   }
 
-  // Delete product
+  // Confirm and delete selected product
   deleteProduct(product: Product) {
     this.utilsService.confirmDelete(
       '¿Estás seguro de que deseas eliminar este producto?',

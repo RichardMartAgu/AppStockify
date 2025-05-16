@@ -1,23 +1,46 @@
 <ion-content>
   <ion-list>
-
     <ion-list-header>
       <ion-text (click)="logout()" color="medium" class="logout-text">
-        <ion-icon color="medium" name="chevron-back"></ion-icon>
+        <ion-icon color="medium" name="close-outline"></ion-icon>
         Cerrar sesión
       </ion-text>
       <ion-label class="custom-text"
-        ><h1>Selecciona un almacén para continuar</h1>
+        ><h2>Selecciona un almacén para continuar</h2>
         <ion-icon name="arrow-down-circle-outline" size="large"></ion-icon>
       </ion-label>
     </ion-list-header>
 
-    <ion-item-divider class="ion-margin-vertical"></ion-item-divider>
+    <ion-item-divider
+      color="light"
+      class="custom-divider ion-padding-horizontal ion-margin-vertical"
+    >
+      <ion-label class="custom-divider-text" color="medium"
+        ><h1>Almacenes disponibles :</h1></ion-label
+      >
+    </ion-item-divider>
 
+    <!-- Warehouse info -->
     <ion-item-sliding *ngFor="let warehouse of warehouses">
       <ion-item (click)="selectWarehouse(warehouse)">
-        <ion-label class="ion-text-center">
+        <ion-icon
+          slot="start"
+          name="business-outline"
+          color="primary"
+        ></ion-icon>
+
+        <ion-label class="ion-text-wrap">
           <h2>{{ warehouse.name }}</h2>
+
+          <p *ngIf="warehouse.address">
+            <ion-icon name="location-outline" color="medium"></ion-icon>
+            {{ warehouse.address }}
+          </p>
+
+          <p *ngIf="warehouse.phone">
+            <ion-icon name="call-outline" color="medium"></ion-icon>
+            {{ warehouse.phone }}
+          </p>
         </ion-label>
       </ion-item>
 

@@ -41,15 +41,15 @@ export class AddUpdateWarehouseComponent {
     private modalController: ModalController,
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
-    private storageService: StorageService,
+    private storageService: StorageService
   ) {}
 
+  // Close the modal and optionally refresh the parent component
   closeModal(refresh: boolean = false) {
     this.modalController.dismiss({ refresh });
   }
 
-  // Create warehouse API call
-
+  // Create a new warehouse
   async createWarehouse() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -70,7 +70,7 @@ export class AddUpdateWarehouseComponent {
         await loading.dismiss();
         await this.utilsService.presentToast(
           'Almacén creado con éxito',
-          'primary',
+          'success',
           'enter-outline'
         );
         this.closeModal(true);
@@ -79,6 +79,7 @@ export class AddUpdateWarehouseComponent {
     await loading.dismiss();
   }
 
+  // Fetch warehouse by ID for editing
   async getWarehouseById(id: number) {
     this.warehouseService.getWarehouseById(id).subscribe({
       next: (warehouseData: ResponseWarehouse) => {
@@ -90,16 +91,10 @@ export class AddUpdateWarehouseComponent {
           user_id: warehouseData.user_id,
         };
       },
-      error: async () => {
-        await this.utilsService.presentToast(
-          'Error al obtener los datos del almacén',
-          'danger',
-          'alert-circle-outline'
-        );
-      },
     });
   }
 
+  // Update existing warehouse details
   async updateWarehouse() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -122,14 +117,6 @@ export class AddUpdateWarehouseComponent {
             'checkmark-circle-outline'
           );
           this.closeModal(true);
-        },
-        error: async () => {
-          await loading.dismiss();
-          await this.utilsService.presentToast(
-            'Error al actualizar el almacén',
-            'danger',
-            'alert-circle-outline'
-          );
         },
       });
   }

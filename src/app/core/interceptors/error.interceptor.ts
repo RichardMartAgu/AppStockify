@@ -10,6 +10,7 @@ import { from, Observable } from 'rxjs';
 import { HttpRequest, HttpHandlerFn } from '@angular/common/http';
 import { UtilsService } from '../services/utils/utils.service';
 
+// Returns a human-readable error message based on the HTTP status code and request URL
 function getErrorMessage(error: HttpErrorResponse): string {
   const url = error.url || '';
 
@@ -42,6 +43,7 @@ function getErrorMessage(error: HttpErrorResponse): string {
   }
 }
 
+// Global error interceptor
 export const errorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn

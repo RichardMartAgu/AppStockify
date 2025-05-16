@@ -54,27 +54,29 @@ export class NewTransactionPage implements OnInit {
     this.loadProductssByWarehouseId();
   }
 
+  // product validation
   isProductValid(): boolean {
     return this.newProduct.id && this.newProduct.quantity > 0;
   }
 
+  // Return readable transaction type string
   getTransactionType(): string {
     switch (this.transaction.type) {
       case 'in':
         return 'Entrada';
       case 'out':
         return 'Salida';
-      case 'intern':
-        return 'Traspaso';
       default:
         return '';
     }
   }
 
+  // Find client by selected ID
   getSelectedClient() {
     return this.clients.find((client) => client.id === this.selectedClientId);
   }
 
+  // Update newProduct info when serial number selected
   onSerialNumberSelect() {
     const selectedProduct = this.products.find(
       (product) => product.serial_number === this.newProduct.serial_number
@@ -85,6 +87,8 @@ export class NewTransactionPage implements OnInit {
       this.newProduct.serial_number = selectedProduct.serial_number;
     }
   }
+
+  // Update newProduct info when product selected
   onProductSelect() {
     const selectedProduct = this.products.find(
       (product) => product.id === this.newProduct.id
@@ -95,6 +99,7 @@ export class NewTransactionPage implements OnInit {
     }
   }
 
+  // Load clients associated to current user
   async loadClientsByUserId() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -120,6 +125,7 @@ export class NewTransactionPage implements OnInit {
     loading.dismiss();
   }
 
+  // Load products available in the warehouse
   async loadProductssByWarehouseId() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -127,14 +133,13 @@ export class NewTransactionPage implements OnInit {
     const warehouse_id = await this.storageService.get<number>('warehouse_id');
     if (warehouse_id === null) {
       await this.utilsService.presentToast(
-        'No se encuentra el id del usuario',
+        'No se encuentra el id del almacén',
         'danger',
         'alert-circle-outline'
       );
       await loading.dismiss();
       return;
     }
-
     this.warehouseService.getProductsByWarehouseId(warehouse_id).subscribe({
       next: (warehouseProductsData: ProductsByWarehouseIdResponse) => {
         const products = warehouseProductsData?.products;
@@ -145,6 +150,7 @@ export class NewTransactionPage implements OnInit {
     loading.dismiss();
   }
 
+  // Add selected product to transaction list
   addProductToCrateList() {
     const exists = this.addedListProducts.some(
       (p) => p.id === this.newProduct.id
@@ -177,13 +183,13 @@ export class NewTransactionPage implements OnInit {
     }
   }
 
+  // Remove product from transaction list by index
   removeProductToCreateList(index: number) {
     this.transaction.transactionProduct.splice(index, 1);
     this.addedListProducts.splice(index, 1);
   }
 
-  // Create transaction
-
+  // Submit new transaction to backend API
   async createTransaction() {
     const loading = await this.utilsService.loading();
     await loading.present();

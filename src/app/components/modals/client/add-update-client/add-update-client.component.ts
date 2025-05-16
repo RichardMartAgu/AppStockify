@@ -12,7 +12,6 @@ import { ClientService } from 'src/app/core/services/api/client/client.service';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
   selector: 'app-add-update-client',
   templateUrl: './add-update-client.component.html',
@@ -21,7 +20,7 @@ import { environment } from 'src/environments/environment';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class AddUpdateClientComponent {
-  emailPattern = environment.EMAIL_PATTERN
+  emailPattern = environment.EMAIL_PATTERN;
   @Input() client!: Client;
 
   isEditMode: boolean = false;
@@ -35,7 +34,7 @@ export class AddUpdateClientComponent {
         identifier: '',
         name: '',
         contact: '',
-        email:'',
+        email: '',
         address: '',
         phone: '',
         user_id: 0,
@@ -47,15 +46,15 @@ export class AddUpdateClientComponent {
     private modalController: ModalController,
     private utilsService: UtilsService,
     private clientService: ClientService,
-    private storageService: StorageService,
+    private storageService: StorageService
   ) {}
 
+  // Closes the modal and optionally triggers a refresh
   closeModal(refresh: boolean = false) {
     this.modalController.dismiss({ refresh });
   }
 
-  // Create client API call
-
+  // Sends a request to create a new client using form data
   async createClient() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -63,7 +62,7 @@ export class AddUpdateClientComponent {
     if (userId != null) {
       this.client.user_id = userId;
     }
-    
+
     if (!this.client.email?.trim()) {
       this.client.email = null;
     }
@@ -82,9 +81,9 @@ export class AddUpdateClientComponent {
       next: async () => {
         await loading.dismiss();
         await this.utilsService.presentToast(
-          'Almacén creado con éxito',
-          'primary',
-          'enter-outline'
+          'Cliente creado con éxito',
+          'success',
+          'person-add-outline'
         );
         this.closeModal(true);
       },
@@ -92,6 +91,7 @@ export class AddUpdateClientComponent {
     await loading.dismiss();
   }
 
+  // Fetches client data by ID and updates the local client object
   async getClientById(id: number) {
     this.clientService.getClientById(id).subscribe({
       next: (clientData: ResponseClient) => {
@@ -116,6 +116,7 @@ export class AddUpdateClientComponent {
     });
   }
 
+  // Sends a request to update an existing client with form data
   async updateClient() {
     const loading = await this.utilsService.loading();
     await loading.present();
@@ -130,18 +131,16 @@ export class AddUpdateClientComponent {
       user_id: this.client.user_id,
     };
 
-    this.clientService
-      .updateClient(this.client.id, updateData)
-      .subscribe({
-        next: async () => {
-          await loading.dismiss();
-          await this.utilsService.presentToast(
-            'Almacén actualizado con éxito',
-            'success',
-            'checkmark-circle-outline'
-          );
-          this.closeModal(true);
-        },
-      });
+    this.clientService.updateClient(this.client.id, updateData).subscribe({
+      next: async () => {
+        await loading.dismiss();
+        await this.utilsService.presentToast(
+          'Cliente actualizado con éxito',
+          'success',
+          'person-outline'
+        );
+        this.closeModal(true);
+      },
+    });
   }
 }

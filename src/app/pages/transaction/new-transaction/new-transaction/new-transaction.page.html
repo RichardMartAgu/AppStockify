@@ -31,8 +31,7 @@
           {{ getSelectedClient()?.name }}
         </ion-text>
       </h2>
-      </ion-title
-    >
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -41,7 +40,7 @@
     <!-- Columna izquierda: Formulario -->
     <div class="left-column">
       <form (ngSubmit)="createTransaction()" #CreateTransactionForm="ngForm">
-        <!-- Tipo -->
+        <!-- type -->
         <ion-item class="custom-input">
           <ion-icon slot="start" name="repeat-outline"></ion-icon>
           <ion-select
@@ -55,7 +54,9 @@
             <ion-select-option value="out">Salida </ion-select-option>
             <ion-select-option value="intern">Interna </ion-select-option>
           </ion-select>
-          <ion-note slot="end" color="danger" *ngIf="!transaction.type">(Requerido)</ion-note>
+          <ion-note slot="end" color="danger" *ngIf="!transaction.type"
+            >(Requerido)</ion-note
+          >
         </ion-item>
 
         <!-- Cient -->
@@ -75,7 +76,9 @@
               {{ client.name }}
             </ion-select-option>
           </ion-select>
-          <ion-note slot="end" color="danger" *ngIf="!selectedClientId">(Requerido)</ion-note>
+          <ion-note slot="end" color="danger" *ngIf="!selectedClientId"
+            >(Requerido)</ion-note
+          >
         </ion-item>
 
         <ion-item-divider class="ion-margin-vertical"></ion-item-divider>
@@ -132,7 +135,7 @@
           ></ion-input>
         </ion-item>
 
-        <!-- Add prdocut button -->
+        <!-- Add product button -->
         <ion-button
           class="ion-margin-top"
           color="success"

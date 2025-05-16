@@ -32,8 +32,8 @@ export class WarehousePage {
     private storageService: StorageService,
     private userService: UserService,
     private router: Router,
-    private leftMenuComponent:LeftMenuComponent,
-    private authService: AuthService,
+    private leftMenuComponent: LeftMenuComponent,
+    private authService: AuthService
   ) {}
 
   async ionViewWillEnter() {
@@ -46,12 +46,14 @@ export class WarehousePage {
     }
   }
 
+  // Load warehouses associated with the user ID
   loadWarehousesByAdminId(userId: number) {
     this.userService.getWarehousesByUserId(userId).subscribe((userData) => {
       this.warehouses = userData.warehouses;
     });
   }
 
+  // Logout and navigate to login page
   async logout() {
     await this.authService.logout();
     this.router.navigate(['/login']);
@@ -74,19 +76,19 @@ export class WarehousePage {
       }
     }
   }
-  // Select warehouse
+
+  // Select a warehouse and navigate to dashboard
   selectWarehouse(warehouse: any) {
-    this.storageService.set('warehouse_id', warehouse.id)
+    this.storageService.set('warehouse_id', warehouse.id);
     this.router.navigate(['/dashboard']);
   }
 
-  // Edit warehouse
+  // Edit warehouse by opening modal
   editWarehouse(warehouse: Warehouse) {
-    
     this.addUpdateWarehouseModal(warehouse);
   }
 
-  // Delete warehouse
+  // Confirm and delete warehouse, then refresh list
   deleteWarehouse(warehouse: Warehouse) {
     this.utilsService.confirmDelete(
       '¿Estás seguro de que deseas eliminar este almacén?',
@@ -98,5 +100,8 @@ export class WarehousePage {
         });
       }
     );
+    if (this.userId !== null) {
+      this.loadWarehousesByAdminId(this.userId);
+    }
   }
 }
