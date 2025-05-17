@@ -48,6 +48,9 @@ import {
   locationOutline,
   callOutline,
   peopleCircleOutline,
+  fingerPrintOutline,
+  layersOutline,
+  calendarOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 
@@ -95,7 +98,8 @@ addIcons({
   locationOutline,
   callOutline,
   peopleCircleOutline,
-  
+  layersOutline,
+  calendarOutline,
 });
 
 @Component({
@@ -105,7 +109,6 @@ addIcons({
   imports: [LeftMenuComponent, IonicModule],
 })
 export class AppComponent implements OnInit {
-  private authService = inject(AuthService);
   private router = inject(Router);
   private storageService = inject(StorageService);
 

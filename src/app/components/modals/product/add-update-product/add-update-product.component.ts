@@ -63,15 +63,14 @@ export class AddUpdateProductComponent {
 
   // Opens a modal to select an associated kit
   async openSearchKitModal() {
-    const categorias = this.utilsService.getUniqueItems(
+    const category = this.utilsService.getUniqueItems(
       this.products,
       'kit_id'
     );
-    console.log(categorias);
     const modal = await this.modalController.create({
       component: SearchModalComponent,
       componentProps: {
-        items: categorias,
+        items: category,
         labelProperty: 'name',
         title: 'Buscar kit asociado',
         allowCreate: false,

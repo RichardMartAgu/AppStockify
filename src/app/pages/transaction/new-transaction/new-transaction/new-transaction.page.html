@@ -21,21 +21,14 @@
           name="exit-outline"
           color="danger"
         ></ion-icon>
-        <ion-icon
-          *ngIf="transaction.type === 'intern'"
-          slot="start"
-          name="repeat-outline"
-          color="warning"
-        ></ion-icon>
-        <ion-text *ngIf="selectedClientId">
-          {{ getSelectedClient()?.name }}
-        </ion-text>
+        <ion-text *ngIf="selectedClient"> {{ selectedClient?.name }} </ion-text>
       </h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+<ion-label class="ion-">Label</ion-label>
   <div class="content-wrapper">
     <!-- Columna izquierda: Formulario -->
     <div class="left-column">
@@ -46,37 +39,30 @@
           <ion-select
             [(ngModel)]="transaction.type"
             name="type"
-            interface="alert"
-            placeholder="Selecciona tipo de transacción"
+            interface="popover"
+            label="Tipo de transacción"
+            labelPlacement="floating"
+            color="medium"
             required
           >
-            <ion-select-option value="in">Entrada </ion-select-option>
-            <ion-select-option value="out">Salida </ion-select-option>
-            <ion-select-option value="intern">Interna </ion-select-option>
+            <ion-select-option value="in">Entrada</ion-select-option>
+            <ion-select-option value="out">Salida</ion-select-option>
           </ion-select>
-          <ion-note slot="end" color="danger" *ngIf="!transaction.type"
-            >(Requerido)</ion-note
-          >
+          <ion-note slot="end" color="danger" *ngIf="!transaction.type">
+            (Requerido)
+          </ion-note>
         </ion-item>
 
         <!-- Cient -->
-        <ion-item class="custom-input">
+        <ion-item class="custom-input" (click)="openSearchClientModal()">
           <ion-icon slot="start" name="person-outline"></ion-icon>
-          <ion-select
-            [(ngModel)]="selectedClientId"
-            name="clientId"
-            interface="alert"
-            placeholder="Selecciona un cliente"
-            required
-          >
-            <ion-select-option
-              *ngFor="let client of clients"
-              [value]="client.id"
-            >
-              {{ client.name }}
-            </ion-select-option>
-          </ion-select>
-          <ion-note slot="end" color="danger" *ngIf="!selectedClientId"
+          <ion-label class="floating-label">
+            <ion-text color="black"> Selecciona un cliente </ion-text>
+            <p>
+              <ion-text color="black"> {{ selectedClient?.name }} </ion-text>
+            </p>
+          </ion-label>
+          <ion-note slot="end" color="danger" *ngIf="!selectedClient?.name"
             >(Requerido)</ion-note
           >
         </ion-item>
@@ -86,54 +72,48 @@
         <!-- Add Product -->
 
         <!-- Product name -->
-        <ion-item class="custom-input">
-          <ion-select
-            [(ngModel)]="newProduct.id"
-            name="newProductName"
-            type="text"
-            label="Nombre del producto"
-            labelPlacement="floating"
-            (ionChange)="onProductSelect()"
-          >
-            <ion-select-option
-              *ngFor="let product of products"
-              [value]="product.id"
-            >
-              {{ product.name }}
-            </ion-select-option>
-            ></ion-select
+        <ion-item class="custom-input" (click)="openProductNameModal()">
+          <ion-icon slot="start" name="pricetag-outline"></ion-icon>
+          <ion-label class="floating-label">
+            <ion-text color="black"> Nombre del producto</ion-text>
+            <p>{{ newProduct?.name }}</p>
+          </ion-label>
+          <ion-note slot="end" color="danger" *ngIf="!selectedClient?.name"
+            >(Requerido)</ion-note
           >
         </ion-item>
 
         <!-- Product Serial Number -->
-        <ion-item class="custom-input">
-          <ion-select
-            [(ngModel)]="newProduct.serial_number"
-            name="newProductSerialNumber"
-            label="Número de serie"
-            labelPlacement="floating"
-            (ionChange)="onSerialNumberSelect()"
+        <ion-item class="custom-input" (click)="openProductSerialModal()">
+          <ion-icon slot="start" name="barcode-outline"></ion-icon>
+          <ion-label class="floating-label">
+            <ion-text color="black"> Numero de serie del producto</ion-text>
+            <p>{{ newProduct?.serial_number }}</p>
+          </ion-label>
+          <ion-note slot="end" color="danger" *ngIf="!newProduct?.serial_number"
+            >(Requerido)</ion-note
           >
-            <ion-select-option
-              *ngFor="let product of products"
-              [value]="product.serial_number"
-            >
-              {{ product.serial_number }}
-            </ion-select-option>
-          </ion-select>
         </ion-item>
 
         <!-- Quantity of products -->
         <ion-item class="custom-input">
+          <ion-icon name="cube-outline" slot="start"></ion-icon>
           <ion-input
             [(ngModel)]="newProduct.quantity"
             name="newProductQuantity"
             type="number"
-            label="Cantidad"
+            [label]="productStock ? 'Cantidad a transferir (Stock actual: ' + productStock + ')' : 'Cantidad a transferir'"
+
             labelPlacement="floating"
             min="0"
+            [max]="transaction.type === 'out' ? productStock : null"
           ></ion-input>
+          
+          <ion-note slot="end" color="danger" *ngIf="!newProduct.quantity"
+            >(Requerido)</ion-note
+          >
         </ion-item>
+        
 
         <!-- Add product button -->
         <ion-button

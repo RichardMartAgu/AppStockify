@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Detalles del producto</ion-title>
+    <ion-buttons slot="end">
+      <!-- Button to close the modal -->
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Large centered product image -->
+  <ion-avatar class="large-avatar">
+    <img [src]="product.image_url || '/assets/Stockify.jpeg'" />
+  </ion-avatar>
+
+  <!-- List of product details with icons -->
+  <ion-list lines="none">
+    <!-- Serial number -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="barcode-outline" color="primary"></ion-icon>
+      <ion-label><strong>Serial Number:</strong></ion-label>
+      <ion-text>{{ product.serial_number }}</ion-text>
+    </ion-item>
+
+    <!-- Product name -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="pricetag-outline" color="primary"></ion-icon>
+      <ion-label><strong>Name:</strong></ion-label>
+      <ion-text>{{ product.name }}</ion-text>
+    </ion-item>
+
+    <!-- Quantity available -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="cube-outline" color="primary"></ion-icon>
+      <ion-label><strong>Quantity:</strong></ion-label>
+      <ion-text>{{ product.quantity }}</ion-text>
+    </ion-item>
+
+    <!-- Product price -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+      <ion-label><strong>Price:</strong></ion-label>
+      <ion-text>{{ product.price | number : "1.2-2" }} €</ion-text>
+    </ion-item>
+
+    <!-- Product description -->
+    <ion-item *ngIf="product.description" class="custom-ion-item">
+      <ion-icon
+        slot="start"
+        name="document-text-outline"
+        color="primary"
+      ></ion-icon>
+      <ion-label><strong>Description:</strong></ion-label>
+      <ion-text>{{ product.description }}</ion-text>
+    </ion-item>
+
+    <!-- Product category -->
+    <ion-item *ngIf="product.category" class="custom-ion-item">
+      <ion-icon slot="start" name="layers-outline" color="primary"></ion-icon>
+      <ion-label><strong>Category:</strong></ion-label>
+      <ion-text>{{ product.category }}</ion-text>
+    </ion-item>
+
+    <!-- Kit ID, if applicable -->
+    <ion-item *ngIf="product.kit_id !== null" class="custom-ion-item">
+      <ion-icon slot="start" name="cube-outline" color="primary"></ion-icon>
+      <ion-label><strong>Kit ID:</strong></ion-label>
+      <ion-text>{{ product.kit_id }}</ion-text>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

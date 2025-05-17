@@ -10,6 +10,10 @@ import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.
 import { TransactionByWarehouseIdResponse } from 'src/app/core/models/warehouse';
 import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 import { Router } from '@angular/router';
+import { ClientService } from 'src/app/core/services/api/client/client.service';
+import { ResponseClient } from 'src/app/core/models/client';
+import { firstValueFrom } from 'rxjs';
+import { UserService } from 'src/app/core/services/api/user/user.service';
 
 @Component({
   selector: 'app-transaction',
@@ -20,6 +24,7 @@ import { Router } from '@angular/router';
 })
 export class TransactionPage {
   transactions: any[] = [];
+  client: any;
 
   logo = environment.LOGO;
 
@@ -29,7 +34,8 @@ export class TransactionPage {
     private warehouseService: WarehouseService,
     private storageService: StorageService,
     private leftMenuComponent: LeftMenuComponent,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ionViewWillEnter() {
@@ -38,12 +44,13 @@ export class TransactionPage {
     this.leftMenuComponent.isHideMenu = false;
   }
 
-  // Fetch transactions for current warehouse
+  // Fetch transactions for current warehouse and asign client for client id
   async loadWarehouseTransactions() {
     const loading = await this.utilsService.loading();
     await loading.present();
 
     const warehouse_id = await this.storageService.get<number>('warehouse_id');
+    const user_id = await this.storageService.get<number>('user_id');
 
     if (warehouse_id === null) {
       await this.utilsService.presentToast(
@@ -55,14 +62,44 @@ export class TransactionPage {
       return;
     }
 
-    this.warehouseService.getTransactionByWarehouseId(warehouse_id).subscribe({
-      next: (warehouseTransactionsData: TransactionByWarehouseIdResponse) => {
-        const transactions = warehouseTransactionsData?.transactions;
-        this.transactions = Array.isArray(transactions) ? transactions : [];
-        loading.dismiss();
-      },
-    });
-    loading.dismiss();
+    if (user_id === null) {
+      await this.utilsService.presentToast(
+        'No se encuentra el id del usuario',
+        'danger',
+        'alert-circle-outline'
+      );
+      await loading.dismiss();
+      return;
+    }
+
+    try {
+      const [transactionsData, allClients] = await Promise.all([
+        firstValueFrom(
+          this.warehouseService.getTransactionByWarehouseId(warehouse_id)
+        ),
+        firstValueFrom(this.userService.getClientsByUserId(user_id)),
+      ]);
+
+      const clientArray = allClients.clients || [];
+
+      const clientMap = new Map<number, ResponseClient>();
+      clientArray.forEach((client: any) => {
+        clientMap.set(client.id, client);
+      });
+
+      const transactions = transactionsData?.transactions || [];
+
+      this.transactions = transactions.map((transaction: any) => {
+        return {
+          ...transaction,
+          client: clientMap.get(transaction.client_id) || null,
+        };
+      });
+    } catch (error) {
+      console.error('Error cargando transacciones o clientes', error);
+    } finally {
+      loading.dismiss();
+    }
   }
 
   // Navigate to the page to create a new transaction

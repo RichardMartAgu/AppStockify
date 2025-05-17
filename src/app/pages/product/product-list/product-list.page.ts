@@ -10,6 +10,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { ProductInfoComponent } from 'src/app/components/modals/product/product-info/product-info.component';
 
 @Component({
   selector: 'app-product-list',
@@ -35,6 +36,18 @@ export class ProductListPage {
   ionViewWillEnter() {
     this.titleService.setTitle('Lista de productos');
     this.loadWarehouseProducts();
+  }
+
+  // Show modal to see product details
+  async openProductDetail(product: any) {
+    const modal = await this.modalController.create({
+      component: ProductInfoComponent,
+      cssClass: 'custom-modal',
+      componentProps: {
+        product,
+      },
+    });
+    await modal.present();
   }
 
   // load warehouse products

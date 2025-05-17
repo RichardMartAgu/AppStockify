@@ -3,36 +3,62 @@
     <ion-item-sliding *ngFor="let product of products">
       <ion-item>
         <ion-avatar slot="start">
-          <img
-            [src]="product.image_url || logo"
-          />
+          <img [src]="product.image_url || logo" />
         </ion-avatar>
 
         <!-- product Info -->
-        <ion-label>
-          <h2>{{ product.name }}</h2>
-          <p>{{ product.description }}</p>
-          <p><strong>{{ product.price | number:'1.2-2' }} € unidad</strong></p>
+        <ion-label >
+          <!-- product name and serial number -->
+          <h2>
+            <ion-text style="color: #00b4ba"
+              ><strong>{{ product.name }} </strong> -
+            </ion-text>
+            <ion-text color="primary"> {{product.serial_number}} </ion-text>
+          </h2>
+
+          <!-- product description -->
+          <p *ngIf="product.description" class="ion-padding-start">
+            <ion-icon name="document-text-outline" color="medium"></ion-icon>
+            {{ product.description }}
+          </p>
+          
+          <!-- product price -->
+          <p class="ion-padding-start">
+            <ion-icon
+              name="cash-outline"
+              color="medium"
+              style="margin-right: 6px"
+            ></ion-icon>
+            <strong>{{ product.price | number:'1.2-2' }} € unidad</strong>
+          </p>
+
+          <!-- product category -->
+          <p class="ion-padding-start">
+            <ion-icon name="pricetag-outline" color="medium"></ion-icon>
+            Categoría: {{ product.category || 'General' }}
+          </p>
         </ion-label>
+
+        <!-- go to info modal -->
+        <ion-note
+          slot="end"
+          color="primary"
+          (click)="openProductDetail(product)"
+          >info <ion-icon color="primary" name="chevron-forward"></ion-icon
+        ></ion-note>
       </ion-item>
 
       <!-- Sliding options (Edit and Delete) -->
-      <ion-item-options >
+      <ion-item-options>
         <!-- Edit button -->
         <ion-item-option color="tertiary" (click)="editProduct(product)">
-          <ion-icon
-            class="option-btn"
-            name="create-outline"
-          ></ion-icon>
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
           Editar
         </ion-item-option>
 
         <!-- Delete button -->
         <ion-item-option color="danger" (click)="deleteProduct(product)">
-          <ion-icon
-            class="option-btn"
-            name="trash-outline"
-          ></ion-icon>
+          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
           Borrar
         </ion-item-option>
       </ion-item-options>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { UserService } from 'src/app/core/services/api/user/user.service';
@@ -14,6 +14,7 @@ import { CreateUpdateTransactionRequest } from 'src/app/core/models/transaction'
 import { TransactionService } from 'src/app/core/services/api/transaction/transaction.service';
 
 import { Router } from '@angular/router';
+import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
 
 @Component({
   selector: 'app-new-transaction',
@@ -31,21 +32,22 @@ export class NewTransactionPage implements OnInit {
     private utilsService: UtilsService,
     private storageService: StorageService,
     private transactionService: TransactionService,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ) {}
 
   clients: any[] = [];
   products: any[] = [];
-  selectedClientId!: string;
+  selectedClient: any;
   addedListProducts: any[] = [];
+  newProduct: any = {};
+  productStock:any;
 
   transaction: any = {
     type: '',
     client_id: 0,
     transactionProduct: [],
   };
-
-  newProduct: any = {};
 
   ngOnInit() {
     this.titleService.setTitle('Nueva Transacción');
@@ -56,7 +58,76 @@ export class NewTransactionPage implements OnInit {
 
   // product validation
   isProductValid(): boolean {
-    return this.newProduct.id && this.newProduct.quantity > 0;
+  if (!this.newProduct || !this.newProduct.quantity || this.newProduct.quantity <= 0) {
+    return false;
+  }
+
+  if (this.transaction.type === 'out' && this.productStock !== undefined) {
+    if (this.newProduct.quantity > this.productStock) {
+      return false;
+    }
+  }
+  return true;
+}
+
+  // Opens a modal to select a client
+  async openSearchClientModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalComponent,
+      componentProps: {
+        items: this.clients,
+        labelProperty: 'name',
+        title: 'Selecciona un cliente',
+        allowCreate: false,
+      },
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      this.transaction.client_id = data.id;
+      this.selectedClient = data;
+    }
+  }
+
+  // Opens a modal to select a product name
+  async openProductNameModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalComponent,
+      componentProps: {
+        items: this.products,
+        labelProperty: 'name',
+        title: 'Selecciona un producto',
+        allowCreate: false,
+      },
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      this.newProduct = data;
+      this.productStock = data.quantity;
+    }
+  }
+
+    // Opens a modal to select a product name
+  async openProductSerialModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalComponent,
+      componentProps: {
+        items: this.products,
+        labelProperty: 'serial_number',
+        title: 'Selecciona un producto',
+        allowCreate: false,
+      },
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      this.newProduct = data;
+      this.productStock = data.quantity;
+    }
   }
 
   // Return readable transaction type string
@@ -73,7 +144,7 @@ export class NewTransactionPage implements OnInit {
 
   // Find client by selected ID
   getSelectedClient() {
-    return this.clients.find((client) => client.id === this.selectedClientId);
+    return this.clients.find((client) => client.id === this.selectedClient.id);
   }
 
   // Update newProduct info when serial number selected
@@ -84,17 +155,6 @@ export class NewTransactionPage implements OnInit {
 
     if (selectedProduct) {
       this.newProduct.id = selectedProduct.id;
-      this.newProduct.serial_number = selectedProduct.serial_number;
-    }
-  }
-
-  // Update newProduct info when product selected
-  onProductSelect() {
-    const selectedProduct = this.products.find(
-      (product) => product.id === this.newProduct.id
-    );
-
-    if (selectedProduct) {
       this.newProduct.serial_number = selectedProduct.serial_number;
     }
   }
@@ -198,8 +258,8 @@ export class NewTransactionPage implements OnInit {
       if (warehouseId != null) {
         this.transaction.warehouse_id = warehouseId;
       }
-      if (this.selectedClientId) {
-        this.transaction.client_id = Number(this.selectedClientId);
+      if (this.selectedClient.id) {
+        this.transaction.client_id = Number(this.selectedClient.id);
       } else {
         this.transaction.client_id = null;
       }
@@ -224,5 +284,7 @@ export class NewTransactionPage implements OnInit {
       });
       await loading.dismiss();
     }
+    await loading.dismiss();
   }
+  
 }

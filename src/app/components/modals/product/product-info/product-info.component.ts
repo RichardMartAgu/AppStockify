@@ -1,0 +1,37 @@
+import { CommonModule } from '@angular/common';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AnimationController } from '@ionic/angular/standalone';
+
+@Component({
+  selector: 'app-product-info',
+  templateUrl: './product-info.component.html',
+  styleUrls: ['./product-info.component.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule, FormsModule],
+})
+export class ProductInfoComponent {
+  constructor(
+    private modalController: ModalController,
+    private animationCtrl: AnimationController
+  ) {}
+
+  @Input() product!: {
+    id: number;
+    name: string;
+    quantity: number;
+    serial_number: string;
+    price: number;
+    description: string | null;
+    category: string | null;
+    image_url: string | null;
+    kit_id: number | null;
+    warehouse_id: number | null;
+  };
+
+  close() {
+    this.modalController.dismiss();
+  }
+
+}
