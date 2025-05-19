@@ -1,13 +1,44 @@
+<ion-header>
+  <!-- Filtros ocultables -->
+  <ng-container *ngIf="showFilters">
+    <ion-toolbar>
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterItems()"
+        placeholder="Buscar..."
+      ></ion-searchbar>
+    </ion-toolbar>
+
+    <ion-toolbar style="--min-height: 48px; padding: 0">
+      <ion-segment [(ngModel)]="filterType" (ionChange)="filterItems()">
+        <ion-segment-button value="name">Nombre</ion-segment-button>
+        <ion-segment-button value="serial">Nº Serie</ion-segment-button>
+        <ion-segment-button value="price">Precio</ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
+</ion-header>
+
 <ion-content>
+  <!-- ionrefresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="refreshProducts($event)">
+    <ion-refresher-content
+      pullingText="Desliza para refrescar"
+      refreshingSpinner="circles"
+      refreshingText="Recargando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
-    <ion-item-sliding *ngFor="let product of products">
-      <ion-item>
+    <ion-item-sliding *ngFor="let product of visibleProducts">
+      <ion-item (click)="openProductDetail(product)">
         <ion-avatar slot="start">
           <img [src]="product.image_url || logo" />
         </ion-avatar>
 
         <!-- product Info -->
-        <ion-label >
+        <ion-label>
           <!-- product name and serial number -->
           <h2>
             <ion-text style="color: #00b4ba"
@@ -21,7 +52,7 @@
             <ion-icon name="document-text-outline" color="medium"></ion-icon>
             {{ product.description }}
           </p>
-          
+
           <!-- product price -->
           <p class="ion-padding-start">
             <ion-icon
@@ -33,17 +64,14 @@
           </p>
 
           <!-- product category -->
-          <p class="ion-padding-start">
+          <p class="ion-padding-start" *ngIf=" product.category">
             <ion-icon name="pricetag-outline" color="medium"></ion-icon>
-            Categoría: {{ product.category || 'General' }}
+            Categoría: {{ product.category}}
           </p>
         </ion-label>
 
         <!-- go to info modal -->
-        <ion-note
-          slot="end"
-          color="primary"
-          (click)="openProductDetail(product)"
+        <ion-note slot="end" color="primary"
           >info <ion-icon color="primary" name="chevron-forward"></ion-icon
         ></ion-note>
       </ion-item>
@@ -69,6 +97,18 @@
   <ion-item *ngIf="products.length === 0">
     <ion-label>No hay productos disponibles.</ion-label>
   </ion-item>
+
+  <!-- infinite scroll -->
+  <ion-infinite-scroll
+    threshold="100px"
+    (ionInfinite)="loadMoreProducts($event)"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más productos..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <!-- New button -->
@@ -78,7 +118,14 @@
   slot="fixed"
   (click)="addUpdateProductModal()"
 >
-  <ion-fab-button color="secondary">
+  <ion-fab-button color="secondary" title="Añadir producto">
     <ion-icon name="add" color="light"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<!-- Search button -->
+<ion-fab vertical="top" horizontal="end" slot="fixed" (click)="toggleFilters()">
+  <ion-fab-button color="medium" size="small" title="Abrir busqueda">
+    <ion-icon name="search-outline" color="light"></ion-icon>
   </ion-fab-button>
 </ion-fab>

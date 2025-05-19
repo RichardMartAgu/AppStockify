@@ -51,6 +51,12 @@ import {
   fingerPrintOutline,
   layersOutline,
   calendarOutline,
+  trendingUpOutline,
+  trendingDownOutline,
+  statsChartOutline,
+  funnelOutline,
+  searchCircleOutline,
+  searchOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 
@@ -100,6 +106,11 @@ addIcons({
   peopleCircleOutline,
   layersOutline,
   calendarOutline,
+  trendingUpOutline,
+  trendingDownOutline,
+  statsChartOutline,
+  searchOutline,
+
 });
 
 @Component({

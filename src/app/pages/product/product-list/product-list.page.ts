@@ -11,18 +11,32 @@ import { environment } from 'src/environments/environment';
 import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { ProductInfoComponent } from 'src/app/components/modals/product/product-info/product-info.component';
+import { FormsModule } from '@angular/forms';
+import { InfiniteScrollCustomEvent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.page.html',
   styleUrls: ['./product-list.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class ProductListPage {
-  products: any[] = [];
-
   logo = environment.LOGO;
+
+  products: any[] = [];
+  filteredProducts: any[] = [];
+  visibleProducts: any[] = [];
+
+  searchTerm: string = '';
+  filterType: string = 'name';
+
+  showFilters = false;
+
+  pageSize = 10;
+  currentIndex = 0;
+  loadingMore = false;
+  noMoreProducts = false;
 
   constructor(
     private productService: ProductService,
@@ -33,9 +47,78 @@ export class ProductListPage {
     private storageService: StorageService
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.titleService.setTitle('Lista de productos');
-    this.loadWarehouseProducts();
+    await this.loadWarehouseProducts();
+  }
+
+  async refreshProducts(event: CustomEvent) {
+    setTimeout(() => {
+      this.products = [];
+      this.filteredProducts = [];
+      this.loadWarehouseProducts();
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
+  }
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
+  filterItems() {
+    const term = this.searchTerm?.toLowerCase().trim() || '';
+    if (!term) {
+      this.filteredProducts = [...this.products];
+      return;
+    }
+    this.filteredProducts = this.products.filter((product) => {
+      const fieldValue = (() => {
+        switch (this.filterType) {
+          case 'name':
+            return product.name;
+          case 'serial':
+            return product.serial_number;
+          case 'price':
+            return product.price;
+          default:
+            return '';
+        }
+      })();
+      return fieldValue?.toLowerCase().includes(term);
+    });
+    this.visibleProducts = this.filteredProducts.slice(0, this.pageSize);
+    this.currentIndex = this.pageSize;
+    this.noMoreProducts = this.currentIndex >= this.filteredProducts.length;
+  }
+
+  loadMoreProducts(event?: InfiniteScrollCustomEvent) {
+    console.log(
+      'Cargando más productos...',
+      this.currentIndex,
+      'de',
+      this.filteredProducts.length
+    );
+    if (this.loadingMore || this.noMoreProducts) {
+      if (event) event.target.complete();
+      return;
+    }
+    this.loadingMore = true;
+
+    const nextIndex = this.currentIndex + this.pageSize;
+    const nextBatch = this.filteredProducts.slice(this.currentIndex, nextIndex);
+
+    this.visibleProducts = [...this.visibleProducts, ...nextBatch];
+    this.currentIndex = nextIndex;
+
+    if (this.currentIndex >= this.filteredProducts.length) {
+      this.noMoreProducts = true;
+    }
+
+    this.loadingMore = false;
+
+    if (event) {
+      event.target.complete();
+    }
   }
 
   // Show modal to see product details
@@ -51,7 +134,7 @@ export class ProductListPage {
   }
 
   // load warehouse products
-  async loadWarehouseProducts() {
+  async loadWarehouseProducts(event?: any) {
     const loading = await this.utilsService.loading();
     await loading.present();
 
@@ -71,10 +154,18 @@ export class ProductListPage {
       next: (warehouseProductsData: ProductsByWarehouseIdResponse) => {
         const products = warehouseProductsData?.products;
         this.products = Array.isArray(products) ? products : [];
+
+        this.searchTerm = '';
+
+        this.filteredProducts = [...this.products];
+
+        this.visibleProducts = this.filteredProducts.slice(0, this.pageSize);
+        this.currentIndex = this.pageSize;
+        this.noMoreProducts = this.currentIndex >= this.filteredProducts.length;
+
         loading.dismiss();
       },
     });
-    loading.dismiss();
   }
 
   // Show modal to add or update a product

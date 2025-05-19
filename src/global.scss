@@ -36,6 +36,13 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+ion-content {
+  --background: none;
+  background: linear-gradient(#120202, #0f2322);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 ion-title {
   color: #3bf8ff;
   font-family: "Inter-SemiBold", sans-serif;

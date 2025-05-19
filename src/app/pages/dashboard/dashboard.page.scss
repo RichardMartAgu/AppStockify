@@ -1,0 +1,32 @@
+.small-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.large-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    width: 500px;
+    height: 300px;
+  }
+}
+
+
+ion-card {
+  border: 3px solid transparent;
+  border-radius: 16px;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  background-image: 
+    linear-gradient(#120202, #0f2322), 
+    linear-gradient(45deg, #1AF7FF, #00B4BA);
+}

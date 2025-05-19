@@ -2,3 +2,16 @@
     font-size: 27px;
     color: beige;
 }
+
+.small-fab {
+  --width: 32px;
+  --height: 32px;
+  --min-width: 32px;
+  --min-height: 32px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --box-shadow: none;
+  --background: transparent;
+  --border-radius: 16px; /* mantiene la forma circular */
+  --color: var(--ion-color-primary);
+}

@@ -108,8 +108,8 @@
     horizontal="start"
     *ngIf="!isHideMenu"
   >
-    <ion-fab-button color="medium" size="small">
-      <ion-icon color="light" name="grid-outline"></ion-icon>
+    <ion-fab-button color="medium" size="small" title="Menu rápido">
+      <ion-icon color="light" name="grid-outline" ></ion-icon>
     </ion-fab-button>
 
     <ion-fab-list side="end">
@@ -118,7 +118,7 @@
         [routerLink]="page.url"
         [title]="page.title"
       >
-        <ion-icon [name]="page.icon"></ion-icon>
+        <ion-icon [name]="page.icon" ></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
