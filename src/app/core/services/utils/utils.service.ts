@@ -3,7 +3,7 @@ import {
   LoadingController,
   ToastController,
   AlertController,
-} from '@ionic/angular';
+} from '@ionic/angular/standalone';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Injectable({

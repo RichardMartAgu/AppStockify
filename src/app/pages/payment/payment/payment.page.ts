@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButton,
+} from '@ionic/angular/standalone';
 import { StripeService } from 'src/app/core/services/api/payment/stripe.service';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -11,7 +17,15 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonButton,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class PaymentPage {
   constructor(

@@ -1,5 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  IonContent,
+  IonItem,
+  IonInput,
+  IonNote,
+} from '@ionic/angular/standalone';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -16,7 +29,20 @@ import { StorageService } from 'src/app/core/services/storage/storage.service';
   templateUrl: './add-update-warehouse.component.html',
   styleUrls: ['./add-update-warehouse.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonTitle,
+    IonContent,
+    IonItem,
+    IonInput,
+    IonNote,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class AddUpdateWarehouseComponent {
   @Input() warehouse!: Warehouse;

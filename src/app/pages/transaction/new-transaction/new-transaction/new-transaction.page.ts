@@ -1,7 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonContent,
+  IonLabel,
+  IonItem,
+  IonIcon,
+  IonSelect,
+  IonSelectOption,
+  IonNote,
+  IonItemDivider,
+  IonInput,
+  IonButton,
+  IonText,
+  IonList,
+} from '@ionic/angular/standalone';
 import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { UserService } from 'src/app/core/services/api/user/user.service';
@@ -21,7 +40,27 @@ import { SearchModalComponent } from 'src/app/components/search-modal/search-mod
   templateUrl: './new-transaction.page.html',
   styleUrls: ['./new-transaction.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonLabel,
+    IonItem,
+    IonIcon,
+    IonSelect,
+    IonSelectOption,
+    IonNote,
+    IonItemDivider,
+    IonInput,
+    IonButton,
+    IonText,
+    IonList,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class NewTransactionPage implements OnInit {
   constructor(
@@ -41,7 +80,7 @@ export class NewTransactionPage implements OnInit {
   selectedClient: any;
   addedListProducts: any[] = [];
   newProduct: any = {};
-  productStock:any;
+  productStock: any;
 
   transaction: any = {
     type: '',
@@ -58,17 +97,21 @@ export class NewTransactionPage implements OnInit {
 
   // product validation
   isProductValid(): boolean {
-  if (!this.newProduct || !this.newProduct.quantity || this.newProduct.quantity <= 0) {
-    return false;
-  }
-
-  if (this.transaction.type === 'out' && this.productStock !== undefined) {
-    if (this.newProduct.quantity > this.productStock) {
+    if (
+      !this.newProduct ||
+      !this.newProduct.quantity ||
+      this.newProduct.quantity <= 0
+    ) {
       return false;
     }
+
+    if (this.transaction.type === 'out' && this.productStock !== undefined) {
+      if (this.newProduct.quantity > this.productStock) {
+        return false;
+      }
+    }
+    return true;
   }
-  return true;
-}
 
   // Opens a modal to select a client
   async openSearchClientModal() {
@@ -110,7 +153,7 @@ export class NewTransactionPage implements OnInit {
     }
   }
 
-    // Opens a modal to select a product name
+  // Opens a modal to select a product name
   async openProductSerialModal() {
     const modal = await this.modalController.create({
       component: SearchModalComponent,
@@ -286,5 +329,4 @@ export class NewTransactionPage implements OnInit {
     }
     await loading.dismiss();
   }
-  
 }

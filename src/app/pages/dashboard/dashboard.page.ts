@@ -1,5 +1,16 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonIcon,
+  IonText,
+} from '@ionic/angular/standalone';
+
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
@@ -18,7 +29,19 @@ import { ResponseClient } from 'src/app/core/models/client';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, BaseChartDirective],
+  imports: [
+    CommonModule,
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonIcon,
+    IonText,
+    BaseChartDirective,
+  ],
 })
 export class DashboardPage {
   constructor(

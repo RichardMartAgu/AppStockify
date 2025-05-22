@@ -1,13 +1,36 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonContent,
+  IonSearchbar,
+  IonList,
+  IonItem,
+} from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search-modal',
   templateUrl: './search-modal.component.html',
   styleUrls: ['./search-modal.component.scss'],
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonContent,
+    IonSearchbar,
+    IonList,
+    IonItem,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class SearchModalComponent {
   @Input() items: any[] = [];

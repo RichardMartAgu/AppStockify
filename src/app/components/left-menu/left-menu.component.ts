@@ -5,7 +5,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+// import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
@@ -15,13 +15,41 @@ import { TitleService } from '../../core/services/components/title.service';
 import { AddUpdateUserComponent } from '../modals/user/add-update-user/add-update-user.component';
 import { User } from 'src/app/core/models/user';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { ModalController,IonMenu, IonHeader, IonToolbar, IonGrid, IonRow, IonCol, IonChip, IonAvatar, IonLabel, IonMenuToggle, IonText, IonContent, IonList, IonItem, IonIcon, IonButtons, IonMenuButton, IonTitle, IonRouterOutlet, IonFab, IonFabButton, IonFabList, IonFooter } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-left-menu',
   templateUrl: './left-menu.component.html',
   styleUrls: ['./left-menu.component.scss'],
   standalone: true,
-  imports: [IonicModule, RouterModule, CommonModule],
+  imports: [
+  RouterModule,
+  CommonModule,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonChip,
+  IonAvatar,
+  IonLabel,
+  IonMenuToggle,
+  IonText,
+  IonContent,
+  IonList,
+  IonItem,
+  IonIcon,
+  IonButtons,
+  IonMenuButton,
+  IonTitle,
+  IonRouterOutlet,
+  IonFab,
+  IonFabButton,
+  IonFabList,
+  IonFooter
+],
+
 })
 export class LeftMenuComponent implements OnInit {
   private authService = inject(AuthService);

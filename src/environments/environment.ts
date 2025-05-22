@@ -2,10 +2,19 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { Capacitor } from '@capacitor/core';
+
+let API_URL = 'http://107.22.235.180:8000'; // Valor por defecto para navegador
+
+// Detectar si estamos en plataforma nativa (emulador/dispositivo Android)
+// if (Capacitor.isNativePlatform()) {
+//   API_URL = 'http://107.22.235.180:8000'; // Cambia por la IP de tu PC si usas móvil real
+// }
+
 export const environment = {
   production: false,
-  API_URL: 'http://127.0.0.1:8000',
-  
+  API_URL: API_URL,
+
   LOGO: "https://res.cloudinary.com/dddghjiwv/image/upload/v1744883802/x5ut8o8tn79nrxo5zsky.jpg",
  
   cloudinary: {
@@ -14,15 +23,4 @@ export const environment = {
   },
 
   EMAIL_PATTERN: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
-
 };
-
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-import { IonicModule } from '@ionic/angular';
+import { IonApp } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { AuthService } from './core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import {
   homeOutline,
@@ -48,17 +47,15 @@ import {
   locationOutline,
   callOutline,
   peopleCircleOutline,
-  fingerPrintOutline,
   layersOutline,
   calendarOutline,
   trendingUpOutline,
   trendingDownOutline,
   statsChartOutline,
-  funnelOutline,
-  searchCircleOutline,
   searchOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
+import { CommonModule } from '@angular/common';
 
 addIcons({
   homeOutline,
@@ -117,7 +114,7 @@ addIcons({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [LeftMenuComponent, IonicModule],
+  imports: [LeftMenuComponent,CommonModule,IonApp],
 })
 export class AppComponent implements OnInit {
   private router = inject(Router);

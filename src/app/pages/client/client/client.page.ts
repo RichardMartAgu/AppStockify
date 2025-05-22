@@ -1,5 +1,17 @@
 import { Component } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonContent,
+  IonList,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
+  IonFab,
+  IonFabButton,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { ClientService } from 'src/app/core/services/api/client/client.service';
@@ -17,7 +29,19 @@ import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.compon
   templateUrl: './client.page.html',
   styleUrls: ['./client.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [
+    IonContent,
+    IonList,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonItemSliding,
+    IonItemOptions,
+    IonItemOption,
+    IonFab,
+    IonFabButton,
+    CommonModule,
+  ],
 })
 export class ClientPage {
   clients: any[] = [];
@@ -31,7 +55,7 @@ export class ClientPage {
     private utilsService: UtilsService,
     private userService: UserService,
     private storageService: StorageService,
-    private leftMenuComponent:LeftMenuComponent,
+    private leftMenuComponent: LeftMenuComponent
   ) {}
 
   ionViewWillEnter() {
@@ -40,11 +64,10 @@ export class ClientPage {
     this.leftMenuComponent.isHideMenu = false;
   }
 
-  
   async loadUserClients() {
     const loading = await this.utilsService.loading();
     await loading.present();
-  
+
     const user_id = await this.storageService.get<number>('user_id');
 
     if (user_id === null) {
@@ -58,7 +81,7 @@ export class ClientPage {
     }
 
     this.userService.getClientsByUserId(user_id).subscribe({
-      next: (userClientsData : ClientsByUserIdResponse) => {
+      next: (userClientsData: ClientsByUserIdResponse) => {
         const clients = userClientsData?.clients;
         this.clients = Array.isArray(clients) ? clients : [];
         loading.dismiss();

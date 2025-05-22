@@ -2,7 +2,21 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductService } from 'src/app/core/services/api/product/product.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  IonContent,
+  IonAvatar,
+  IonItem,
+  IonInput,
+  IonNote,
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -19,7 +33,22 @@ import { SearchModalComponent } from 'src/app/components/search-modal/search-mod
   templateUrl: './add-update-product.component.html',
   styleUrls: ['./add-update-product.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonTitle,
+    IonContent,
+    IonAvatar,
+    IonItem,
+    IonInput,
+    IonNote,
+    IonLabel,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class AddUpdateProductComponent {
   @Input() product!: Product;
@@ -63,10 +92,7 @@ export class AddUpdateProductComponent {
 
   // Opens a modal to select an associated kit
   async openSearchKitModal() {
-    const category = this.utilsService.getUniqueItems(
-      this.products,
-      'kit_id'
-    );
+    const category = this.utilsService.getUniqueItems(this.products, 'kit_id');
     const modal = await this.modalController.create({
       component: SearchModalComponent,
       componentProps: {

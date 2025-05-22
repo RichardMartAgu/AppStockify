@@ -1,14 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StripeService } from 'src/app/core/services/api/payment/stripe.service';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonSpinner,
+} from '@ionic/angular/standalone';
+
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-payment-success',
   templateUrl: './payment-success.page.html',
   styleUrls: ['./payment-success.page.scss'],
-  imports: [IonicModule,CommonModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonSpinner,
+    CommonModule,
+  ],
 })
 export class PaymentSuccessPage implements OnInit {
   sessionId: string | null = null;

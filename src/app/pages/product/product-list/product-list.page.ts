@@ -1,5 +1,29 @@
 import { Component } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
+  IonContent,
+  IonRefresher,
+  IonRefresherContent,
+  IonList,
+  IonItemSliding,
+  IonItem,
+  IonAvatar,
+  IonLabel,
+  IonText,
+  IonIcon,
+  IonNote,
+  IonItemOptions,
+  IonItemOption,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonFab,
+  IonFabButton,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { ProductService } from 'src/app/core/services/api/product/product.service';
@@ -19,7 +43,32 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular/standalone';
   templateUrl: './product-list.page.html',
   styleUrls: ['./product-list.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonSearchbar,
+    IonSegment,
+    IonSegmentButton,
+    IonContent,
+    IonRefresher,
+    IonRefresherContent,
+    IonList,
+    IonItemSliding,
+    IonItem,
+    IonAvatar,
+    IonLabel,
+    IonText,
+    IonIcon,
+    IonNote,
+    IonItemOptions,
+    IonItemOption,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+    IonFab,
+    IonFabButton,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class ProductListPage {
   logo = environment.LOGO;

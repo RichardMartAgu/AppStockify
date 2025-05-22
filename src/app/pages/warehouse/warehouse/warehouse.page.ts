@@ -1,6 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  IonContent,
+  IonList,
+  IonListHeader,
+  IonText,
+  IonIcon,
+  IonLabel,
+  IonItemDivider,
+  IonItemSliding,
+  IonItem,
+  IonItemOptions,
+  IonItemOption,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -18,7 +31,22 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
   templateUrl: './warehouse.page.html',
   styleUrls: ['./warehouse.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    IonContent,
+    IonList,
+    IonListHeader,
+    IonText,
+    IonIcon,
+    IonLabel,
+    IonItemDivider,
+    IonItemSliding,
+    IonItem,
+    IonItemOptions,
+    IonItemOption,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class WarehousePage {
   warehouses: any[] = [];

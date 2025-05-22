@@ -1,5 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonContent,
+  IonList,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonText,
+  IonFab,
+  IonFabButton,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { Transaction } from 'src/app/core/models/transaction';
@@ -18,7 +27,18 @@ import { UserService } from 'src/app/core/services/api/user/user.service';
   templateUrl: './transaction.page.html',
   styleUrls: ['./transaction.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [
+    CommonModule,
+    IonContent,
+    IonList,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonText,
+    IonFab,
+    IonFabButton,
+    CommonModule,
+  ],
 })
 export class TransactionPage {
   transactions: any[] = [];

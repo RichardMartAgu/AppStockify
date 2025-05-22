@@ -1,5 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  IonContent,
+  IonAvatar,
+  IonInput,
+  IonItem,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -14,7 +26,20 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-update-user.component.html',
   styleUrls: ['./add-update-user.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonTitle,
+    IonContent,
+    IonAvatar,
+    IonInput,
+    IonItem,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class AddUpdateUserComponent {
   emailPattern = environment.EMAIL_PATTERN;

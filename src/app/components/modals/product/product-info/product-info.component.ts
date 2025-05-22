@@ -1,5 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  ModalController,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonAvatar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonText,
+} from '@ionic/angular/standalone';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AnimationController } from '@ionic/angular/standalone';
@@ -9,7 +23,22 @@ import { AnimationController } from '@ionic/angular/standalone';
   templateUrl: './product-info.component.html',
   styleUrls: ['./product-info.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonAvatar,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonText,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class ProductInfoComponent {
   constructor(
@@ -33,5 +62,4 @@ export class ProductInfoComponent {
   close() {
     this.modalController.dismiss();
   }
-
 }

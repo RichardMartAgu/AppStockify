@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter} from '@angular/router';
+import { PreloadAllModules, RouteReuseStrategy, provideRouter, withHashLocation, withPreloading} from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/core/interceptors/auth.interceptor'
@@ -19,9 +19,8 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
-    provideHttpClient(withInterceptors([errorInterceptor])),
+    provideRouter(routes,withPreloading(PreloadAllModules)),
+    provideHttpClient(withInterceptors([authInterceptor,errorInterceptor])),
     provideCharts(withDefaultRegisterables()),
     Storage,
     { provide: LOCALE_ID, useValue: 'es' }

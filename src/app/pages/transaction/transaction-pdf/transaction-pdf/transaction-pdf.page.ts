@@ -1,7 +1,17 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonContent,
+  IonFooter,
+  IonButton,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Router } from '@angular/router';
@@ -11,12 +21,25 @@ import { Router } from '@angular/router';
   templateUrl: './transaction-pdf.page.html',
   styleUrls: ['./transaction-pdf.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonFooter,
+    IonButton,
+    IonIcon,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class TransactionPdfPage implements OnInit {
   @ViewChild('contentToExport', { static: false }) contentToExport!: ElementRef;
 
-  logo = "/assets/Stockify.jpeg";
+  logo = '/assets/Stockify.jpeg';
 
   constructor(private router: Router) {}
 

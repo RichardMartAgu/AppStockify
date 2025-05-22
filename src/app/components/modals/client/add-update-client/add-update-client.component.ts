@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonContent, IonItem, IonInput, IonNote } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-update-client.component.html',
   styleUrls: ['./add-update-client.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonContent, IonItem, IonInput, IonNote, CommonModule, FormsModule],
 })
 export class AddUpdateClientComponent {
   emailPattern = environment.EMAIL_PATTERN;
