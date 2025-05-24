@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-import { IonApp } from '@ionic/angular/standalone';
+import { IonApp, Platform } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
 import {
@@ -107,19 +107,17 @@ addIcons({
   trendingDownOutline,
   statsChartOutline,
   searchOutline,
-
 });
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [LeftMenuComponent,CommonModule,IonApp],
+  imports: [LeftMenuComponent, CommonModule, IonApp],
 })
 export class AppComponent implements OnInit {
   private router = inject(Router);
   private storageService = inject(StorageService);
-
   async ngOnInit() {
     await this.storageService.init();
 
@@ -129,5 +127,11 @@ export class AppComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  constructor(private platform: Platform) {
+    this.platform.ready().then(() => {
+      document.body.classList.toggle('dark', true);
+    });
   }
 }

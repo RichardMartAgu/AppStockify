@@ -37,6 +37,7 @@ import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { ProductInfoComponent } from 'src/app/components/modals/product/product-info/product-info.component';
 import { FormsModule } from '@angular/forms';
 import { InfiniteScrollCustomEvent } from '@ionic/angular/standalone';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -199,22 +200,24 @@ export class ProductListPage {
       return;
     }
 
-    this.warehouseService.getProductsByWarehouseId(warehouse_id).subscribe({
-      next: (warehouseProductsData: ProductsByWarehouseIdResponse) => {
-        const products = warehouseProductsData?.products;
-        this.products = Array.isArray(products) ? products : [];
+    this.warehouseService
+      .getProductsByWarehouseId(warehouse_id)
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe({
+        next: (warehouseProductsData: ProductsByWarehouseIdResponse) => {
+          const products = warehouseProductsData?.products;
+          this.products = Array.isArray(products) ? products : [];
 
-        this.searchTerm = '';
+          this.searchTerm = '';
 
-        this.filteredProducts = [...this.products];
+          this.filteredProducts = [...this.products];
 
-        this.visibleProducts = this.filteredProducts.slice(0, this.pageSize);
-        this.currentIndex = this.pageSize;
-        this.noMoreProducts = this.currentIndex >= this.filteredProducts.length;
-
-        loading.dismiss();
-      },
-    });
+          this.visibleProducts = this.filteredProducts.slice(0, this.pageSize);
+          this.currentIndex = this.pageSize;
+          this.noMoreProducts =
+            this.currentIndex >= this.filteredProducts.length;
+        },
+      });
   }
 
   // Show modal to add or update a product

@@ -10,4 +10,5 @@ export interface LoginResponse {
   username: string;
   image_url: string;
   email: string;
+  stripe_subscription_status:boolean;
 }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class WarehouseService {
-  apiUrl = `http://107.22.235.180:8000/warehouse`;
+  apiUrl = `${environment.API_URL}/warehouse`;
 
   constructor(private http: HttpClient) {}
 

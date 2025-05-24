@@ -71,7 +71,8 @@ export class LoginPage {
           response.id,
           response.username,
           response.image_url,
-          response.email
+          response.email,
+          response.stripe_subscription_status,
         );
         await loading.dismiss();
         (document.activeElement as HTMLElement)?.blur();
@@ -81,6 +82,10 @@ export class LoginPage {
           'enter-outline'
         );
         this.router.navigate(['/warehouse']);
+      },
+      error: async (err) => {
+        console.error('Login error:', err);
+        await loading.dismiss();
       },
     });
   }

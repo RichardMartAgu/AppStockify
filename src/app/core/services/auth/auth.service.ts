@@ -36,13 +36,16 @@ export class AuthService {
     id: number,
     username: string,
     image_url: string,
-    email: string
+    email: string,
+    stripe_subscription_status: boolean
   ) {
     await this.storageService.set('token', token);
     await this.storageService.set('user_id', id);
     await this.storageService.set('username', username);
     await this.storageService.set('image_url', image_url);
     await this.storageService.set('email', email);
+    await this.storageService.set('payment', stripe_subscription_status);
+    console.log('stripe0',stripe_subscription_status)
   }
 
   // Clear user data from storage on logout
@@ -53,5 +56,6 @@ export class AuthService {
     await this.storageService.remove('image_url');
     await this.storageService.remove('email');
     await this.storageService.remove('warehouse_id');
+    await this.storageService.remove('payment');
   }
 }

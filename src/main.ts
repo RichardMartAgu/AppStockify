@@ -10,7 +10,9 @@ import { AppComponent } from './app/app.component';
 import { errorInterceptor} from './app/core/interceptors/error.interceptor';
 import { registerLocaleData } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts'
+import { AndroidPermissions  } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeEs);
@@ -22,8 +24,12 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes,withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor,errorInterceptor])),
     provideCharts(withDefaultRegisterables()),
+    
     Storage,
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
+    { provide: AndroidPermissions, useClass: AndroidPermissions },
+    { provide: File, useClass: File },
+    
   ],
 });
 

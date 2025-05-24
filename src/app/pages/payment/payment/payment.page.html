@@ -1,11 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Pago
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <img src="https://stripe.com/img/v3/home/twitter.png" alt="Stripe Logo" width="200" class="logo" />
 
-<ion-content>
-  <ion-button (click)="createPaymentSession()">Pagar ahora</ion-button>
+  <div *ngIf="hasPaid === true">
+    <ion-text color="success">
+      <h2>Pago completado ✅</h2>
+    </ion-text>
+  </div>
+
+  <div *ngIf="hasPaid === false">
+    <ion-text>
+      <p>Debes realizar el pago para continuar.</p>
+    </ion-text>
+    <ion-button expand="full" (click)="createPaymentSession()">Pagar con Stripe</ion-button>
+  </div>
 </ion-content>

@@ -65,6 +65,8 @@ export class WarehousePage {
   ) {}
 
   async ionViewWillEnter() {
+    const loading = await this.utilsService.loading();
+    await loading.present();
     this.titleService.setTitle('Almacenes');
     this.leftMenuComponent.isHideMenu = true;
     this.storageService.remove('warehouse_id');
@@ -72,13 +74,15 @@ export class WarehousePage {
     if (this.userId !== null) {
       this.loadWarehousesByAdminId(this.userId);
     }
+    await loading.dismiss();
   }
 
   // Load warehouses associated with the user ID
-  loadWarehousesByAdminId(userId: number) {
+  async loadWarehousesByAdminId(userId: number) {  
     this.userService.getWarehousesByUserId(userId).subscribe((userData) => {
       this.warehouses = userData.warehouses;
     });
+    
   }
 
   // Logout and navigate to login page
