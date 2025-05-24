@@ -228,7 +228,7 @@ export class AddUpdateProductComponent {
         await loading.dismiss();
         await this.utilsService.presentToast(
           'Producto creado con éxito',
-          'primary',
+          'success',
           'save-outline'
         );
         this.productCreated.emit();
@@ -263,7 +263,7 @@ export class AddUpdateProductComponent {
         await loading.dismiss();
         await this.utilsService.presentToast(
           'Producto editado con éxito',
-          'primary',
+          'success',
           'save-outline'
         );
         this.closeModal();

@@ -101,7 +101,7 @@ export class AddUpdateTransactionComponent {
         await loading.dismiss();
         await this.utilsService.presentToast(
           'Transacción creada con éxito',
-          'primary',
+          'success',
           'enter-outline'
         );
         this.closeModal(true);

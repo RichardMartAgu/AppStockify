@@ -126,7 +126,7 @@ export class AddUpdateUserComponent {
         await loading.dismiss();
         await this.utilsService.presentToast(
           'Usuario creado con éxito',
-          'primary',
+          'success',
           'enter-outline'
         );
         this.closeModal();

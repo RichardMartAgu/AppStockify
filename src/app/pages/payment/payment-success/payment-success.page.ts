@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StripeService } from 'src/app/core/services/api/payment/stripe.service';
+import { Router } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -10,10 +9,11 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonSpinner,
+  Platform,
 } from '@ionic/angular/standalone';
 
 import { CommonModule } from '@angular/common';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 @Component({
   selector: 'app-payment-success',
@@ -28,39 +28,22 @@ import { CommonModule } from '@angular/common';
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonSpinner,
     CommonModule,
   ],
 })
 export class PaymentSuccessPage implements OnInit {
-  sessionId: string | null = null;
-  paymentStatus: string | null = null;
-
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private stripeService: StripeService
+    private router: Router,
+    private platform: Platform,
+    private storageService: StorageService
   ) {}
 
-  ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.sessionId = params['session_id'];
-      if (this.sessionId) {
-        this.verifyPayment();
-      }
+   ngOnInit() {
+    this.platform.ready().then(() => {
+      setTimeout(() => {
+        this.storageService.set('payment', "true");
+        this.router.navigate(['/dashboard']);
+      }, 3000);
     });
-  }
-
-  async verifyPayment() {
-    if (this.sessionId) {
-      try {
-        const paymentStatus = await this.stripeService.verifyPayment(
-          this.sessionId
-        );
-        this.paymentStatus = paymentStatus.status;
-      } catch (error) {
-        console.error('Error al verificar el pago:', error);
-        this.paymentStatus = 'failed';
-      }
-    }
   }
 }

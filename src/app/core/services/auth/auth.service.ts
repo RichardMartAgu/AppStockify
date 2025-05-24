@@ -45,7 +45,6 @@ export class AuthService {
     await this.storageService.set('image_url', image_url);
     await this.storageService.set('email', email);
     await this.storageService.set('payment', stripe_subscription_status);
-    console.log('stripe0',stripe_subscription_status)
   }
 
   // Clear user data from storage on logout

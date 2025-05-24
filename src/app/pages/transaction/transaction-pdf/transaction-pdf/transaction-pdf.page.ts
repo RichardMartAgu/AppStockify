@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { File } from '@awesome-cordova-plugins/file/ngx';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-transaction-pdf',
@@ -43,7 +44,7 @@ import { File } from '@awesome-cordova-plugins/file/ngx';
 export class TransactionPdfPage implements OnInit {
   @ViewChild('contentToExport', { static: false }) contentToExport!: ElementRef;
 
-  logo = '/assets/Stockify.jpeg';
+    logo = environment.LOGO;
 
   constructor(
     private utilsService: UtilsService,
