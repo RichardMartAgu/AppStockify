@@ -53,6 +53,7 @@ import {
   trendingDownOutline,
   statsChartOutline,
   searchOutline,
+  logOutOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 import { CommonModule } from '@angular/common';
@@ -107,6 +108,7 @@ addIcons({
   trendingDownOutline,
   statsChartOutline,
   searchOutline,
+  logOutOutline,
 });
 
 @Component({

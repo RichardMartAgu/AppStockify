@@ -15,6 +15,7 @@ import { AddUpdateUserComponent } from '../modals/user/add-update-user/add-updat
 import { User } from 'src/app/core/models/user';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import {
+  MenuController,
   ModalController,
   IonMenu,
   IonHeader,
@@ -40,6 +41,7 @@ import {
   IonFabList,
   IonFooter,
 } from '@ionic/angular/standalone';
+import { UserInfoComponent } from '../modals/user/user-info/user-info.component';
 
 @Component({
   selector: 'app-left-menu',
@@ -111,7 +113,8 @@ export class LeftMenuComponent implements OnInit {
   constructor(
     private router: Router,
     private modalController: ModalController,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private menuController: MenuController
   ) {}
 
   ngOnInit(): void {
@@ -119,6 +122,18 @@ export class LeftMenuComponent implements OnInit {
       this.title = value;
     });
   }
+
+  // Show modal to see product details
+    async openUserDetail(user: any) {
+      const modal = await this.modalController.create({
+        component: UserInfoComponent,
+        cssClass: 'custom-modal',
+        componentProps: {
+          user,
+        },
+      });
+      await modal.present();
+    }
 
   // Removes focus from any active element when the menu is opened
   async blurContentOnMenuOpen() {
@@ -132,6 +147,7 @@ export class LeftMenuComponent implements OnInit {
     await this.authService.logout();
     this.user.username = '';
     this.user.image_url = '';
+    await this.menuController.close();
     this.router.navigate(['/login']);
   }
 

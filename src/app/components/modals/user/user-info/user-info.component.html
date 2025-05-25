@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Button to close the modal -->
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title >Perfil usuario <ion-text color="medium">
+    </ion-text> </ion-title>
+   
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" >
+  <!-- User image -->
+  <ion-avatar class="large-avatar">
+    <img [src]="user.image_url || '/assets/Stockify.jpeg'" />
+  </ion-avatar>
+
+  <!-- List of User details with icons -->
+  <ion-list lines="none" >
+    <!-- User name -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="pricetag-outline" color="primary"></ion-icon>
+      <ion-label><strong>Nombre:</strong></ion-label>
+      <ion-text>{{ user.username }}</ion-text>
+    </ion-item>
+
+    <!-- User Email -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="cube-outline" color="primary"></ion-icon>
+      <ion-label><strong>Dirección electrónica:</strong></ion-label>
+      <ion-text>{{ user.email }}</ion-text>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

@@ -12,7 +12,7 @@
             size="9"
             class="ion-justify-content-center ion-align-items-center ion-text-center d-flex"
           >
-            <ion-chip (click)="addUpdateUserModal(user)">
+            <ion-chip (click)="openUserDetail(user)">
               <ion-avatar>
                 <img
                   alt="Avatar del usuario"
@@ -23,28 +23,14 @@
                 />
               </ion-avatar>
               <ion-label>{{
-                user.username || "Crear nuevo usuario"
+                user.username
               }}</ion-label>
             </ion-chip>
           </ion-col>
 
           <ion-col size="3" class="ion-text">
             <ion-menu-toggle>
-              <ion-text
-                *ngIf="user.username"
-                (click)="logout()"
-                color="medium"
-                class="logout-text"
-              >
-                Cerrar sesión
-              </ion-text>
-              <ion-text
-                *ngIf="!user.username"
-                [routerLink]="['/login']"
-                color="primary"
-              >
-                Iniciar sesión
-              </ion-text>
+              <ion-icon color="medium" name="create-outline" (click)="addUpdateUserModal(user)"></ion-icon>             
             </ion-menu-toggle>
           </ion-col>
         </ion-row>
@@ -72,6 +58,15 @@
         </ion-item>
       </ion-list>
     </ion-menu-toggle>
+
+    <ion-item lines="none" (click)="logout()">
+      <ion-text color="medium"> Cerrar Sesión</ion-text>
+      <ion-icon
+        color="medium"
+        name="log-out-outline"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
   </ion-content>
 </ion-menu>
 
@@ -89,7 +84,7 @@
       <div>
         <div>
           <ion-title>
-            {{ title }} <img class="logo" [src]="logo" alt="Logo"/>
+            {{ title }} <img class="logo" [src]="logo" alt="Logo" />
           </ion-title>
         </div>
       </div>
@@ -109,7 +104,7 @@
     *ngIf="!isHideMenu"
   >
     <ion-fab-button color="medium" size="small" title="Menu rápido">
-      <ion-icon color="light" name="grid-outline" ></ion-icon>
+      <ion-icon color="light" name="grid-outline"></ion-icon>
     </ion-fab-button>
 
     <ion-fab-list side="end">
@@ -118,7 +113,7 @@
         [routerLink]="page.url"
         [title]="page.title"
       >
-        <ion-icon [name]="page.icon" ></ion-icon>
+        <ion-icon [name]="page.icon"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
