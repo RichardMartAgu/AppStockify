@@ -1,43 +1,81 @@
+<ion-header>
+ <!-- Hide filters -->
+  <ng-container *ngIf="showFilters">
+    <ion-toolbar>
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterItems()"
+        placeholder="Buscar..."
+      ></ion-searchbar>
+    </ion-toolbar>
+
+    <ion-toolbar style="--min-height: 48px; padding: 0">
+      <ion-segment [(ngModel)]="filterType" (ionChange)="filterItems()">
+        <ion-segment-button value="name">Nombre</ion-segment-button>
+        <ion-segment-button value="identifier">Identificador</ion-segment-button>
+        <ion-segment-button value="email">Email</ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
+</ion-header>
+
 <ion-content>
+  <!-- ionrefresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="refreshClients($event)">
+    <ion-refresher-content
+      pullingText="Desliza para refrescar"
+      refreshingSpinner="circles"
+      refreshingText="Recargando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
-    <ion-item-sliding *ngFor="let client of clients">
-      <ion-item>
-        <ion-icon
-          slot="start"
-          name="people-outline"
-          color="primary"
-        ></ion-icon>
+    <ion-item-sliding *ngFor="let client of filteredClients">
+      <ion-item (click)="openClientDetail(client)">
+        <ion-icon slot="start" name="people-outline" color="primary"></ion-icon>
         <ion-label>
-          <h2>{{ client.name }}</h2>
+          <!-- client name and identifier -->
+          <h2>
+            <ion-text style="color: #00b4ba"
+              ><strong>{{ client.name }} </strong> -
+            </ion-text>
+            <ion-text color="primary"> {{client.identifier}} </ion-text>
+          </h2>
+          
+          <!-- client adress -->
           <p *ngIf="client.address">
             <ion-icon name="location-outline" color="medium"></ion-icon>
             {{ client.address }}
           </p>
-
+          <!--client phone -->
           <p *ngIf="client.phone">
             <ion-icon name="call-outline" color="medium"></ion-icon>
             {{ client.phone }}
           </p>
+          <!--client email -->
+          <p *ngIf="client.email">
+            <ion-icon name="mail-outline" color="medium"></ion-icon>
+            {{ client.email }}
+          </p>
         </ion-label>
+          <!-- go to info modal -->
+        <ion-note slot="end" color="primary"
+          >info <ion-icon color="primary" name="chevron-forward"></ion-icon
+        ></ion-note>
       </ion-item>
 
       <!-- Sliding options (Edit and Delete) -->
-      <ion-item-options >
+      <ion-item-options>
         <!-- Edit button -->
         <ion-item-option color="tertiary" (click)="editClient(client)">
-          <ion-icon
-            class="option-btn"
-            name="create-outline"
-          ></ion-icon>
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
           Editar
         </ion-item-option>
 
         <!-- Delete button -->
         <ion-item-option color="danger" (click)="deleteClient(client)">
-          <ion-icon
-            class="option-btn"
-            name="trash-outline"
-          ></ion-icon>
+          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
           Borrar
         </ion-item-option>
       </ion-item-options>
@@ -61,5 +99,9 @@
     <ion-icon name="add" color="light"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
-
+<!-- Search button -->
+<ion-fab vertical="top" horizontal="end" slot="fixed" (click)="toggleFilters()">
+  <ion-fab-button color="medium" size="small" title="Abrir busqueda">
+    <ion-icon name="search-outline" color="light"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

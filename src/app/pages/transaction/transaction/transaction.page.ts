@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
 import {
+  IonHeader,
+  IonToolbar,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
   IonContent,
+  IonRefresher,
+  IonRefresherContent,
   IonList,
   IonItem,
-  IonIcon,
   IonLabel,
   IonText,
+  IonIcon,
   IonFab,
   IonFabButton,
 } from '@ionic/angular/standalone';
@@ -21,6 +28,7 @@ import { Router } from '@angular/router';
 import { ResponseClient } from 'src/app/core/models/client';
 import { firstValueFrom } from 'rxjs';
 import { UserService } from 'src/app/core/services/api/user/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transaction',
@@ -28,21 +36,34 @@ import { UserService } from 'src/app/core/services/api/user/user.service';
   styleUrls: ['./transaction.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    IonHeader,
+    IonToolbar,
+    IonSearchbar,
+    IonSegment,
+    IonSegmentButton,
     IonContent,
+    IonRefresher,
+    IonRefresherContent,
     IonList,
     IonItem,
-    IonIcon,
     IonLabel,
     IonText,
+    IonIcon,
     IonFab,
     IonFabButton,
     CommonModule,
+    FormsModule,
   ],
 })
 export class TransactionPage {
   transactions: any[] = [];
   client: any;
+  filteredTransactions: any[] = [];
+  filterType: string = 'identifier';
+
+  searchTerm: string = '';
+
+  showFilters = false;
 
   logo = environment.LOGO;
 
@@ -60,6 +81,42 @@ export class TransactionPage {
     this.titleService.setTitle('Lista de Transacciones');
     this.loadWarehouseTransactions();
     this.leftMenuComponent.isHideMenu = false;
+  }
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
+  async refreshTransactions(event: CustomEvent) {
+    setTimeout(() => {
+      this.transactions = [];
+      this.filteredTransactions = [];
+      this.loadWarehouseTransactions();
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
+  }
+
+  filterItems() {
+    const term = this.searchTerm?.toLowerCase().trim() || '';
+    if (!term) {
+      this.filteredTransactions = [...this.transactions];
+      return;
+    }
+    this.filteredTransactions = this.transactions.filter((transactions) => {
+      const fieldValue = (() => {
+        switch (this.filterType) {
+          case 'identifier':
+            return transactions.identifier;
+          case 'date':
+            return transactions.date;
+          case 'client':
+            return transactions.client.name;
+          default:
+            return '';
+        }
+      })();
+      return fieldValue?.toLowerCase().includes(term);
+    });
   }
 
   // Fetch transactions for current warehouse and asign client for client id
@@ -116,6 +173,7 @@ export class TransactionPage {
     } catch (error) {
       console.error('Error cargando transacciones o clientes', error);
     } finally {
+      this.filteredTransactions = [...this.transactions];
       loading.dismiss();
     }
   }

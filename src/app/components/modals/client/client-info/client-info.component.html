@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Button to close the modal -->
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Detalles del cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- List of client details with icons -->
+  <ion-list lines="none">
+    <!-- Serial identifier -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="barcode-outline" color="primary"></ion-icon>
+      <ion-label><strong>Identificador:</strong></ion-label>
+      <ion-text>{{ client.identifier }}</ion-text>
+    </ion-item>
+
+    <!-- client name -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="pricetag-outline" color="primary"></ion-icon>
+      <ion-label><strong>Nombre:</strong></ion-label>
+      <ion-text>{{ client.name }}</ion-text>
+    </ion-item>
+
+    <!-- Quantity contact -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="cube-outline" color="primary"></ion-icon>
+      <ion-label><strong>Contacto:</strong></ion-label>
+      <ion-text>{{ client.contact }}</ion-text>
+    </ion-item>
+
+    <!-- client price -->
+    <ion-item class="custom-ion-item">
+      <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+      <ion-label><strong>Teléfono:</strong></ion-label>
+      <ion-text>{{ client.phone }}</ion-text>
+    </ion-item>
+
+    <!-- client email -->
+    <ion-item *ngIf="client.email" class="custom-ion-item">
+      <ion-icon
+        slot="start"
+        name="document-text-outline"
+        color="primary"
+      ></ion-icon>
+      <ion-label><strong>Correo Electrónico:</strong></ion-label>
+      <ion-text>{{ client.email }}</ion-text>
+    </ion-item>
+
+    <!-- client address -->
+    <ion-item *ngIf="client.address" class="custom-ion-item">
+      <ion-icon slot="start" name="layers-outline" color="primary"></ion-icon>
+      <ion-label><strong>Dirección:</strong></ion-label>
+      <ion-text>{{ client.address }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

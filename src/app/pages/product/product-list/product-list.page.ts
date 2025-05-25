@@ -38,6 +38,7 @@ import { ProductInfoComponent } from 'src/app/components/modals/product/product-
 import { FormsModule } from '@angular/forms';
 import { InfiniteScrollCustomEvent } from '@ionic/angular/standalone';
 import { finalize } from 'rxjs';
+import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
 
 @Component({
   selector: 'app-product-list',
@@ -94,12 +95,14 @@ export class ProductListPage {
     private modalController: ModalController,
     private utilsService: UtilsService,
     private warehouseService: WarehouseService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private leftMenuComponent: LeftMenuComponent
   ) {}
 
   async ionViewWillEnter() {
     this.titleService.setTitle('Lista de productos');
     await this.loadWarehouseProducts();
+    this.leftMenuComponent.isHideMenu = false;
   }
 
   async refreshProducts(event: CustomEvent) {

@@ -78,7 +78,7 @@
             <ion-text color="black"> Nombre del producto</ion-text>
             <p>{{ newProduct?.name }}</p>
           </ion-label>
-          <ion-note slot="end" color="danger" *ngIf="!selectedClient?.name"
+          <ion-note slot="end" color="danger" *ngIf="!newProduct?.name"
             >(Requerido)</ion-note
           >
         </ion-item>

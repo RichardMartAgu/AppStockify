@@ -1,5 +1,36 @@
+<ion-header>
+  <!-- Hide filters -->
+  <ng-container *ngIf="showFilters">
+    <ion-toolbar>
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterItems()"
+        placeholder="Buscar..."
+      ></ion-searchbar>
+    </ion-toolbar>
+
+    <ion-toolbar style="--min-height: 48px; padding: 0">
+      <ion-segment [(ngModel)]="filterType" (ionChange)="filterItems()">
+        <ion-segment-button value="identifier">Identificador</ion-segment-button>
+        <ion-segment-button value="date">Fecha</ion-segment-button>
+        <ion-segment-button value="client">Cliente</ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
+</ion-header>
+
 <ion-content>
-  <ion-list *ngFor="let transaction of transactions">
+  <!-- ionrefresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="refreshTransactions($event)">
+    <ion-refresher-content
+      pullingText="Desliza para refrescar"
+      refreshingSpinner="circles"
+      refreshingText="Recargando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngFor="let transaction of filteredTransactions">
     <ion-item (click)="goTransactionsDetails(transaction)">
       <ion-icon
         *ngIf="transaction.type === 'in'"
@@ -65,3 +96,11 @@
     <ion-icon name="add" color="light"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
+<!-- Search button -->
+<ion-fab vertical="top" horizontal="end" slot="fixed" (click)="toggleFilters()">
+  <ion-fab-button color="medium" size="small" title="Abrir busqueda">
+    <ion-icon name="search-outline" color="light"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+

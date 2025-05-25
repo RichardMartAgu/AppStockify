@@ -1,12 +1,21 @@
 import { Component } from '@angular/core';
 import {
   ModalController,
+  IonHeader,
+  IonToolbar,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
   IonContent,
+  IonRefresher,
+  IonRefresherContent,
   IonList,
-  IonItem,
-  IonIcon,
-  IonLabel,
   IonItemSliding,
+  IonItem,
+  IonNote,
+  IonLabel,
+  IonText,
+  IonIcon,
   IonItemOptions,
   IonItemOption,
   IonFab,
@@ -23,6 +32,8 @@ import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { UserService } from 'src/app/core/services/api/user/user.service';
 import { ClientsByUserIdResponse } from 'src/app/core/models/user';
 import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.component';
+import { FormsModule } from '@angular/forms';
+import { ClientInfoComponent } from 'src/app/components/modals/client/client-info/client-info.component';
 
 @Component({
   selector: 'app-client',
@@ -30,21 +41,37 @@ import { LeftMenuComponent } from 'src/app/components/left-menu/left-menu.compon
   styleUrls: ['./client.page.scss'],
   standalone: true,
   imports: [
+    IonHeader,
+    IonToolbar,
+    IonSearchbar,
+    IonSegment,
+    IonSegmentButton,
     IonContent,
+    IonRefresher,
+    IonRefresherContent,
     IonList,
-    IonItem,
-    IonIcon,
-    IonLabel,
     IonItemSliding,
+    IonItem,
+    IonLabel,
+    IonText,
+    IonIcon,
+    IonNote,
     IonItemOptions,
     IonItemOption,
     IonFab,
     IonFabButton,
     CommonModule,
+    FormsModule,
   ],
 })
 export class ClientPage {
   clients: any[] = [];
+  filteredClients: any[] = [];
+  filterType: string = 'name';
+
+  showFilters = false;
+
+  searchTerm: string = '';
 
   logo = environment.LOGO;
 
@@ -63,6 +90,54 @@ export class ClientPage {
     this.loadUserClients();
     this.leftMenuComponent.isHideMenu = false;
   }
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
+  async refreshClients(event: CustomEvent) {
+    setTimeout(() => {
+      this.clients = [];
+      this.filteredClients = [];
+      this.loadUserClients();
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 1000);
+  }
+
+  filterItems() {
+    const term = this.searchTerm?.toLowerCase().trim() || '';
+    if (!term) {
+      this.filteredClients = [...this.clients];
+      return;
+    }
+    this.filteredClients = this.clients.filter((client) => {
+      const fieldValue = (() => {
+        switch (this.filterType) {
+          case 'name':
+            return client.name;
+          case 'identifier':
+            return client.identifier;
+          case 'email':
+            return client.email;
+          default:
+            return '';
+        }
+      })();
+      return fieldValue?.toLowerCase().includes(term);
+    });
+  }
+
+   // Show modal to see product details
+    async openClientDetail(client: any) {
+      const modal = await this.modalController.create({
+        component: ClientInfoComponent,
+        cssClass: 'custom-modal',
+        componentProps: {
+          client,
+        },
+      });
+      await modal.present();
+    }
 
   async loadUserClients() {
     const loading = await this.utilsService.loading();
@@ -84,10 +159,10 @@ export class ClientPage {
       next: (userClientsData: ClientsByUserIdResponse) => {
         const clients = userClientsData?.clients;
         this.clients = Array.isArray(clients) ? clients : [];
+        this.filteredClients = [...this.clients];
         loading.dismiss();
       },
     });
-    loading.dismiss();
   }
 
   // Open the modal to add or update a client

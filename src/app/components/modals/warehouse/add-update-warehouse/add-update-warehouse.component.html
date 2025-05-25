@@ -1,5 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
+    <!-- Button to close the modal -->
     <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
         <ion-icon name="close-circle-outline"></ion-icon>
@@ -31,7 +32,9 @@
           labelPlacement="floating"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+         <ion-note *ngIf ="!warehouse.name" slot="end" [color]="isEditMode ? 'medium' : 'danger'">{{
+          isEditMode ? "(Opcional)" : "(Requerido)"
+        }}</ion-note>
       </ion-item>
 
       <!-- address -->
@@ -44,7 +47,7 @@
           label="Dirección"
           labelPlacement="floating"
         ></ion-input>
-        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+        <ion-note *ngIf ="!warehouse.address" slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
       <!-- phone -->
@@ -57,7 +60,7 @@
           label="Teléfono"
           labelPlacement="floating"
         ></ion-input>
-        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+        <ion-note *ngIf ="!warehouse.phone" slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
       <ion-button

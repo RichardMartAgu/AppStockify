@@ -46,7 +46,9 @@
           labelPlacement="floating"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+         <ion-note *ngIf ="!product.serial_number" slot="end" [color]="isEditMode ? 'medium' : 'danger'">{{
+          isEditMode ? "(Opcional)" : "(Requerido)"
+        }}</ion-note>
       </ion-item>
 
       <!-- Name -->
@@ -60,7 +62,9 @@
           labelPlacement="floating"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+        <ion-note *ngIf ="!product.name" slot="end" [color]="isEditMode ? 'medium' : 'danger'">{{
+          isEditMode ? "(Opcional)" : "(Requerido)"
+        }}</ion-note>
       </ion-item>
 
       <!-- quantity -->
@@ -75,7 +79,9 @@
           min="0"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+          <ion-note *ngIf ="!product.quantity" slot="end" [color]="isEditMode ? 'medium' : 'danger'">{{
+          isEditMode ? "(Opcional)" : "(Requerido)"
+        }}</ion-note>
       </ion-item>
 
       <!-- price -->
@@ -90,7 +96,9 @@
           min="0"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+        <ion-note *ngIf ="!product.price" slot="end" [color]="isEditMode ? 'medium' : 'danger'">{{
+          isEditMode ? "(Opcional)" : "(Requerido)"
+        }}</ion-note>
       </ion-item>
 
       <!-- description -->
@@ -104,7 +112,7 @@
           labelPlacement="floating"
           auto-grow="true"
         ></ion-input>
-        <ion-note slot="end" color="medium">(opcional)</ion-note>
+        <ion-note *ngIf ="!product.description" slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
       <!-- category -->
@@ -114,7 +122,7 @@
           Categoría
           <p>{{ product.category }}</p>
         </ion-label>
-        <ion-note slot="end" color="medium">(opcional)</ion-note>
+        <ion-note *ngIf ="!product.category" slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
       <!-- kit -->
@@ -124,7 +132,7 @@
           Kit asociado
           <p>{{ product.kit_id }}</p>
         </ion-label>
-        <ion-note slot="end" color="medium">(opcional)</ion-note>
+        <ion-note *ngIf ="!product.kit_id" slot="end" color="medium">(opcional)</ion-note>
       </ion-item>
 
       <ion-button

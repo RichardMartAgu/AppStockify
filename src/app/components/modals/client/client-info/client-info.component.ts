@@ -8,7 +8,6 @@ import {
   IonButton,
   IonIcon,
   IonContent,
-  IonAvatar,
   IonList,
   IonItem,
   IonLabel,
@@ -18,9 +17,9 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-product-info',
-  templateUrl: './product-info.component.html',
-  styleUrls: ['./product-info.component.scss'],
+  selector: 'app-client-info',
+  templateUrl: './client-info.component.html',
+  styleUrls: ['./client-info.component.scss'],
   standalone: true,
   imports: [
     IonHeader,
@@ -30,7 +29,6 @@ import { FormsModule } from '@angular/forms';
     IonButton,
     IonIcon,
     IonContent,
-    IonAvatar,
     IonList,
     IonItem,
     IonLabel,
@@ -39,22 +37,18 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ],
 })
-export class ProductInfoComponent {
-  constructor(
-    private modalController: ModalController,
-  ) {}
+export class ClientInfoComponent {
+  constructor(private modalController: ModalController) {}
 
-  @Input() product!: {
+  @Input() client!: {
     id: number;
+    identifier: string;
     name: string;
-    quantity: number;
-    serial_number: string;
-    price: number;
-    description: string | null;
-    category: string | null;
-    image_url: string | null;
-    kit_id: number | null;
-    warehouse_id: number | null;
+    contact: string;
+    email: string | null;
+    address: string;
+    phone: string;
+    user_id: number;
   };
 
   closeModal() {
