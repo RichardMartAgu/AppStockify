@@ -54,9 +54,17 @@ import {
   statsChartOutline,
   searchOutline,
   logOutOutline,
+  checkmarkDoneCircleOutline,
+  cardOutline,
+  sadOutline,
+  happyOutline,
+  timeOutline,
+  thumbsUpOutline,
+  documentOutline,
 } from 'ionicons/icons';
 import { StorageService } from './core/services/storage/storage.service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 addIcons({
   homeOutline,
@@ -109,6 +117,13 @@ addIcons({
   statsChartOutline,
   searchOutline,
   logOutOutline,
+  checkmarkDoneCircleOutline,
+  cardOutline,
+  sadOutline,
+  happyOutline,
+  timeOutline,
+  thumbsUpOutline,
+  documentOutline,
 });
 
 @Component({
@@ -119,21 +134,30 @@ addIcons({
 })
 export class AppComponent implements OnInit {
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private storageService = inject(StorageService);
+
   async ngOnInit() {
     await this.storageService.init();
 
     const token = await this.storageService.get<string>('token');
+
+    const url = new URL(window.location.href);
+    const from = url.searchParams.get('from');
+
+    if (from === 'fail') {
+      this.router.navigate(['/payment/fail']);
+      return;
+    }
+    if (from === 'success') {
+      this.router.navigate(['/payment/success']);
+      return;
+    }
+
     if (token) {
       this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/login']);
     }
-  }
-
-  constructor(private platform: Platform) {
-    this.platform.ready().then(() => {
-      document.body.classList.toggle('dark', true);
-    });
   }
 }

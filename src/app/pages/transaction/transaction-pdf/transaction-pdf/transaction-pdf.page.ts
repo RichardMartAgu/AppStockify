@@ -1,6 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { Router } from '@angular/router';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { File } from '@awesome-cordova-plugins/file/ngx';
+import { environment } from 'src/environments/environment';
 import {
   IonHeader,
   IonToolbar,
@@ -13,13 +20,6 @@ import {
   IonIcon,
   Platform,
 } from '@ionic/angular/standalone';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import { Router } from '@angular/router';
-import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
-import { UtilsService } from 'src/app/core/services/utils/utils.service';
-import { File } from '@awesome-cordova-plugins/file/ngx';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-transaction-pdf',
@@ -44,8 +44,6 @@ import { environment } from 'src/environments/environment';
 export class TransactionPdfPage implements OnInit {
   @ViewChild('contentToExport', { static: false }) contentToExport!: ElementRef;
 
-    logo = environment.LOGO;
-
   constructor(
     private utilsService: UtilsService,
     private router: Router,
@@ -63,6 +61,7 @@ export class TransactionPdfPage implements OnInit {
       this.transaction = navigation.extras.state['transaction'];
       this.products = this.transaction?.products || [];
     }
+    console.log(this.transaction);
   }
 
   // Calculate total amount of transaction products
@@ -94,75 +93,109 @@ export class TransactionPdfPage implements OnInit {
       return;
     }
 
-    element.style.height = 'auto';
+    element.style.height = '1580px';
     element.style.maxHeight = 'none';
     element.style.overflow = 'visible';
+    element.style.width = 'auto';
+    element.style.maxWidth = 'none';
 
     const folderName = 'Transactions';
     const fileName = this.transaction.identifier.replace(/\//g, '-') + '.pdf';
 
+    const isMobileWeb =
+      this.platform.is('mobile') && !this.platform.is('hybrid');
+
+    const generatePDF = async () => {
+      const canvas = await html2canvas(element, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+
+      const pdf = new jsPDF('l', 'mm', 'a4'); // landscape
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgWidth = imgProps.width;
+      const imgHeight = imgProps.height;
+
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const scaledWidth = imgWidth * ratio;
+      const scaledHeight = imgHeight * ratio;
+
+      const x = (pdfWidth - scaledWidth) / 2;
+      const y = (pdfHeight - scaledHeight) / 2;
+
+      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight);
+
+      return pdf;
+    };
+
+    if (isMobileWeb) {
+      const pdf = await generatePDF();
+      const blob = pdf.output('blob');
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      URL.revokeObjectURL(url);
+      await loading.dismiss();
+      await this.utilsService.presentToast(
+        'PDF abierto en una pestaña nueva',
+        'success',
+        'document'
+      );
+      return;
+    }
+
     if (this.platform.is('android')) {
       await this.checkPermissions();
+      const pdf = await generatePDF();
+      const pdfOutput = pdf.output('arraybuffer');
+      const blob = new Blob([pdfOutput], { type: 'application/pdf' });
 
-      html2canvas(element).then(async (canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const path = this.file.externalRootDirectory + 'Download/';
 
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      try {
+        await this.file.checkDir(path, folderName).catch(() => {
+          return this.file.createDir(path, folderName, false);
+        });
 
-        const pdfOutput = pdf.output('arraybuffer');
-        const blob = new Blob([pdfOutput], { type: 'application/pdf' });
+        await this.file.writeFile(`${path}${folderName}/`, fileName, blob, {
+          replace: true,
+        });
 
-        const path = this.file.externalRootDirectory + 'Download/';
-
-        try {
-          await this.file.checkDir(path, folderName).catch(() => {
-            return this.file.createDir(path, folderName, false);
-          });
-
-          await this.file.writeFile(`${path}${folderName}/`, fileName, blob, {
-            replace: true,
-          });
-          console.log('PDF guardado exitosamente');
-          await this.utilsService.presentToast(
-            'PDF guardado',
-            'success',
-            'document'
-          );
-        } catch (error) {
-          console.error('Error al guardar PDF:', JSON.stringify(error));
-          await this.utilsService.presentToast(
-            'No se pudo guardar el PDF',
-            'danger',
-            'alert-circle'
-          );
-        } finally {
-          await loading.dismiss();
-        }
-      });
-    } else {
-      // ELSE para navegadores o plataformas no Android
-      html2canvas(element).then(async (canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-        pdf.save(`${this.transaction.identifier}`);
-
-        await loading.dismiss();
         await this.utilsService.presentToast(
-          'PDF descargado',
+          'PDF guardado',
           'success',
-          'document'
+          'document-outline'
         );
-      });
+      } catch (error) {
+        console.error('Error al guardar PDF:', JSON.stringify(error));
+        await this.utilsService.presentToast(
+          'No se pudo guardar el PDF',
+          'danger',
+          'alert-circle'
+        );
+      } finally {
+        await loading.dismiss();
+      }
+      return;
     }
+
+    const pdf = await generatePDF();
+    const blob = pdf.output('blob');
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    await loading.dismiss();
+    await this.utilsService.presentToast(
+      'PDF descargado',
+      'success',
+      'document'
+    );
   }
 }

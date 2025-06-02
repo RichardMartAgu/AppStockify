@@ -217,7 +217,6 @@ export class DashboardPage {
         (t) => t.type === 'out'
       ).length;
 
-      console.log('entradas', totalEntradas);
       entradas.push(totalEntradas);
       salidas.push(totalSalidas);
     }

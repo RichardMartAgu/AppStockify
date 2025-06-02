@@ -1,11 +1,11 @@
- let API_URL = 'http://107.22.235.180:8000'; 
+let API_URL = 'http://107.22.235.180:8000'; 
 // let API_URL = 'http://127.0.0.1:8000'; 
 
 export const environment = {
   production: false,
   API_URL: API_URL,
 
-  LOGO: "https://res.cloudinary.com/dddghjiwv/image/upload/v1744883802/x5ut8o8tn79nrxo5zsky.jpg",
+  LOGO: 'https://res.cloudinary.com/dddghjiwv/image/upload/v1748805550/o2ueccmkoyqgq8yul2yc.jpg',
  
   cloudinary: {
     cloudName: 'dddghjiwv',  

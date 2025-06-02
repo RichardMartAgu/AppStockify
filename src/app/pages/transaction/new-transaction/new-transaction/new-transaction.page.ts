@@ -319,7 +319,7 @@ export class NewTransactionPage implements OnInit {
           await loading.dismiss();
           await this.utilsService.presentToast(
             'Transacción creada con éxito',
-            'primary',
+            'success',
             'enter-outline'
           );
           this.router.navigate(['transaction'], {});

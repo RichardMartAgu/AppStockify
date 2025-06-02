@@ -2,6 +2,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductService } from 'src/app/core/services/api/product/product.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { Capacitor } from '@capacitor/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
+import { ProductsByWarehouseIdResponse } from 'src/app/core/models/warehouse';
+import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
+import {
+  CreateUpdateProductRequest,
+  Product,
+} from 'src/app/core/models/product';
 import {
   ModalController,
   IonHeader,
@@ -17,16 +28,6 @@ import {
   IonNote,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import {
-  CreateUpdateProductRequest,
-  Product,
-} from 'src/app/core/models/product';
-import { StorageService } from 'src/app/core/services/storage/storage.service';
-import { WarehouseService } from 'src/app/core/services/api/warehouse/warehouse.service';
-import { ProductsByWarehouseIdResponse } from 'src/app/core/models/warehouse';
-import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
 
 @Component({
   selector: 'app-add-update-product',
@@ -58,8 +59,10 @@ export class AddUpdateProductComponent {
   isEditMode: boolean = false;
 
   ngOnInit() {
+    
     this.isEditMode = !!this.product?.id;
     this.loadProductsByWarehouseId();
+    
 
     if (!this.product) {
       this.product = {
@@ -75,6 +78,8 @@ export class AddUpdateProductComponent {
         warehouse_id: 0,
       };
     }
+
+    console.log(this.products);
   }
 
   constructor(
@@ -86,44 +91,43 @@ export class AddUpdateProductComponent {
     private modalController: ModalController
   ) {}
 
+  isWeb: boolean = Capacitor.getPlatform() === 'web';
   filteredProducts = [...this.products];
   searchText: string = '';
   showCreateOption = false;
 
   // Opens a modal to select an associated kit
   async openSearchKitModal() {
-    const category = this.utilsService.getUniqueItems(this.products, 'kit_id');
+    const kit_id = this.utilsService.getUniqueItems(this.products, 'id');
     const modal = await this.modalController.create({
       component: SearchModalComponent,
       componentProps: {
-        items: category,
+        items: kit_id,
         labelProperty: 'name',
         title: 'Buscar kit asociado',
         allowCreate: false,
       },
     });
-
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
     if (data) {
-      this.product.kit_id = data.kit_id;
+      this.product.kit_id = data.id;
     }
   }
 
   // Opens a modal to select a product category
   async openSearchCategoryModal() {
-    const categorias = this.utilsService.getUniqueItems(
+    const category = this.utilsService.getUniqueItems(
       this.products,
       'category'
     );
-    console.log(categorias);
     const modal = await this.modalController.create({
       component: SearchModalComponent,
       componentProps: {
-        items: categorias,
+        items: category,
         labelProperty: 'category',
-        title: 'Buscar producto',
+        title: 'Buscar categoría',
         allowCreate: true,
       },
     });

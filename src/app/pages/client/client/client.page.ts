@@ -187,13 +187,21 @@ export class ClientPage {
 
   // Delete client
   deleteClient(client: Client) {
-    this.utilsService.confirmDelete(
-      '¿Estás seguro de que deseas eliminar este cliente?',
-      () => {
-        this.clientService.deleteClient(client.id).subscribe(() => {
-          this.clients = this.clients.filter((p) => p.id !== client.id);
+  this.utilsService.confirmDelete(
+    '¿Estás seguro de que deseas eliminar este cliente?',
+    () => {
+      return new Promise<void>((resolve, reject) => {
+        this.clientService.deleteClient(client.id).subscribe({
+          next: () => {
+            this.clients = this.clients.filter((p) => p.id !== client.id);
+            this.loadUserClients();
+            resolve();
+          },
+          error: (err) => reject(err),
         });
-      }
-    );
-  }
+      });
+    }
+  );
+}
+
 }

@@ -1,18 +1,31 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Error en el pago</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div>
+  <div class="d-flex-center" style="text-align: center">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Error en el pago!</ion-card-title>
+        <ion-card-title i color="danger">Ups! Algo ocurrió en el pago</ion-card-title>
       </ion-card-header>
+      <ion-icon
+        name="alert-circle-outline"
+        size="large"
+        color="danger"
+      ></ion-icon>
       <ion-card-content>
-        <p>Lo sentimos ha tenido un fallo en el pago</p>
-        <p>Vuelve a probar más tarde.</p>
+        <h2 class="ion-padding">Tu pago no se ha procesado correctamente.</h2>
+
+        <ion-icon
+        name="bug-outline"
+        size="large"
+        color="warning"
+      ></ion-icon>
+
+        <ion-text color="black" >
+          <p class="ion-padding">Prueba más tarde.</p>
+        </ion-text>
+         <ion-icon
+        name="time-outline"
+        size="large"
+        color="secondary"
+      ></ion-icon>
       </ion-card-content>
     </ion-card>
   </div>

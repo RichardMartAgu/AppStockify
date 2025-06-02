@@ -33,7 +33,7 @@ export class UtilsService {
   }
 
   // Show confirmation alert before deletion
-  async confirmDelete(message: string, onConfirm: () => void) {
+  async confirmDelete(message: string, onConfirm: () => void | Promise<void>) {
     const alert = await this.alertController.create({
       header: '⚠️ Alerta',
       message: message,
@@ -48,17 +48,24 @@ export class UtilsService {
         {
           text: '🗑️ Eliminar',
           role: 'destructive',
-          handler: () => {
-            onConfirm();
-            this.presentToast(
-              'Eliminación completada',
-              'success',
-              'checkmark-circle-outline'
-            );
+          handler: async () => {
+            try {
+              await Promise.resolve(onConfirm());
+              this.presentToast(
+                'Eliminación completada',
+                'success',
+                'checkmark-circle-outline'
+              );
+              await alert.dismiss();
+            } catch (error) {
+              console.error('Error en la eliminación:', error);
+            }
+            return false;
           },
         },
       ],
     });
+
     await alert.present();
   }
 
@@ -66,7 +73,7 @@ export class UtilsService {
   async takePicture(promptLabelHeader: string) {
     return await Camera.getPhoto({
       quality: 90,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Prompt,
       promptLabelHeader,

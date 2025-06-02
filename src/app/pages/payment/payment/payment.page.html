@@ -1,16 +1,49 @@
 <ion-content class="ion-padding">
-  <img src="https://stripe.com/img/v3/home/twitter.png" alt="Stripe Logo" width="200" class="logo" />
+  <div class="d-flex-center" style="text-align: center">
+    <div *ngIf="hasPaid !== false">
+      <ion-text color="success">
+        <h2>La suscripción esta pagada</h2>
+        <ion-icon
+          name="checkmark-done-circle-outline"
+          size="large"
+          color="success"
+        ></ion-icon>
+      </ion-text>
+      <p>Puede seguir utilizando la App</p>
+      <ion-icon
+        name="thumbs-up-outline"
+        size="large"
+        color="secondary"
+      ></ion-icon>
+    </div>
 
-  <div *ngIf="hasPaid === true">
-    <ion-text color="success">
-      <h2>Pago completado ✅</h2>
-    </ion-text>
-  </div>
+    <div *ngIf="hasPaid === false" class="ion-padding">
+      <ion-text>
+        <h2>
+          <strong>¡Lo sentimos! </strong>
+          <ion-icon name="sad-outline" size="large" color="danger"></ion-icon>
+        </h2>
 
-  <div *ngIf="hasPaid === false">
-    <ion-text>
-      <p>Debes realizar el pago para continuar.</p>
-    </ion-text>
-    <ion-button expand="full" (click)="createPaymentSession()">Pagar con Stripe</ion-button>
+        <h3>Debes realizar el pago para continuar</h3>
+        <ion-icon name="card-outline" size="large" color="secondary"></ion-icon>
+        <p>Para pagar la suscripción con Stripe pulsa el logo inferior</p>
+        <ion-icon
+          name="arrow-down-circle-outline"
+          size="large"
+          color="secondary"
+        ></ion-icon>
+      </ion-text>
+      <p></p>
+      <img
+        (click)="createPaymentSession()"
+        src="https://stripe.com/img/v3/home/twitter.png"
+        alt="Stripe Logo"
+        width="100"
+        class="logo"
+        style="cursor: pointer; margin-top: 16px"
+      />
+    </div>
+
+    <p>Gracias por confiar en Stockify!</p>
   </div>
 </ion-content>

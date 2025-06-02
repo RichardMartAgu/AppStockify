@@ -96,8 +96,6 @@ export class LeftMenuComponent implements OnInit {
     { title: 'Clientes', url: '/client', icon: 'people-outline' },
     { title: 'Transacciones', url: '/transaction', icon: 'repeat-outline' },
     { title: 'Suscripción', url: '/payment', icon: 'cash-outline' },
-    { title: 'Success', url: '/payment/success', icon: 'cash-outline' },
-    { title: 'Fail', url: '/payment/fail', icon: 'cash-outline' },
   ];
 
   user: User = {

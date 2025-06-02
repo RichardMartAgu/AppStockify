@@ -30,7 +30,12 @@
           labelPlacement="floating"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+        <ion-note
+          *ngIf="!client.identifier"
+          slot="end"
+          [color]="isEditMode ? 'medium' : 'danger'"
+          >{{ isEditMode ? "(Opcional)" : "(Requerido)" }}</ion-note
+        >
       </ion-item>
 
       <!-- Name -->
@@ -44,7 +49,12 @@
           labelPlacement="floating"
           required
         ></ion-input>
-        <ion-note slot="end" color="danger">(Requerido)</ion-note>
+        <ion-note
+          *ngIf="!client.name"
+          slot="end"
+          [color]="isEditMode ? 'medium' : 'danger'"
+          >{{ isEditMode ? "(Opcional)" : "(Requerido)" }}</ion-note
+        >
       </ion-item>
 
       <!-- contact -->
@@ -57,7 +67,9 @@
           label="Contacto"
           labelPlacement="floating"
         ></ion-input>
-        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+        <ion-note *ngIf="!client.contact" slot="end" color="medium"
+          >(opcional)</ion-note
+        >
       </ion-item>
 
       <!-- email -->
@@ -71,7 +83,9 @@
           label="Correo"
           labelPlacement="floating"
         ></ion-input>
-        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+        <ion-note *ngIf="!client.email" slot="end" color="medium"
+          >(opcional)</ion-note
+        >
       </ion-item>
 
       <!-- address -->
@@ -84,7 +98,9 @@
           label="Dirección"
           labelPlacement="floating"
         ></ion-input>
-        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+        <ion-note *ngIf="!client.address" slot="end" color="medium"
+          >(opcional)</ion-note
+        >
       </ion-item>
 
       <!-- phone -->
@@ -97,7 +113,9 @@
           label="Teléfono"
           labelPlacement="floating"
         ></ion-input>
-        <ion-note slot="end" color="medium">(Opcional)</ion-note>
+        <ion-note *ngIf="!client.phone" slot="end" color="medium"
+          >(opcional)</ion-note
+        >
       </ion-item>
 
       <ion-button

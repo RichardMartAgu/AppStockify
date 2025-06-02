@@ -250,6 +250,7 @@ export class ProductListPage {
       () => {
         this.productService.deleteProduct(product.id).subscribe(() => {
           this.products = this.products.filter((p) => p.id !== product.id);
+          this.loadWarehouseProducts();
         });
       }
     );

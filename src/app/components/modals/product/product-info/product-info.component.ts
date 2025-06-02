@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-info',
@@ -56,6 +57,8 @@ export class ProductInfoComponent {
     kit_id: number | null;
     warehouse_id: number | null;
   };
+
+    logo = environment.LOGO;
 
   closeModal() {
     this.modalController.dismiss();

@@ -23,11 +23,11 @@
     <ion-icon
       class="image-icon"
       name="image-outline"
-      *ngIf="!user.image_url"
+      *ngIf="isWeb && !user.image_url"
     ></ion-icon>
 
     <!-- Create new image -->
-    <ion-button (click)="takeImage()" size="small" shape="round" color="light">
+    <ion-button *ngIf="isWeb" (click)="takeImage()" size="small" shape="round" color="light">
       <ion-icon class="custom-icon" slot="end" name="camera-outline"></ion-icon>
       Añadir imagen
     </ion-button>

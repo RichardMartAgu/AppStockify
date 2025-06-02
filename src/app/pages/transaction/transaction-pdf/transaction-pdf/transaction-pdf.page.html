@@ -17,17 +17,16 @@
     id="content-to-export"
     style="padding: 20px; background-color: #ffffff; color: #000000"
   >
-    <!-- Logo -->
-    <div style="text-align: center; margin-bottom: 20px">
-      <img
-        src="{{logo}}"
-        alt="Logo"
-        style="width: 150px; opacity: 70%; border-radius: 80px"
-      />
-    </div>
-
     <!-- Principal Data -->
     <h2>Detalles de la Transacción</h2>
+     <p>
+      <strong>Identificador:</strong>
+      {{ transaction.identifier}}
+    </p>
+      <p>
+      <strong>Cliente:</strong>
+      {{ transaction.client.name}}
+    </p>
     <p>
       <strong>Tipo:</strong>
       {{ transaction.type === 'in' ? 'Entrada' : transaction.type === 'out' ?

@@ -20,6 +20,7 @@ import { UserService } from 'src/app/core/services/api/user/user.service';
 import { UploadImageService } from 'src/app/core/services/upload-image/upload-image.service';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { environment } from 'src/environments/environment';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-add-update-user',
@@ -46,6 +47,7 @@ export class AddUpdateUserComponent {
 
   @Input() user!: User;
 
+  isWeb: boolean = Capacitor.getPlatform() === 'web';
   isEditMode: boolean = false;
   showPassword = false;
 

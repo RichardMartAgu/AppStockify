@@ -14,11 +14,23 @@ import { UtilsService } from '../services/utils/utils.service';
 function getErrorMessage(error: HttpErrorResponse): string {
   const url = error.url || '';
 
+   const detail = error.error?.detail || '';
+
+  const detailTranslations: Record<string, string> = {
+    'Email already registered': 'El correo electrónico ya está registrado',
+    'Username already registered': 'El nombre de usuario ya está en uso',
+    'Serial Number already registered':'El número de serie ya esta en uso',
+    'Client cannot be deleted because it has associated transactions.':'No se puede borrar el cliente porque tiene transacciones asociadas'
+  
+  };
+
+  const translatedDetail = detailTranslations[detail] || detail;
+
   switch (error.status) {
     case 0:
       return 'No se pudo conectar con el servidor';
     case 400:
-      return 'Solicitud incorrecta';
+      return translatedDetail || 'Solicitud incorrecta';
     case 401:
       return 'Sesión expirada. Inicia sesión de nuevo';
     case 403:
@@ -39,7 +51,7 @@ function getErrorMessage(error: HttpErrorResponse): string {
     case 500:
       return 'Error interno del servidor';
     default:
-      return error.error?.message || 'Ocurrió un error inesperado';
+      return error.error?.message || error.error?.detail || 'Ocurrió un error inesperado';
   }
 }
 

@@ -14,7 +14,6 @@ export class UploadImageService {
   async uriToFile(uri: string, fileName: string): Promise<File> {
       const response = await fetch(uri);
       const blob = await response.blob();
-      console.log('Error al subir la imagen:' , blob);
       return new File([blob], fileName, { type: blob.type });
     }
 
