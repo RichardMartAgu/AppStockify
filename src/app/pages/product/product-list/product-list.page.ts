@@ -145,12 +145,6 @@ export class ProductListPage {
   }
 
   loadMoreProducts(event?: InfiniteScrollCustomEvent) {
-    console.log(
-      'Cargando más productos...',
-      this.currentIndex,
-      'de',
-      this.filteredProducts.length
-    );
     if (this.loadingMore || this.noMoreProducts) {
       if (event) event.target.complete();
       return;

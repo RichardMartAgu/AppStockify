@@ -16,7 +16,7 @@ import {
   IonFab,
   IonFabButton,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TitleService } from 'src/app/core/services/components/title.service';
 import { Transaction } from 'src/app/core/models/transaction';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -53,6 +53,7 @@ import { FormsModule } from '@angular/forms';
     IonFabButton,
     CommonModule,
     FormsModule,
+    DatePipe,
   ],
 })
 export class TransactionPage {
@@ -108,7 +109,14 @@ export class TransactionPage {
           case 'identifier':
             return transactions.identifier;
           case 'date':
-            return transactions.date;
+            const formattedDate = new Date(
+              transactions.date
+            ).toLocaleDateString('es-ES', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            });
+            return formattedDate;
           case 'client':
             return transactions.client.name;
           default:

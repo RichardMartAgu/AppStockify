@@ -20,6 +20,7 @@ function getErrorMessage(error: HttpErrorResponse): string {
     'Email already registered': 'El correo electrónico ya está registrado',
     'Username already registered': 'El nombre de usuario ya está en uso',
     'Serial Number already registered':'El número de serie ya esta en uso',
+    'Identifier already registered':'El Identificador del cliente ya esta en uso',
     'Client cannot be deleted because it has associated transactions.':'No se puede borrar el cliente porque tiene transacciones asociadas'
   
   };

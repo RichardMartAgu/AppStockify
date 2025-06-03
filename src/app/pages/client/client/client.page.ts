@@ -73,8 +73,6 @@ export class ClientPage {
 
   searchTerm: string = '';
 
-  logo = environment.LOGO;
-
   constructor(
     private clientService: ClientService,
     private titleService: TitleService,
